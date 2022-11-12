@@ -1,0 +1,13 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Hanoded-Sunbird-Black-Regular.ttf",
+      "sha1": "d315279f35cc7f776e6b6faff1016cba60f3ec0d"
+    },
+    {
+      "path": "assets/fonts/Hanoded-Sunbird-Regular.ttf",
+      "sha1": "82047258d75bfc04d13fbcdfbc36aa4fb3a376e6"
+    }
+  ]
+}
