@@ -5,8 +5,12 @@ import styled from 'styled-components';
 import Background from './background/Background';
 import Button from './button/Button';
 import Icon from 'react-native-vector-icons/Feather';
+import {useDispatch} from 'react-redux';
+import {playersRequest} from '../actions/players';
+import {TouchableHighlight} from 'react-native-gesture-handler';
 
 const NamesScreen = ({navigation}) => {
+  const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [players, setPlayers] = useState([]);
   const [howManyPlayers, setHowManyPlayers] = useState(0);
@@ -30,12 +34,10 @@ const NamesScreen = ({navigation}) => {
     setName('');
   };
 
-  const ready = async () => {
-    try {
-      await AsyncStorage.setItem('names', players);
-    } catch (e) {
-      console.log(e);
-    }
+  const ready = () => {
+    console.log(players, 'players sent in');
+    dispatch(playersRequest(players));
+    navigation.navigate('Card Screen');
   };
 
   return (
@@ -48,7 +50,7 @@ const NamesScreen = ({navigation}) => {
           </TitleContainer>
           <PlayersList>
             {players.map(player => {
-              return <PlayerName>{player.name}</PlayerName>;
+              return <PlayerName key={player.name}>{player.name}</PlayerName>;
             })}
           </PlayersList>
           <NameInputContainer>
@@ -63,10 +65,11 @@ const NamesScreen = ({navigation}) => {
               onSubmitEditing={() => handleSubmit()}
             />
           </NameInputContainer>
-          <Button
-            onPress={() => ready()}
-            buttonInfo={{text: 'READY!', navigate: 'Names Screen', navigation}}
-          />
+          <TouchableHighlight style={{width: '100%'}} onPress={() => ready()}>
+            <Button
+              buttonInfo={{text: 'READY!', navigate: 'Card Screen', navigation}}
+            />
+          </TouchableHighlight>
         </ScreenContainer>
       </SafeAreaView>
     </>
@@ -146,8 +149,8 @@ const NameInput = styled.TextInput`
 
 const IconTouch = styled.TouchableOpacity`
   position: absolute;
-  right: -15px;
-  top: -15px;
+  right: -20px;
+  top: -20px;
   padding: 10px;
   border-radius: 20px;
   background-color: #ee3347;

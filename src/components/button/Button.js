@@ -21,16 +21,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const CustomButton = styled.Text`
-  text-align: center;
-  color: black;
-  font-size: 26px;
-  padding: 12px 0px 12px 0px;
-  letter-spacing: 5px;
-  font-family: Sunbird Black;
-  overflow: hidden;
-`;
-
 const ButtonContainer = styled.View`
   display: flex;
   align-items: center;
@@ -40,6 +30,16 @@ const ButtonContainer = styled.View`
   border-radius: 10px;
   border: solid 3px black;
   margin-bottom: 20px;
+`;
+
+const CustomButton = styled.Text`
+  text-align: center;
+  color: black;
+  font-size: 26px;
+  padding: 12px 12px 12px 12px;
+  letter-spacing: 5px;
+  font-family: Sunbird Black;
+  overflow: hidden;
 `;
 
 export default Button;

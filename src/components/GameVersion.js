@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from 'react-native';
 import styled from 'styled-components';
 import Background from './background/Background';
 import Button from './button/Button';
