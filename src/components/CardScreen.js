@@ -4,8 +4,8 @@ import Background from './background/Background';
 import BackOfCard from './background/BackOfCard';
 import {cardColorRequest} from '../actions/card-color';
 import {useDispatch, useSelector} from 'react-redux';
-import {TouchableHighlight} from 'react-native-gesture-handler';
 import {playersRequest} from '../actions/players';
+import {currentPlayerRequest} from '../actions/current-player';
 
 const CardScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -30,16 +30,16 @@ const CardScreen = ({navigation}) => {
 
   const storeCurrentCard = () => {
     const randomNameIndex = Math.floor(Math.random() * players.length) + 0;
-    const player = players[randomNameIndex];
-
-    localStorage.setItem('currentName', JSON.stringify(`${name}`));
+    const currentPlayer = players[randomNameIndex];
+    dispatch(currentPlayerRequest(currentPlayer));
+    navigation.navigate('Challenge Screen');
   };
 
   if (ingredientCardToRender) {
     return (
       <ScreenContainer>
         <Background background={ingredientCardToRender} />
-        <CardTouch>
+        <CardTouch onPress={storeCurrentCard()}>
           <BackOfCard image={ingredientCardToRender} />
         </CardTouch>
       </ScreenContainer>

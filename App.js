@@ -9,6 +9,7 @@ import HomeScreen from './src/components/HomeScreen';
 import GameVersionScreen from './src/components/GameVersion';
 import NamesScreen from './src/components/NamesScreen';
 import CardScreen from './src/components/CardScreen';
+import ChallengeScreen from './src/components/ChallengeScreen';
 import reducers from './src/reducers';
 import routeSaga from './src/sagas';
 
@@ -43,6 +44,11 @@ const App = () => {
               name="Card Screen"
               component={CardScreen}
               options={{title: 'Card Screen', headerShown: false}}
+            />
+            <Stack.Screen
+              name="Challenge Screen"
+              component={ChallengeScreen}
+              options={{title: 'Challenge Screen', headerShown: false}}
             />
           </Stack.Navigator>
         </NavigationContainer>
