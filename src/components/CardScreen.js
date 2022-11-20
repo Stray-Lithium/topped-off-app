@@ -6,6 +6,7 @@ import {cardColorRequest} from '../actions/card-color';
 import {useDispatch, useSelector} from 'react-redux';
 import {TouchableHighlight} from 'react-native-gesture-handler';
 import {playersRequest} from '../actions/players';
+import {NativeScreenNavigationContainer} from 'react-native-screens';
 
 const CardScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -39,7 +40,8 @@ const CardScreen = ({navigation}) => {
     return (
       <ScreenContainer>
         <Background background={ingredientCardToRender} />
-        <CardTouch>
+        <CardTouch
+          onPress={() => navigation.navigate('Lemonade Players Screen')}>
           <BackOfCard image={ingredientCardToRender} />
         </CardTouch>
       </ScreenContainer>

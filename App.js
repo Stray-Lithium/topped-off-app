@@ -11,6 +11,7 @@ import NamesScreen from './src/components/NamesScreen';
 import CardScreen from './src/components/CardScreen';
 import reducers from './src/reducers';
 import routeSaga from './src/sagas';
+import LemonadePlayersScreen from './src/components/LemonadePlayersScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,11 @@ const App = () => {
               name="Card Screen"
               component={CardScreen}
               options={{title: 'Card Screen', headerShown: false}}
+            />
+            <Stack.Screen
+              name="Lemonade Players Screen"
+              component={LemonadePlayersScreen}
+              options={{title: 'Lemonade Players Screen', headerShown: false}}
             />
           </Stack.Navigator>
         </NavigationContainer>
