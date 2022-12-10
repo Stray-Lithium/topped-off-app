@@ -37,45 +37,48 @@ const ChallengeScreen = ({navigation}) => {
     if (!cardContent) {
       blankWord();
     }
-  }, [cardContent]);
+  }, [cardContent, currentPlayer]);
 
   const nameMaker = () => {
     const playersLength = currentPlayer.length;
     let names = '';
+    console.log(currentPlayer, 'challenge screen');
     currentPlayer.forEach((name, index) => {
       if (playersLength === 1) {
-        names += `${name},`;
+        names += `${name.name},`;
       } else if (index === playersLength - 2) {
-        names += `${name} and `;
+        names += `${name.name} and `;
       } else {
-        names += `${name}, `;
+        names += `${name.name}, `;
       }
     });
-    console.log(names, 'namess');
     return names;
   };
+
   const names = nameMaker();
 
-  return (
-    <ChallengeScreenContainer>
-      <Background />
-      <CardContainer>
-        <ChallengeCardBackground image={cardColor} />
-      </CardContainer>
-      <CardContentContainer>
-        <CardTitle>{cardContent.title}</CardTitle>
-        <CardContent>{`${names} ${cardContent.content}`}</CardContent>
-        <CardComment>{cardContent.comment}</CardComment>
-      </CardContentContainer>
-      <Button
-        buttonInfo={{
-          text: 'OK',
-          navigate: 'Lemonade Who Completed Screen',
-          navigation,
-        }}
-      />
-    </ChallengeScreenContainer>
-  );
+  if (currentPlayer) {
+    return (
+      <ChallengeScreenContainer>
+        <Background />
+        <CardContainer>
+          <ChallengeCardBackground image={cardColor} />
+        </CardContainer>
+        <CardContentContainer>
+          <CardTitle>{cardContent.title}</CardTitle>
+          <CardContent>{`${names} ${cardContent.content}`}</CardContent>
+          <CardComment>{cardContent.comment}</CardComment>
+        </CardContentContainer>
+        <Button
+          buttonInfo={{
+            text: 'OK',
+            navigate: 'Lemonade Who Completed Screen',
+            navigation,
+          }}
+        />
+      </ChallengeScreenContainer>
+    );
+  }
 };
 
 const ChallengeScreenContainer = styled.View`
