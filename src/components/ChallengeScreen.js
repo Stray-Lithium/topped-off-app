@@ -11,13 +11,12 @@ import {martiniBlank} from '../blanks/martini';
 import {martiniCard} from '../cards/martini';
 import {whiskeyCard} from '../cards/whiskey';
 import {mojitoCard} from '../cards/mojito';
+import {lemonadeCard} from '../cards/lemonade';
 
 const ChallengeScreen = ({navigation}) => {
   const cardColor = useSelector(state => state.CardColor.cardColor);
   const [cardContent, setCardContent] = useState(false);
   const currentPlayer = useSelector(state => state.CurrentPlayer.currentPlayer);
-  const [counter, setCounter] = useState(false);
-  const [startTimer, setStartTimer] = useState(false);
 
   const blankWord = () => {
     if (cardColor === 'whiskeyScore') {
@@ -29,24 +28,33 @@ const ChallengeScreen = ({navigation}) => {
     if (cardColor === 'mojitoScore') {
       setCardContent(mojitoCard());
     }
+    if (cardColor === 'lemonadeScore') {
+      setCardContent(lemonadeCard());
+    }
   };
 
   useEffect(() => {
     if (!cardContent) {
       blankWord();
     }
-    setCounter(cardContent.timer);
   }, [cardContent]);
 
-  console.log(cardContent.timer);
-
-  useEffect(() => {
-    if (counter && startTimer) {
-      const timer =
-        counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
-      return () => clearInterval(timer);
-    }
-  }, [counter, startTimer]);
+  const nameMaker = () => {
+    const playersLength = currentPlayer.length;
+    let names = '';
+    currentPlayer.forEach((name, index) => {
+      if (playersLength === 1) {
+        names += `${name},`;
+      } else if (index === playersLength - 2) {
+        names += `${name} and `;
+      } else {
+        names += `${name}, `;
+      }
+    });
+    console.log(names, 'namess');
+    return names;
+  };
+  const names = nameMaker();
 
   return (
     <ChallengeScreenContainer>
@@ -55,11 +63,17 @@ const ChallengeScreen = ({navigation}) => {
         <ChallengeCardBackground image={cardColor} />
       </CardContainer>
       <CardContentContainer>
-        <Counter>{counter}</Counter>
         <CardTitle>{cardContent.title}</CardTitle>
-        <CardContent>{`${currentPlayer.name}! ${cardContent.content}`}</CardContent>
+        <CardContent>{`${names} ${cardContent.content}`}</CardContent>
         <CardComment>{cardContent.comment}</CardComment>
       </CardContentContainer>
+      <Button
+        buttonInfo={{
+          text: 'OK',
+          navigate: 'Lemonade Who Completed Screen',
+          navigation,
+        }}
+      />
     </ChallengeScreenContainer>
   );
 };
@@ -82,7 +96,6 @@ const CardContainer = styled.View`
   justify-content: center;
   width: 80%;
   height: auto;
-  background-color: red;
 `;
 
 const CardContentContainer = styled.View`

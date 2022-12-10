@@ -35,6 +35,7 @@ const NamesScreen = ({navigation}) => {
   };
 
   const ready = () => {
+    console.log(players);
     dispatch(playersRequest(players));
     navigation.navigate('Card Screen');
   };

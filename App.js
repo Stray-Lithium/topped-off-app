@@ -13,6 +13,9 @@ import ChallengeScreen from './src/components/ChallengeScreen';
 import reducers from './src/reducers';
 import routeSaga from './src/sagas';
 import LemonadePlayersScreen from './src/components/LemonadePlayersScreen';
+import LemonadeWhoCompletedScreen from './src/components/LemonadeWhoCompletedScreen';
+import DrinkScreen from './src/components/DrinkScreen';
+import ScoreScreen from './src/components/ScoreScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -55,6 +58,30 @@ const App = () => {
               name="Lemonade Players Screen"
               component={LemonadePlayersScreen}
               options={{title: 'Lemonade Players Screen', headerShown: false}}
+            />
+            <Stack.Screen
+              name="Lemonade Who Completed Screen"
+              component={LemonadeWhoCompletedScreen}
+              options={{
+                title: 'Lemonade Who Completed Screen',
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Drink Screen"
+              component={DrinkScreen}
+              options={{
+                title: 'Drink Screen',
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Score Screen"
+              component={ScoreScreen}
+              options={{
+                title: 'Score Screen',
+                headerShown: false,
+              }}
             />
           </Stack.Navigator>
         </NavigationContainer>

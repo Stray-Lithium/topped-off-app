@@ -1,6 +1,10 @@
 import styled from 'styled-components';
+import AutoHeightImage from 'react-native-auto-height-image';
+import {Dimensions} from 'react-native';
 
 const ChallengeCardBackground = ({image}) => {
+  const windowWidth = Dimensions.get('window').width * 0.8;
+
   const backgroundImage = () => {
     if (image === 'whiskeyScore') {
       return require(`../../assets/red-card.png`);
@@ -17,12 +21,13 @@ const ChallengeCardBackground = ({image}) => {
   };
   const uri = backgroundImage();
 
-  return <CardBack resizeMode="contain" source={uri} />;
+  return (
+    <AutoHeightImage
+      style={{marginBottom: 20}}
+      width={windowWidth}
+      source={uri}
+    />
+  );
 };
-
-const CardBack = styled.Image`
-  width: 100%;
-  background-color: purple;
-`;
 
 export default ChallengeCardBackground;

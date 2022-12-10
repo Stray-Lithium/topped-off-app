@@ -5,76 +5,41 @@ import AnimatedCheckbox from 'react-native-checkbox-reanimated';
 import styled from 'styled-components';
 import Background from './background/Background';
 import Button from './button/Button';
-import {lemonadeBlankFill} from '../blanks/lemonade';
 import {currentPlayerRequest} from '../actions/current-player';
 import {useDispatch, useSelector} from 'react-redux';
 
-const LemonadePlayersScreen = ({navigation}) => {
+const DrinkScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const players = useSelector(state => state.Players.players);
-  const [lemonFill, setLemonFill] = useState(false);
-  const [checkedNames, setCheckedNames] = useState([]);
+  const currentPlayer = useSelector(state => state.CurrentPlayer.currentPlayer);
 
-  useEffect(() => {
-    if (!lemonFill) {
-      setLemonFill(lemonadeBlankFill().toUpperCase());
-    }
-  }, [lemonFill, players]);
+  useEffect(() => {}, [players]);
 
-  const checkboxClick = checkName => {
-    if (!checkedNames.includes(checkName)) {
-      setCheckedNames([...checkedNames, checkName]);
-    } else {
-      let filter = checkedNames.filter(player => player !== checkName);
-      setCheckedNames(filter);
-    }
-  };
-
-  const checkBoxes = () => {
-    return (
-      <>
-        {players.map(player => {
-          return (
-            <>
-              <CheckboxContainer>
-                <NamePosition>
-                  <PlayerName>{player.name}</PlayerName>
-                </NamePosition>
-                <CheckboxPosition>
-                  <Pressable
-                    onPress={() => checkboxClick(player.name)}
-                    style={styles.checkbox}>
-                    <AnimatedCheckbox
-                      checked={checkedNames.includes(player.name)}
-                      highlightColor="#ee3347"
-                      checkmarkColor="#ffffff"
-                      boxOutlineColor="#000000"
-                    />
-                  </Pressable>
-                </CheckboxPosition>
-              </CheckboxContainer>
-            </>
-          );
-        })}
-      </>
-    );
+  const drinkTitle = () => {
+    let title = '';
+    currentPlayer.forEach((player, index) => {
+      if (currentPlayer.length === 1 || index !== currentPlayer.length - 1) {
+        title += `${player}, `;
+      } else {
+        title += `and ${player} `;
+      }
+    });
+    return title;
   };
 
   const confirm = () => {
-    dispatch(currentPlayerRequest(checkedNames));
-    navigation.navigate('Challenge Screen');
+    navigation.navigate('Score Screen');
   };
 
-  if (lemonFill && players) {
+  if (players) {
     return (
       <>
         <Background />
         <SafeAreaView style={{flex: 1}}>
           <ScreenContainer>
-            <Title>{lemonFill}?</Title>
-            <CheckboxesContainer>{checkBoxes()}</CheckboxesContainer>
+            <Title>{`${drinkTitle()} you must drink!`}</Title>
             <ButtonContainer onPress={() => confirm()}>
-              <CustomButton>CONFIRM</CustomButton>
+              <CustomButton>NEXT ROUND</CustomButton>
             </ButtonContainer>
           </ScreenContainer>
         </SafeAreaView>
@@ -171,4 +136,4 @@ const CustomButton = styled.Text`
   overflow: hidden;
 `;
 
-export default LemonadePlayersScreen;
+export default DrinkScreen;

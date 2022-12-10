@@ -5,21 +5,16 @@ import AnimatedCheckbox from 'react-native-checkbox-reanimated';
 import styled from 'styled-components';
 import Background from './background/Background';
 import Button from './button/Button';
-import {lemonadeBlankFill} from '../blanks/lemonade';
 import {currentPlayerRequest} from '../actions/current-player';
 import {useDispatch, useSelector} from 'react-redux';
 
-const LemonadePlayersScreen = ({navigation}) => {
+const LemonadeWhoCompletedScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const players = useSelector(state => state.Players.players);
-  const [lemonFill, setLemonFill] = useState(false);
+  const currentPlayer = useSelector(state => state.CurrentPlayer.currentPlayer);
   const [checkedNames, setCheckedNames] = useState([]);
 
-  useEffect(() => {
-    if (!lemonFill) {
-      setLemonFill(lemonadeBlankFill().toUpperCase());
-    }
-  }, [lemonFill, players]);
+  useEffect(() => {}, [players, currentPlayer]);
 
   const checkboxClick = checkName => {
     if (!checkedNames.includes(checkName)) {
@@ -33,19 +28,19 @@ const LemonadePlayersScreen = ({navigation}) => {
   const checkBoxes = () => {
     return (
       <>
-        {players.map(player => {
+        {currentPlayer.map(player => {
           return (
             <>
               <CheckboxContainer>
                 <NamePosition>
-                  <PlayerName>{player.name}</PlayerName>
+                  <PlayerName>{player}</PlayerName>
                 </NamePosition>
                 <CheckboxPosition>
                   <Pressable
-                    onPress={() => checkboxClick(player.name)}
+                    onPress={() => checkboxClick(player)}
                     style={styles.checkbox}>
                     <AnimatedCheckbox
-                      checked={checkedNames.includes(player.name)}
+                      checked={checkedNames.includes(player)}
                       highlightColor="#ee3347"
                       checkmarkColor="#ffffff"
                       boxOutlineColor="#000000"
@@ -62,16 +57,16 @@ const LemonadePlayersScreen = ({navigation}) => {
 
   const confirm = () => {
     dispatch(currentPlayerRequest(checkedNames));
-    navigation.navigate('Challenge Screen');
+    navigation.navigate('Drink Screen');
   };
 
-  if (lemonFill && players) {
+  if ((players, currentPlayer)) {
     return (
       <>
         <Background />
         <SafeAreaView style={{flex: 1}}>
           <ScreenContainer>
-            <Title>{lemonFill}?</Title>
+            <Title>WHO COMPLETED THE CHALLENGE?</Title>
             <CheckboxesContainer>{checkBoxes()}</CheckboxesContainer>
             <ButtonContainer onPress={() => confirm()}>
               <CustomButton>CONFIRM</CustomButton>
@@ -171,4 +166,4 @@ const CustomButton = styled.Text`
   overflow: hidden;
 `;
 
-export default LemonadePlayersScreen;
+export default LemonadeWhoCompletedScreen;

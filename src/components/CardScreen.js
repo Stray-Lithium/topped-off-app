@@ -13,14 +13,16 @@ const CardScreen = ({navigation}) => {
   const [ingredientCardToRender, setIngredientCardToRender] = useState(false);
   const players = useSelector(state => state.Players.players);
 
-  console.log(players);
-
   const ingredientRandomizer = () => {
     const cards = ['lemonade', 'whiskey', 'martini', 'mojito'];
     const randomWordIndex = Math.floor(Math.random() * cards.length) + 0;
     const card = cards[randomWordIndex];
-    setIngredientCardToRender(card);
-    dispatch(cardColorRequest(`${card}Score`));
+    // setIngredientCardToRender(card);
+    setIngredientCardToRender('lemonade');
+
+    dispatch(cardColorRequest(`lemonadeScore`));
+
+    // dispatch(cardColorRequest(`${card}Score`));
   };
 
   useEffect(() => {
@@ -32,15 +34,15 @@ const CardScreen = ({navigation}) => {
   const storeCurrentCard = () => {
     const randomNameIndex = Math.floor(Math.random() * players.length) + 0;
     const currentPlayer = players[randomNameIndex];
-    dispatch(currentPlayerRequest(currentPlayer));
-    navigation.navigate('Challenge Screen');
+    dispatch(currentPlayerRequest([currentPlayer]));
+    navigation.navigate('Lemonade Players Screen');
   };
 
   if (ingredientCardToRender) {
     return (
       <ScreenContainer>
         <Background background={ingredientCardToRender} />
-        <CardTouch onPress={storeCurrentCard()}>
+        <CardTouch onPress={() => storeCurrentCard()}>
           <BackOfCard image={ingredientCardToRender} />
         </CardTouch>
       </ScreenContainer>
