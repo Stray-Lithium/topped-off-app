@@ -19,9 +19,9 @@ const DrinkScreen = ({navigation}) => {
     let title = '';
     currentPlayer.forEach((player, index) => {
       if (currentPlayer.length === 1 || index !== currentPlayer.length - 1) {
-        title += `${player}, `;
+        title += `${player.name}, `;
       } else {
-        title += `and ${player} `;
+        title += `and ${player.name} `;
       }
     });
     return title;
