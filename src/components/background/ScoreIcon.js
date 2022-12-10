@@ -1,6 +1,10 @@
 import styled from 'styled-components';
+import AutoHeightImage from 'react-native-auto-height-image';
+import {Dimensions} from 'react-native';
 
 const ScoreIcon = ({image}) => {
+  const windowWidth = Dimensions.get('window').width * 0.8;
+
   const backgroundImage = () => {
     if (image === 'whiskeyScore') {
       return require(`../../assets/whiskey-score.png`);
@@ -16,11 +20,7 @@ const ScoreIcon = ({image}) => {
     }
   };
   const uri = backgroundImage();
-  return <CardBack resizeMode="contain" source={uri} />;
+  return <AutoHeightImage width={50} source={uri} />;
 };
-
-const CardBack = styled.Image`
-  width: 100%;
-`;
 
 export default ScoreIcon;

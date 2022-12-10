@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {ScreenContainer} from 'react-native-screens';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components';
@@ -51,7 +50,6 @@ const ChallengeScreen = ({navigation}) => {
         names += `${name}, `;
       }
     });
-    console.log(names, 'namess');
     return names;
   };
   const names = nameMaker();

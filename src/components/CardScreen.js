@@ -14,11 +14,16 @@ const CardScreen = ({navigation}) => {
   const players = useSelector(state => state.Players.players);
 
   const ingredientRandomizer = () => {
-    const cards = ['lemonade', 'whiskey', 'martini', 'mojito'];
+    const cards = [
+      'lemonadeScore',
+      'whiskeyScore',
+      'martiniScore',
+      'mojitoScore',
+    ];
     const randomWordIndex = Math.floor(Math.random() * cards.length) + 0;
     const card = cards[randomWordIndex];
     // setIngredientCardToRender(card);
-    setIngredientCardToRender('lemonade');
+    setIngredientCardToRender('lemonadeScore');
 
     dispatch(cardColorRequest(`lemonadeScore`));
 
@@ -37,6 +42,8 @@ const CardScreen = ({navigation}) => {
     dispatch(currentPlayerRequest([currentPlayer]));
     navigation.navigate('Lemonade Players Screen');
   };
+
+  console.log(ingredientCardToRender, 'ingredient');
 
   if (ingredientCardToRender) {
     return (

@@ -1,26 +1,35 @@
 import {useState, useEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
+import AutoHeightImage from 'react-native-auto-height-image';
 import styled from 'styled-components';
 import title from '../assets/scoreboard.png';
 import Background from './background/Background';
 import ScoreIcon from './background/ScoreIcon';
+import {Dimensions} from 'react-native';
 
 const ScoreScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const players = useSelector(state => state.Players.players);
   const cardColor = useSelector(state => state.CardColor.cardColor);
+  const windowWidth = Dimensions.get('window').width * 0.8;
 
   useEffect(() => {}, [players, cardColor]);
+
+  console.log(players, 'players');
 
   if (players && cardColor) {
     return (
       <>
         <Background background={cardColor} />
         <SafeAreaView style={{flex: 1}}>
-          {/* <ScreenContainer>
+          <ScreenContainer>
             <ScoreboardContainer>
-              <Title src={title} />
+              <AutoHeightImage
+                style={{marginBottom: 20}}
+                width={windowWidth}
+                source={require('../assets/scoreboard.png')}
+              />
               <ScoreList>
                 {players.map(player => {
                   return (
@@ -30,16 +39,16 @@ const ScoreScreen = ({navigation}) => {
                       </ScoreNameContainer>
                       <IconsContainer>
                         <IconDiv>
-                          <Score source={ScoreIcon('whiskey')} />
+                          <ScoreIcon image={'whiskeyScore'} />
                         </IconDiv>
                         <IconDiv>
-                          <Score source={ScoreIcon('lemonade')} />
+                          <ScoreIcon image={'lemonadeScore'} />
                         </IconDiv>
                         <IconDiv>
-                          <Score source={ScoreIcon('martini')} />
+                          <ScoreIcon image={'martiniScore'} />
                         </IconDiv>
                         <IconDiv>
-                          <Score source={ScoreIcon('mojito')} />
+                          <ScoreIcon image={'mojitoScore'} />
                         </IconDiv>
                       </IconsContainer>
                     </EachPersonsScoreContainer>
@@ -47,11 +56,11 @@ const ScoreScreen = ({navigation}) => {
                 })}
               </ScoreList>
             </ScoreboardContainer>
-          </ScreenContainer> */}
+          </ScreenContainer>
         </SafeAreaView>
       </>
     );
-  }
+  } else return <Text>Hello</Text>;
 };
 
 const ScreenContainer = styled.View`
@@ -70,10 +79,11 @@ const ScoreboardContainer = styled.View`
   flex-direction: column;
   align-items: center;
   width: 90%;
+  height: 100%;
 `;
 
 const Title = styled.Image`
-  width: 80vw;
+  width: 80%;
   margin-bottom: 10px;
   margin-top: 80px;
 `;
@@ -85,10 +95,6 @@ const ScoreList = styled.View`
   align-items: center;
   margin-bottom: 40px;
   width: 100%;
-  height: 60vh;
-  // border: solid 4px #ee3347;
-  // outline: 5px solid black;
-  // background-color: #808184;
 `;
 
 const EachPersonsScoreContainer = styled.View`
@@ -134,10 +140,7 @@ const ScoreName = styled.Text`
   text-align: center;
   width: 100%;
   margin: 10px;
-`;
-
-const Score = styled.Image`
-  height: 50px;
+  font-family: Sunbird Black;
 `;
 
 export default ScoreScreen;

@@ -2,16 +2,16 @@ import styled from 'styled-components';
 
 const BackOfCard = ({image}) => {
   const backgroundImage = () => {
-    if (image === 'whiskey') {
+    if (image === 'whiskeyScore') {
       return require(`../../assets/whiskey-card.png`);
     }
-    if (image === 'martini') {
+    if (image === 'martiniScore') {
       return require(`../../assets/martini-card.png`);
     }
-    if (image === 'mojito') {
+    if (image === 'mojitoScore') {
       return require(`../../assets/mojito-card.png`);
     }
-    if (image === 'lemonade') {
+    if (image === 'lemonadeScore') {
       return require(`../../assets/lemonade-card.png`);
     }
   };

@@ -5,16 +5,16 @@ const Background = ({background}) => {
     if (!background) {
       return require(`../../assets/app-background.png`);
     }
-    if (background === 'whiskey') {
+    if (background === 'whiskeyScore') {
       return require(`../../assets/whiskey-background.png`);
     }
-    if (background === 'martini') {
+    if (background === 'martiniScore') {
       return require(`../../assets/martini-background.png`);
     }
-    if (background === 'mojito') {
+    if (background === 'mojitoScore') {
       return require(`../../assets/mojito-background.png`);
     }
-    if (background === 'lemonade') {
+    if (background === 'lemonadeScore') {
       return require(`../../assets/lemonade-background.png`);
     }
   };
