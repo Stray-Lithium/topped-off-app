@@ -11,11 +11,16 @@ import {martiniCard} from '../cards/martini';
 import {whiskeyCard} from '../cards/whiskey';
 import {mojitoCard} from '../cards/mojito';
 import {lemonadeCard} from '../cards/lemonade';
+import {playersRequest} from '../actions/players';
+import {playerTurn} from '../algorithms/turn';
 
 const ChallengeScreen = ({navigation}) => {
+  const dispatch = useDispatch();
   const cardColor = useSelector(state => state.CardColor.cardColor);
   const [cardContent, setCardContent] = useState(false);
   const currentPlayer = useSelector(state => state.CurrentPlayer.currentPlayer);
+  const gameVersion = useSelector(state => state.GameVersion.gameVersion);
+  const players = useSelector(state => state.Players.players);
 
   const blankWord = () => {
     if (cardColor === 'whiskeyScore') {
@@ -36,12 +41,11 @@ const ChallengeScreen = ({navigation}) => {
     if (!cardContent) {
       blankWord();
     }
-  }, [cardContent, currentPlayer]);
+  }, [cardContent, currentPlayer, players]);
 
   const nameMaker = () => {
     const playersLength = currentPlayer.length;
     let names = '';
-    console.log(currentPlayer, 'challenge screen');
     currentPlayer.forEach((name, index) => {
       if (playersLength === 1) {
         names += `${name.name},`;
@@ -54,9 +58,25 @@ const ChallengeScreen = ({navigation}) => {
     return names;
   };
 
+  const complete = () => {
+    let playersCopy = players;
+    let updatedPlayers = [];
+    playersCopy.forEach(player => {
+      console.log(player[cardColor], 'here');
+      if (player.name === currentPlayer[0].name) {
+        player[cardColor] += 1;
+        updatedPlayers.push(player);
+      } else {
+        updatedPlayers.push(player);
+      }
+    });
+    dispatch(playersRequest(updatedPlayers));
+    navigation.navigate('Score Screen');
+  };
+
   const names = nameMaker();
 
-  if (currentPlayer) {
+  if (currentPlayer && players && cardColor) {
     return (
       <ChallengeScreenContainer>
         <Background />
@@ -64,14 +84,28 @@ const ChallengeScreen = ({navigation}) => {
           <ChallengeCardBackground image={cardColor} />
         </CardContainer>
         <CardContentContainer>
-          <CardTitle>{cardContent.title}</CardTitle>
+          {gameVersion === 'FULL' ? (
+            <CardTitle>{cardContent.title}</CardTitle>
+          ) : null}
           <CardContent>{`${names} ${cardContent.content}`}</CardContent>
-          <CardComment>{cardContent.comment}</CardComment>
+          {gameVersion === 'FULL' ? (
+            <CardComment>{cardContent.comment}</CardComment>
+          ) : null}
         </CardContentContainer>
         <Button
           buttonInfo={{
             text: 'OK',
             navigate: 'Lemonade Who Completed Screen',
+            navigation,
+          }}
+        />
+        <ButtonContainer onPress={() => complete()}>
+          <CustomButton>COMPLETE</CustomButton>
+        </ButtonContainer>
+        <Button
+          buttonInfo={{
+            text: 'DRINK',
+            navigate: 'Drink Screen',
             navigation,
           }}
         />
@@ -141,6 +175,27 @@ const Counter = styled.Text`
   font-family: Sunbird Black;
   transform: rotate(15deg);
   font-size: 60px;
+`;
+
+const ButtonContainer = styled.Pressable`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  background-color: #ee3347;
+  border-radius: 10px;
+  border: solid 3px black;
+  margin-bottom: 20px;
+`;
+
+const CustomButton = styled.Text`
+  text-align: center;
+  color: black;
+  font-size: 26px;
+  padding: 12px 12px 12px 12px;
+  letter-spacing: 5px;
+  font-family: Sunbird Black;
+  overflow: hidden;
 `;
 
 export default ChallengeScreen;

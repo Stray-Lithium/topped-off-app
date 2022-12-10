@@ -29,7 +29,7 @@ const CardVersionCardScreen = ({navigation}) => {
   const process = card => {
     dispatch(cardColorRequest(`${card}Score`));
     dispatch(currentPlayerRequest([turn]));
-    navigation.navigate('Card Version Challenge Screen');
+    navigation.navigate('Challenge Screen');
   };
 
   return (
