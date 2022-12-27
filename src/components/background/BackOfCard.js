@@ -1,6 +1,9 @@
-import styled from 'styled-components';
+import AutoHeightImage from 'react-native-auto-height-image';
+import {Dimensions} from 'react-native';
 
 const BackOfCard = ({image}) => {
+  const windowWidth = Dimensions.get('window').width * 0.9;
+
   const backgroundImage = () => {
     if (image === 'whiskeyScore') {
       return require(`../../assets/whiskey-card.png`);
@@ -17,11 +20,13 @@ const BackOfCard = ({image}) => {
   };
   const uri = backgroundImage();
 
-  return <CardBack resizeMode="contain" source={uri} />;
+  return (
+    <AutoHeightImage
+      style={{marginBottom: 20}}
+      width={windowWidth}
+      source={uri}
+    />
+  );
 };
-
-const CardBack = styled.Image`
-  width: 100%;
-`;
 
 export default BackOfCard;

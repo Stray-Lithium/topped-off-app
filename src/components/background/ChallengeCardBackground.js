@@ -21,13 +21,7 @@ const ChallengeCardBackground = ({image}) => {
   };
   const uri = backgroundImage();
 
-  return (
-    <AutoHeightImage
-      style={{marginBottom: 20}}
-      width={windowWidth}
-      source={uri}
-    />
-  );
+  return <AutoHeightImage width={windowWidth} source={uri} />;
 };
 
 export default ChallengeCardBackground;

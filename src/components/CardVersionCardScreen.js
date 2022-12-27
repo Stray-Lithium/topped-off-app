@@ -28,7 +28,7 @@ const CardVersionCardScreen = ({navigation}) => {
 
   const process = card => {
     dispatch(cardColorRequest(`${card}Score`));
-    dispatch(currentPlayerRequest([turn]));
+    dispatch(currentPlayerRequest([turn.name]));
     navigation.navigate('Challenge Screen');
   };
 

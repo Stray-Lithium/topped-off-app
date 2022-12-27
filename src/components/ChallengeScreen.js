@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components';
@@ -13,7 +13,6 @@ import {mojitoCard} from '../cards/mojito';
 import {lemonadeCard} from '../cards/lemonade';
 import {playersRequest} from '../actions/players';
 import {playerTurn} from '../algorithms/turn';
-import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 
 const ChallengeScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -38,8 +37,6 @@ const ChallengeScreen = ({navigation}) => {
     }
   };
 
-  console.log(cardColor, 'color');
-
   useEffect(() => {
     if (!cardContent) {
       blankWord();
@@ -59,15 +56,15 @@ const ChallengeScreen = ({navigation}) => {
         names += `${name}, `;
       }
     });
-    console.log(names, 'namesss');
     return names;
   };
+
+  const names = nameMaker();
 
   const complete = () => {
     let playersCopy = players;
     let updatedPlayers = [];
     playersCopy.forEach(player => {
-      console.log(player[cardColor], 'here');
       if (player.name === currentPlayer[0].name) {
         player[cardColor] += 1;
         updatedPlayers.push(player);
@@ -79,7 +76,30 @@ const ChallengeScreen = ({navigation}) => {
     navigation.navigate('Score Screen');
   };
 
-  const names = nameMaker();
+  const notLemonadeChallenge = () => {
+    return (
+      <>
+        <ButtonContainer onPress={() => complete()}>
+          <CustomButton>COMPLETED</CustomButton>
+        </ButtonContainer>
+        <ButtonContainer onPress={() => complete()}>
+          <CustomButton>DRINK</CustomButton>
+        </ButtonContainer>
+      </>
+    );
+  };
+
+  const lemonadeChallenge = () => {
+    return (
+      <Button
+        buttonInfo={{
+          text: 'OK',
+          navigate: 'Lemonade Who Completed Screen',
+          navigation,
+        }}
+      />
+    );
+  };
 
   const displayCardContent = () => {
     return (
@@ -88,39 +108,28 @@ const ChallengeScreen = ({navigation}) => {
           <>
             <CardContainer>
               <ChallengeCardBackground image={cardColor} />
+              <CardContentContainer>
+                <CardTitle>{cardContent.title}</CardTitle>
+                <CardContent>{`${names} ${cardContent.content}`}</CardContent>
+                <CardComment>{cardContent.comment}</CardComment>
+              </CardContentContainer>
             </CardContainer>
-            <CardContentContainer>
-              <CardTitle>{cardContent.title}</CardTitle>
-              <CardContent>{`${names} ${cardContent.content}`}</CardContent>
-              <CardComment>{cardContent.comment}</CardComment>
-            </CardContentContainer>
-            <Button
-              buttonInfo={{
-                text: 'OK',
-                navigate: 'Lemonade Who Completed Screen',
-                navigation,
-              }}
-            />
+            {cardColor !== 'lemonadeScore'
+              ? notLemonadeChallenge()
+              : lemonadeChallenge()}
           </>
         ) : (
           <>
-            <CVCardContainer>
+            <CardContainer>
               <ChallengeCardBackground image={cardColor} />
-            </CVCardContainer>
-            <CVCardContentContainer>
-              <PlayerName>{`${names}`}</PlayerName>
-              <CVCardContent>{`${cardContent.content}`}</CVCardContent>
-            </CVCardContentContainer>
-            <ButtonContainer onPress={() => complete()}>
-              <CustomButton>COMPLETED</CustomButton>
-            </ButtonContainer>
-            <Button
-              buttonInfo={{
-                text: 'DRINK',
-                navigate: 'Drink Screen',
-                navigation,
-              }}
-            />
+              <CVCardContentContainer>
+                <PlayerName>{`${names}`}</PlayerName>
+                <CVCardContent>{`${cardContent.content}`}</CVCardContent>
+              </CVCardContentContainer>
+            </CardContainer>
+            {cardColor !== 'lemonadeScore'
+              ? notLemonadeChallenge()
+              : lemonadeChallenge()}
           </>
         )}
       </>
@@ -153,8 +162,7 @@ const CardContainer = styled.View`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 80%;
-  height: auto;
+  margin-bottom: 20px;
 `;
 
 const CardContentContainer = styled.View`
@@ -162,8 +170,8 @@ const CardContentContainer = styled.View`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 100%;
+  justify-content: space-between;
+  width: 80%;
   height: 100%;
 `;
 
@@ -171,14 +179,14 @@ const CardTitle = styled.Text`
   font-size: 26px;
   text-align: center;
   width: 80%;
+  margin-top: 20px;
   font-family: Sunbird Black;
-  // text-decoration: underline;
 `;
 
 const CardContent = styled.Text`
   font-size: 22px;
   text-align: center;
-  width: 70%;
+  width: 80%;
   font-family: Sunbird Black;
 `;
 
@@ -186,27 +194,9 @@ const CardComment = styled.Text`
   font-size: 20px;
   text-align: center;
   width: 80%;
+  margin-bottom: 20px;
   font-family: Sunbird Black;
   font-style: italic;
-`;
-
-const Counter = styled.Text`
-  // position: absolute;
-  right: -20px;
-  top: -40px;
-  margin: 0px;
-  font-family: Sunbird Black;
-  transform: rotate(15deg);
-  font-size: 60px;
-`;
-
-const CVCardContainer = styled.View`
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 80%;
-  height: auto;
 `;
 
 const CVCardContentContainer = styled.View`
@@ -214,7 +204,7 @@ const CVCardContentContainer = styled.View`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   width: 100%;
   height: 100%;
 `;

@@ -4,8 +4,6 @@ import Background from './background/Background';
 import BackOfCard from './background/BackOfCard';
 import {cardColorRequest} from '../actions/card-color';
 import {useDispatch, useSelector} from 'react-redux';
-import {playersRequest} from '../actions/players';
-import {NativeScreenNavigationContainer} from 'react-native-screens';
 import {currentPlayerRequest} from '../actions/current-player';
 
 const CardScreen = ({navigation}) => {
@@ -23,10 +21,6 @@ const CardScreen = ({navigation}) => {
     const randomWordIndex = Math.floor(Math.random() * cards.length) + 0;
     const card = cards[randomWordIndex];
     setIngredientCardToRender(card);
-    // setIngredientCardToRender('lemonadeScore');
-
-    // dispatch(cardColorRequest(`lemonadeScore`));
-
     dispatch(cardColorRequest(`${card}Score`));
   };
 
@@ -39,11 +33,14 @@ const CardScreen = ({navigation}) => {
   const storeCurrentCard = () => {
     const randomNameIndex = Math.floor(Math.random() * players.length) + 0;
     const currentPlayer = players[randomNameIndex];
-    dispatch(currentPlayerRequest([currentPlayer]));
-    navigation.navigate('Lemonade Players Screen');
+    dispatch(currentPlayerRequest([currentPlayer.name]));
+    dispatch(cardColorRequest(`${ingredientCardToRender}`));
+    navigation.navigate(
+      ingredientCardToRender === 'lemonadeScore'
+        ? 'Lemonade Players Screen'
+        : 'Challenge Screen',
+    );
   };
-
-  console.log(ingredientCardToRender, 'ingredient');
 
   if (ingredientCardToRender) {
     return (
