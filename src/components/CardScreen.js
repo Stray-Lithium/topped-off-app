@@ -22,12 +22,12 @@ const CardScreen = ({navigation}) => {
     ];
     const randomWordIndex = Math.floor(Math.random() * cards.length) + 0;
     const card = cards[randomWordIndex];
-    // setIngredientCardToRender(card);
-    setIngredientCardToRender('lemonadeScore');
+    setIngredientCardToRender(card);
+    // setIngredientCardToRender('lemonadeScore');
 
-    dispatch(cardColorRequest(`lemonadeScore`));
+    // dispatch(cardColorRequest(`lemonadeScore`));
 
-    // dispatch(cardColorRequest(`${card}Score`));
+    dispatch(cardColorRequest(`${card}Score`));
   };
 
   useEffect(() => {

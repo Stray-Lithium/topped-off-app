@@ -16,6 +16,7 @@ import {playerTurn} from '../algorithms/turn';
 
 const ChallengeScreen = ({navigation}) => {
   const dispatch = useDispatch();
+  const players = useSelector(state => state.Players.players);
   const cardColor = useSelector(state => state.CardColor.cardColor);
   const [cardContent, setCardContent] = useState(false);
   const currentPlayer = useSelector(state => state.CurrentPlayer.currentPlayer);
@@ -45,17 +46,19 @@ const ChallengeScreen = ({navigation}) => {
   }, [cardContent, currentPlayer, players, cardColor]);
 
   const nameMaker = () => {
+    console.log(currentPlayer, 'current player test');
     const playersLength = currentPlayer.length;
     let names = '';
     currentPlayer.forEach((name, index) => {
       if (playersLength === 1) {
-        names += `${name.name},`;
+        names += `${name},`;
       } else if (index === playersLength - 2) {
-        names += `${name.name} and `;
+        names += `${name} and `;
       } else {
-        names += `${name.name}, `;
+        names += `${name}, `;
       }
     });
+    console.log(names, 'namesss');
     return names;
   };
 
