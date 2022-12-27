@@ -17,7 +17,6 @@ import LemonadeWhoCompletedScreen from './src/components/LemonadeWhoCompletedScr
 import DrinkScreen from './src/components/DrinkScreen';
 import ScoreScreen from './src/components/ScoreScreen';
 import CardVersionCardScreen from './src/components/CardVersionCardScreen';
-import CardVersionChallengeScreen from './src/components/CardVersionChallengeScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -63,14 +62,6 @@ const App = () => {
               name="Challenge Screen"
               component={ChallengeScreen}
               options={{title: 'Challenge Screen', headerShown: false}}
-            />
-            <Stack.Screen
-              name="Card Version Challenge Screen"
-              component={CardVersionChallengeScreen}
-              options={{
-                title: 'Card Version Challenge Screen',
-                headerShown: false,
-              }}
             />
             <Stack.Screen
               name="Lemonade Players Screen"
