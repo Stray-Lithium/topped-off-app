@@ -13,6 +13,7 @@ import {mojitoCard} from '../cards/mojito';
 import {lemonadeCard} from '../cards/lemonade';
 import {playersRequest} from '../actions/players';
 import {playerTurn} from '../algorithms/turn';
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 
 const ChallengeScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -110,9 +111,12 @@ const ChallengeScreen = ({navigation}) => {
               <PlayerName>{`${names}`}</PlayerName>
               <CVCardContent>{`${cardContent.content}`}</CVCardContent>
             </CVCardContentContainer>
+            <ButtonContainer onPress={() => complete()}>
+              <CustomButton>COMPLETED</CustomButton>
+            </ButtonContainer>
             <Button
               buttonInfo={{
-                text: 'OK',
+                text: 'DRINK',
                 navigate: 'Drink Screen',
                 navigation,
               }}
@@ -227,6 +231,27 @@ const PlayerName = styled.Text`
   text-align: center;
   width: 70%;
   font-family: Sunbird Black;
+`;
+
+const ButtonContainer = styled.Pressable`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 55%;
+  background-color: #ee3347;
+  border-radius: 10px;
+  border: solid 3px black;
+  margin-bottom: 20px;
+`;
+
+const CustomButton = styled.Text`
+  text-align: center;
+  color: black;
+  font-size: 24px;
+  padding: 12px 12px 12px 12px;
+  letter-spacing: 5px;
+  font-family: Sunbird Black;
+  overflow: hidden;
 `;
 
 export default ChallengeScreen;

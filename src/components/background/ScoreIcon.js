@@ -6,6 +6,9 @@ const ScoreIcon = ({image}) => {
   const windowWidth = Dimensions.get('window').width * 0.8;
 
   const backgroundImage = () => {
+    if (image === false) {
+      return require(`../../assets/empty-score.png`);
+    }
     if (image === 'whiskeyScore') {
       return require(`../../assets/whiskey-score.png`);
     }
