@@ -8,10 +8,13 @@ import {currentPlayerRequest} from '../actions/current-player';
 
 const CardScreen = ({navigation}) => {
   const dispatch = useDispatch();
-  const [ingredientCardToRender, setIngredientCardToRender] = useState(false);
   const players = useSelector(state => state.Players.players);
+  const cardColor = useSelector(state =>
+    state.CardColor.cardColor ? state.CardColor.cardColor : false,
+  );
 
   const ingredientRandomizer = () => {
+    console.log('randomizing');
     const cards = [
       'lemonadeScore',
       'whiskeyScore',
@@ -20,34 +23,37 @@ const CardScreen = ({navigation}) => {
     ];
     const randomWordIndex = Math.floor(Math.random() * cards.length) + 0;
     const card = cards[randomWordIndex];
-    setIngredientCardToRender(card);
-    dispatch(cardColorRequest(`${card}Score`));
+    dispatch(cardColorRequest(`${card}`));
   };
 
   useEffect(() => {
-    if (!ingredientCardToRender) {
+    console.log();
+    if (!cardColor) {
+      console.log('random');
       ingredientRandomizer();
     }
-  }, [ingredientCardToRender, players]);
+  }, [players, cardColor]);
 
   const storeCurrentCard = () => {
     const randomNameIndex = Math.floor(Math.random() * players.length) + 0;
     const currentPlayer = players[randomNameIndex];
+    setIngredientCardToRender(false);
     dispatch(currentPlayerRequest([currentPlayer.name]));
-    dispatch(cardColorRequest(`${ingredientCardToRender}`));
+    dispatch(cardColorRequest(`${cardColor}`));
     navigation.navigate(
-      ingredientCardToRender === 'lemonadeScore'
+      cardColor === 'lemonadeScore'
         ? 'Lemonade Players Screen'
         : 'Challenge Screen',
     );
   };
 
-  if (ingredientCardToRender) {
+  console.log('in here', cardColor);
+  if (cardColor !== false && players) {
     return (
       <ScreenContainer>
-        <Background background={ingredientCardToRender} />
+        <Background background={cardColor} />
         <CardTouch onPress={() => storeCurrentCard()}>
-          <BackOfCard image={ingredientCardToRender} />
+          <BackOfCard image={cardColor} />
         </CardTouch>
       </ScreenContainer>
     );

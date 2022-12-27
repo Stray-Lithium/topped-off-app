@@ -4,6 +4,8 @@ import {Dimensions} from 'react-native';
 const BackOfCard = ({image}) => {
   const windowWidth = Dimensions.get('window').width * 0.9;
 
+  console.log(image, 'image plurrrrr');
+
   const backgroundImage = () => {
     if (image === 'whiskeyScore') {
       return require(`../../assets/whiskey-card.png`);

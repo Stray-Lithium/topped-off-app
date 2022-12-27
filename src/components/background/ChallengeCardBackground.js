@@ -4,6 +4,7 @@ import {Dimensions} from 'react-native';
 
 const ChallengeCardBackground = ({image}) => {
   const windowWidth = Dimensions.get('window').width * 0.8;
+  console.log(image);
 
   const backgroundImage = () => {
     if (image === 'whiskeyScore') {

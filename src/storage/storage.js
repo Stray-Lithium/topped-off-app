@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export const getPlayers = async () => {
   try {
     const jsonValue = await AsyncStorage.getItem('players');

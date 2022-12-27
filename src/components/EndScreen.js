@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import {Text} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Background from './background/Background';
-// import {getWinners} from './storage/storage';
 import {useEffect, useState} from 'react';
 
 const EndScreen = () => {
@@ -12,19 +11,16 @@ const EndScreen = () => {
       const getWinners = async () => {
         try {
           const jsonValue = await AsyncStorage.getItem('winners');
-          console.log(jsonValue, 'end screen json');
-          setWinners(jsonValue);
-          return jsonValue != null ? JSON.parse(jsonValue) : null;
-        } catch (e) {}
+          setWinners(JSON.parse(jsonValue));
+        } catch (e) {
+          console.log(e);
+        }
       };
       getWinners();
     }
   }, [winners]);
 
-  console.log(winners, 'end screen test');
-
   const nameMaker = () => {
-    console.log(winners, 'name maker test');
     const winnersLength = winners.length;
     let names = '';
     winners.forEach((name, index) => {
@@ -36,12 +32,11 @@ const EndScreen = () => {
         names += `${name}, `;
       }
     });
-    console.log(names, 'test');
     return names;
   };
 
   if (winners) {
-    winningNames = nameMaker(winners);
+    winningNames = nameMaker();
     return (
       <ScreenContainer>
         <Background />

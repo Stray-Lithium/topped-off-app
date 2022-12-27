@@ -12,6 +12,7 @@ import {whiskeyCard} from '../cards/whiskey';
 import {mojitoCard} from '../cards/mojito';
 import {lemonadeCard} from '../cards/lemonade';
 import {playersRequest} from '../actions/players';
+import {drinkersRequest} from '../actions/drinkers';
 import {playerTurn} from '../algorithms/turn';
 import {storeWinners} from './storage/storage';
 
@@ -81,28 +82,36 @@ const ChallengeScreen = ({navigation}) => {
     }
   };
 
-  const complete = () => {
+  const complete = completed => {
     let playersCopy = players;
     let updatedPlayers = [];
     playersCopy.forEach(player => {
       if (player.name === currentPlayer[0]) {
-        player[cardColor] += 1;
+        player.turns += 1;
+        if (completed) {
+          player[cardColor] += 1;
+        }
         updatedPlayers.push(player);
       } else {
         updatedPlayers.push(player);
       }
     });
     dispatch(playersRequest(updatedPlayers));
-    winnersCheck(updatedPlayers);
+    if (completed) {
+      winnersCheck(updatedPlayers);
+    } else {
+      dispatch(drinkersRequest(currentPlayer));
+      navigation.navigate('Drink Screen');
+    }
   };
 
   const notLemonadeChallenge = () => {
     return (
       <>
-        <ButtonContainer onPress={() => complete()}>
+        <ButtonContainer onPress={() => complete(true)}>
           <CustomButton>COMPLETED</CustomButton>
         </ButtonContainer>
-        <ButtonContainer onPress={() => complete()}>
+        <ButtonContainer onPress={() => complete(false)}>
           <CustomButton>DRINK</CustomButton>
         </ButtonContainer>
       </>
@@ -120,6 +129,8 @@ const ChallengeScreen = ({navigation}) => {
       />
     );
   };
+
+  console.log(cardColor, 'herjjsnkjfn');
 
   const displayCardContent = () => {
     return (
