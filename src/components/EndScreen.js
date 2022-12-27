@@ -1,9 +1,34 @@
 import styled from 'styled-components';
+import {Text} from 'react-native';
+import Background from './background/Background';
+
+const winners = ['jake', 'nate'];
+
+const nameMaker = () => {
+  const winnersLength = winners.length;
+  let names = '';
+  winners.forEach((name, index) => {
+    if (winnersLength === 1) {
+      names += `${name},`;
+    } else if (index === winnersLength - 2) {
+      names += `${name} and `;
+    } else {
+      names += `${name}, `;
+    }
+  });
+  console.log(names, 'test');
+  return names;
+};
+
+winningNames = nameMaker();
 
 const EndScreen = () => {
   return (
     <ScreenContainer>
-      <Text>Hello</Text>
+      <Background />
+      <WinnersText>
+        {winningNames} you topped off all of your drinks! Congratulations!
+      </WinnersText>
     </ScreenContainer>
   );
 };
@@ -19,4 +44,10 @@ const ScreenContainer = styled.View`
   justify-content: center;
   height: 100%;
   width: 100%;
+`;
+
+const WinnersText = styled.Text`
+  font-family: Sunbird Black;
+  font-size: 32px;
+  width: 70%;
 `;
