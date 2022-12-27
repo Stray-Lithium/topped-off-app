@@ -54,8 +54,10 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Feather.ttf</string>
-		<string>Hanoded-Sunbird-Black-Regular.ttf</string>
-		<string>Hanoded-Sunbird-Regular.ttf</string>
+		<string>MorningBreeze-w19VZ.ttf</string>
+		<string>MorningBreezeBold-7BGeA.ttf</string>
+		<string>MorningBreezeItalic-mL7aG.ttf</string>
+		<string>MorningBreezeLight-d9BPX.ttf</string>
 	</array>
 </dict>
 </plist>

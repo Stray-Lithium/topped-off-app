@@ -47,7 +47,8 @@ const ScreenContainer = styled.View`
 `;
 
 const WinnersText = styled.Text`
-  font-family: Sunbird Black;
+  font-family: Morning Breeze;
+  font-weight: bold;
   font-size: 32px;
   width: 70%;
 `;
