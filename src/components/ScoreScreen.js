@@ -28,7 +28,7 @@ const ScoreScreen = ({navigation}) => {
   };
 
   if (players && cardColor) {
-    console.log(gameVersion);
+    navigation.navigate('End Screen');
     return (
       <>
         <Background background={cardColor} />
@@ -55,16 +55,32 @@ const ScoreScreen = ({navigation}) => {
                       </ScoreNameContainer>
                       <IconsContainer>
                         <IconDiv>
-                          <ScoreIcon image={'whiskeyScore'} />
+                          <ScoreIcon
+                            image={
+                              player.whiskeyScore > 0 ? 'whiskeyScore' : false
+                            }
+                          />
                         </IconDiv>
                         <IconDiv>
-                          <ScoreIcon image={'lemonadeScore'} />
+                          <ScoreIcon
+                            image={
+                              player.lemonadeScore > 0 ? 'lemonadeScore' : false
+                            }
+                          />
                         </IconDiv>
                         <IconDiv>
-                          <ScoreIcon image={'martiniScore'} />
+                          <ScoreIcon
+                            image={
+                              player.martiniScore > 0 ? 'martiniScore' : false
+                            }
+                          />
                         </IconDiv>
                         <IconDiv>
-                          <ScoreIcon image={'mojitoScore'} />
+                          <ScoreIcon
+                            image={
+                              player.mojitoScore > 0 ? 'mojitoScore' : false
+                            }
+                          />
                         </IconDiv>
                       </IconsContainer>
                     </EachPersonsScoreContainer>
