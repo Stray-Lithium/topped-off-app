@@ -68,7 +68,7 @@ const ScreenContainer = styled.View`
 `;
 
 const Title = styled.Text`
-  font-family: Sunbird Black;
+  font-family: Morning Breeze;
   font-size: 36px;
   margin-bottom: 12px;
 `;

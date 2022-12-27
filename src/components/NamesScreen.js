@@ -132,7 +132,7 @@ const PlayerName = styled.Text`
   background-color: rgba(255, 255, 255, 0.5);
   border: solid 3px black;
   overflow: hidden;
-  font-family: Sunbird Black;
+  font-family: Morning Breeze;
 `;
 
 const NameInputContainer = styled.View`
@@ -149,7 +149,7 @@ const NameInput = styled.TextInput`
   border-radius: 20px;
   font-size: 20px;
   padding-left: 14px;
-  font-family: Sunbird Black;
+  font-family: Morning Breeze;
   border: solid 3px black;
   background-color: rgba(255, 255, 255, 0.5);
 `;

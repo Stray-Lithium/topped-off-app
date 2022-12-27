@@ -144,7 +144,7 @@ const Title = styled.Text`
   margin-bottom: 20px;
   text-align: center;
   width: 90%;
-  font-family: Sunbird Black;
+  font-family: Morning Breeze;
 `;
 
 const CheckboxesContainer = styled.ScrollView`
@@ -170,7 +170,7 @@ const NamePosition = styled.View`
 
 const PlayerName = styled.Text`
   font-size: 20px;
-  font-family: Sunbird Black;
+  font-family: Morning Breeze;
   margin-right: 10px;
 `;
 
@@ -198,7 +198,7 @@ const CustomButton = styled.Text`
   font-size: 26px;
   padding: 12px 12px 12px 12px;
   letter-spacing: 5px;
-  font-family: Sunbird Black;
+  font-family: Morning Breeze;
   overflow: hidden;
 `;
 

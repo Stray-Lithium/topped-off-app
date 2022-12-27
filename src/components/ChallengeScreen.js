@@ -180,14 +180,14 @@ const CardTitle = styled.Text`
   text-align: center;
   width: 80%;
   margin-top: 20px;
-  font-family: Sunbird Black;
+  font-family: Morning Breeze;
 `;
 
 const CardContent = styled.Text`
   font-size: 22px;
   text-align: center;
   width: 80%;
-  font-family: Sunbird Black;
+  font-family: Morning Breeze;
 `;
 
 const CardComment = styled.Text`
@@ -195,7 +195,7 @@ const CardComment = styled.Text`
   text-align: center;
   width: 80%;
   margin-bottom: 20px;
-  font-family: Sunbird Black;
+  font-family: Morning Breeze;
   font-style: italic;
 `;
 
@@ -213,14 +213,14 @@ const CVCardContent = styled.Text`
   font-size: 22px;
   text-align: center;
   width: 70%;
-  font-family: Sunbird Black;
+  font-family: Morning Breeze;
 `;
 
 const PlayerName = styled.Text`
   font-size: 22px;
   text-align: center;
   width: 70%;
-  font-family: Sunbird Black;
+  font-family: Morning Breeze;
 `;
 
 const ButtonContainer = styled.Pressable`
@@ -240,7 +240,7 @@ const CustomButton = styled.Text`
   font-size: 24px;
   padding: 12px 12px 12px 12px;
   letter-spacing: 5px;
-  font-family: Sunbird Black;
+  font-family: Morning Breeze;
   overflow: hidden;
 `;
 

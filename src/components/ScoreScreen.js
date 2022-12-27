@@ -181,7 +181,7 @@ const ScoreName = styled.Text`
   text-align: center;
   width: 100%;
   margin: 10px;
-  font-family: Sunbird Black;
+  font-family: Morning Breeze;
 `;
 
 export default ScoreScreen;
