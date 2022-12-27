@@ -37,11 +37,13 @@ const ChallengeScreen = ({navigation}) => {
     }
   };
 
+  console.log(cardColor, 'color');
+
   useEffect(() => {
     if (!cardContent) {
       blankWord();
     }
-  }, [cardContent, currentPlayer, players]);
+  }, [cardContent, currentPlayer, players, cardColor]);
 
   const nameMaker = () => {
     const playersLength = currentPlayer.length;
@@ -92,23 +94,28 @@ const ChallengeScreen = ({navigation}) => {
             <CardComment>{cardContent.comment}</CardComment>
           ) : null}
         </CardContentContainer>
-        <Button
-          buttonInfo={{
-            text: 'OK',
-            navigate: 'Lemonade Who Completed Screen',
-            navigation,
-          }}
-        />
-        <ButtonContainer onPress={() => complete()}>
-          <CustomButton>COMPLETE</CustomButton>
-        </ButtonContainer>
-        <Button
-          buttonInfo={{
-            text: 'DRINK',
-            navigate: 'Drink Screen',
-            navigation,
-          }}
-        />
+        {cardColor === 'lemonadeScore' ? (
+          <Button
+            buttonInfo={{
+              text: 'OK',
+              navigate: 'Lemonade Who Completed Screen',
+              navigation,
+            }}
+          />
+        ) : (
+          <>
+            <ButtonContainer onPress={() => complete()}>
+              <CustomButton>COMPLETE</CustomButton>
+            </ButtonContainer>
+            <Button
+              buttonInfo={{
+                text: 'DRINK',
+                navigate: 'Drink Screen',
+                navigation,
+              }}
+            />
+          </>
+        )}
       </ChallengeScreenContainer>
     );
   }

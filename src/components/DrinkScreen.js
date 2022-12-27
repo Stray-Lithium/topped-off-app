@@ -12,16 +12,27 @@ const DrinkScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const players = useSelector(state => state.Players.players);
   const currentPlayer = useSelector(state => state.CurrentPlayer.currentPlayer);
+  const [drinkers, setDrinkers] = useState(false);
 
-  useEffect(() => {}, [players]);
+  useEffect(() => {
+    if (!drinkers) {
+      const drinkArray = [];
+      players.forEach(player => {
+        if (!currentPlayer.includes(player.name)) {
+          drinkArray.push(player);
+        }
+      });
+      setDrinkers(drinkArray);
+    }
+  }, [players, currentPlayer, drinkers]);
 
   const drinkTitle = () => {
     let title = '';
-    currentPlayer.forEach((player, index) => {
-      if (currentPlayer.length === 1 || index !== currentPlayer.length - 1) {
-        title += `${player.name}, `;
+    drinkers.forEach((player, index) => {
+      if (drinkers.length === 1 || index !== drinkers.length - 1) {
+        title += `${player.name} `;
       } else {
-        title += `and ${player.name} `;
+        title += `and ${player.name}, `;
       }
     });
     return title;
@@ -31,7 +42,7 @@ const DrinkScreen = ({navigation}) => {
     navigation.navigate('Score Screen');
   };
 
-  if (players) {
+  if (players && currentPlayer && drinkers) {
     return (
       <>
         <Background />

@@ -29,6 +29,7 @@ const NamesScreen = ({navigation}) => {
       whiskeyScore: 0,
       martiniScore: 0,
       mojitoScore: 0,
+      turns: 0,
     };
     setHowManyPlayers(howManyPlayers + 1);
     setPlayers([...players, playerObject]);
