@@ -1,9 +1,8 @@
-import {useState, useEffect} from 'react';
+import {useEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
 import AutoHeightImage from 'react-native-auto-height-image';
 import styled from 'styled-components';
-import title from '../assets/scoreboard.png';
 import Background from './background/Background';
 import ScoreIcon from './background/ScoreIcon';
 import {Dimensions} from 'react-native';
@@ -15,8 +14,6 @@ const ScoreScreen = ({navigation}) => {
   const windowWidth = Dimensions.get('window').width * 0.8;
 
   useEffect(() => {}, [players, cardColor]);
-
-  console.log(players, 'players');
 
   if (players && cardColor) {
     return (

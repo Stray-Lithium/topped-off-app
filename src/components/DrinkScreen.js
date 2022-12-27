@@ -1,30 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, Pressable} from 'react-native';
+import React, {useEffect} from 'react';
+import {StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import AnimatedCheckbox from 'react-native-checkbox-reanimated';
 import styled from 'styled-components';
 import Background from './background/Background';
-import Button from './button/Button';
-import {currentPlayerRequest} from '../actions/current-player';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const DrinkScreen = ({navigation}) => {
-  const dispatch = useDispatch();
   const players = useSelector(state => state.Players.players);
   const currentPlayer = useSelector(state => state.CurrentPlayer.currentPlayer);
-  const [drinkers, setDrinkers] = useState(false);
+  const drinkers = useSelector(state => state.Drinkers.drinkers);
 
-  useEffect(() => {
-    if (!drinkers) {
-      const drinkArray = [];
-      players.forEach(player => {
-        if (!currentPlayer.includes(player.name)) {
-          drinkArray.push(player);
-        }
-      });
-      setDrinkers(drinkArray);
-    }
-  }, [players, currentPlayer, drinkers]);
+  useEffect(() => {}, [players, currentPlayer, drinkers]);
 
   const drinkTitle = () => {
     let title = '';

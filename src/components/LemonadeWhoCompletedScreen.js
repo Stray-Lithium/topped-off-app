@@ -5,12 +5,16 @@ import AnimatedCheckbox from 'react-native-checkbox-reanimated';
 import styled from 'styled-components';
 import Background from './background/Background';
 import Button from './button/Button';
+import {playersRequest} from '../actions/players';
 import {currentPlayerRequest} from '../actions/current-player';
+import {drinkersRequest} from '../actions/drinkers';
+import {completedRequest} from '../actions/completed';
 import {useDispatch, useSelector} from 'react-redux';
 
 const LemonadeWhoCompletedScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const players = useSelector(state => state.Players.players);
+  const cardColor = useSelector(state => state.CardColor.cardColor);
   const currentPlayer = useSelector(state => state.CurrentPlayer.currentPlayer);
   const [checkedNames, setCheckedNames] = useState([]);
 
@@ -55,9 +59,41 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
     );
   };
 
+  const setDrinkers = () => {
+    const drinkers = [];
+    currentPlayer.forEach(player => {
+      if (!checkedNames.includes(player)) {
+        drinkers.push(player);
+      }
+    });
+    dispatch(drinkersRequest(drinkers));
+  };
+
+  const setCompleted = () => {
+    let playersCopy = players;
+    let updatedPlayers = [];
+    playersCopy.forEach(player => {
+      console.log(player[cardColor], 'here');
+      if (checkedNames.includes(player.name)) {
+        player[cardColor] += 1;
+        updatedPlayers.push(player);
+      } else {
+        updatedPlayers.push(player);
+      }
+    });
+    dispatch(playersRequest(updatedPlayers));
+  };
+
   const confirm = () => {
-    dispatch(currentPlayerRequest(checkedNames));
-    navigation.navigate('Drink Screen');
+    if (checkedNames) {
+      setCompleted();
+    }
+    if (checkedNames.length === currentPlayer.length) {
+      navigation.navigate('Score Screen');
+    } else {
+      setDrinkers();
+      navigation.navigate('Drink Screen');
+    }
   };
 
   if ((players, currentPlayer)) {
