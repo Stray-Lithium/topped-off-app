@@ -20,7 +20,6 @@ const ChallengeScreen = ({navigation}) => {
   const [cardContent, setCardContent] = useState(false);
   const currentPlayer = useSelector(state => state.CurrentPlayer.currentPlayer);
   const gameVersion = useSelector(state => state.GameVersion.gameVersion);
-  const players = useSelector(state => state.Players.players);
 
   const blankWord = () => {
     if (cardColor === 'whiskeyScore') {
@@ -78,44 +77,54 @@ const ChallengeScreen = ({navigation}) => {
 
   const names = nameMaker();
 
-  if (currentPlayer && players && cardColor) {
+  const displayCardContent = () => {
     return (
-      <ChallengeScreenContainer>
-        <Background />
-        <CardContainer>
-          <ChallengeCardBackground image={cardColor} />
-        </CardContainer>
-        <CardContentContainer>
-          {gameVersion === 'FULL' ? (
-            <CardTitle>{cardContent.title}</CardTitle>
-          ) : null}
-          <CardContent>{`${names} ${cardContent.content}`}</CardContent>
-          {gameVersion === 'FULL' ? (
-            <CardComment>{cardContent.comment}</CardComment>
-          ) : null}
-        </CardContentContainer>
-        {cardColor === 'lemonadeScore' ? (
-          <Button
-            buttonInfo={{
-              text: 'OK',
-              navigate: 'Lemonade Who Completed Screen',
-              navigation,
-            }}
-          />
-        ) : (
+      <>
+        {gameVersion === 'FULL' ? (
           <>
-            <ButtonContainer onPress={() => complete()}>
-              <CustomButton>COMPLETE</CustomButton>
-            </ButtonContainer>
+            <CardContainer>
+              <ChallengeCardBackground image={cardColor} />
+            </CardContainer>
+            <CardContentContainer>
+              <CardTitle>{cardContent.title}</CardTitle>
+              <CardContent>{`${names} ${cardContent.content}`}</CardContent>
+              <CardComment>{cardContent.comment}</CardComment>
+            </CardContentContainer>
             <Button
               buttonInfo={{
-                text: 'DRINK',
+                text: 'OK',
+                navigate: 'Lemonade Who Completed Screen',
+                navigation,
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <CVCardContainer>
+              <ChallengeCardBackground image={cardColor} />
+            </CVCardContainer>
+            <CVCardContentContainer>
+              <PlayerName>{`${names}`}</PlayerName>
+              <CVCardContent>{`${cardContent.content}`}</CVCardContent>
+            </CVCardContentContainer>
+            <Button
+              buttonInfo={{
+                text: 'OK',
                 navigate: 'Drink Screen',
                 navigation,
               }}
             />
           </>
         )}
+      </>
+    );
+  };
+
+  if (currentPlayer) {
+    return (
+      <ChallengeScreenContainer>
+        <Background />
+        {displayCardContent()}
       </ChallengeScreenContainer>
     );
   }
@@ -184,25 +193,37 @@ const Counter = styled.Text`
   font-size: 60px;
 `;
 
-const ButtonContainer = styled.Pressable`
+const CVCardContainer = styled.View`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50%;
-  background-color: #ee3347;
-  border-radius: 10px;
-  border: solid 3px black;
-  margin-bottom: 20px;
+  width: 80%;
+  height: auto;
 `;
 
-const CustomButton = styled.Text`
+const CVCardContentContainer = styled.View`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+`;
+
+const CVCardContent = styled.Text`
+  font-size: 22px;
   text-align: center;
-  color: black;
-  font-size: 26px;
-  padding: 12px 12px 12px 12px;
-  letter-spacing: 5px;
+  width: 70%;
   font-family: Sunbird Black;
-  overflow: hidden;
+`;
+
+const PlayerName = styled.Text`
+  font-size: 22px;
+  text-align: center;
+  width: 70%;
+  font-family: Sunbird Black;
 `;
 
 export default ChallengeScreen;

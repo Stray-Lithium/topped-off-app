@@ -6,20 +6,39 @@ import styled from 'styled-components';
 import Background from './background/Background';
 import ScoreIcon from './background/ScoreIcon';
 import {Dimensions} from 'react-native';
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 
 const ScoreScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const players = useSelector(state => state.Players.players);
   const cardColor = useSelector(state => state.CardColor.cardColor);
   const windowWidth = Dimensions.get('window').width * 0.8;
+  const gameVersion = useSelector(state => state.GameVersion.gameVersion);
 
   useEffect(() => {}, [players, cardColor]);
 
+  console.log(players, 'players');
+
+  const exitButton = () => {
+    {
+      navigation.navigate(
+        gameVersion === 'FULL' ? 'Card Screen' : 'Card Version Card Screen',
+      );
+    }
+  };
+
   if (players && cardColor) {
+    console.log(gameVersion);
     return (
       <>
         <Background background={cardColor} />
         <SafeAreaView style={{flex: 1}}>
+          <Pressable
+            onPress={() => {
+              exitButton();
+            }}>
+            <ExitButton>X</ExitButton>
+          </Pressable>
           <ScreenContainer>
             <ScoreboardContainer>
               <AutoHeightImage
@@ -60,6 +79,14 @@ const ScoreScreen = ({navigation}) => {
   } else return <Text>Hello</Text>;
 };
 
+const ExitButton = styled.Text`
+  position: absolute;
+  top: 8px;
+  left: 24px;
+  font-size: 32px;
+  font-weight: bold;
+`;
+
 const ScreenContainer = styled.View`
   flex: 1;
   display: flex;
@@ -69,6 +96,7 @@ const ScreenContainer = styled.View`
   justify-content: center;
   height: 100%;
   width: 100%;
+  margin-top: 50px;
 `;
 
 const ScoreboardContainer = styled.View`
