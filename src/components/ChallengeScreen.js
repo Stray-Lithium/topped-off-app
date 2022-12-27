@@ -13,6 +13,7 @@ import {mojitoCard} from '../cards/mojito';
 import {lemonadeCard} from '../cards/lemonade';
 import {playersRequest} from '../actions/players';
 import {playerTurn} from '../algorithms/turn';
+import {storeWinners} from './storage/storage';
 
 const ChallengeScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -44,7 +45,6 @@ const ChallengeScreen = ({navigation}) => {
   }, [cardContent, currentPlayer, players, cardColor]);
 
   const nameMaker = () => {
-    console.log(currentPlayer, 'current player test');
     const playersLength = currentPlayer.length;
     let names = '';
     currentPlayer.forEach((name, index) => {
@@ -61,11 +61,31 @@ const ChallengeScreen = ({navigation}) => {
 
   const names = nameMaker();
 
+  const winnersCheck = updatedPlayers => {
+    let winningPlayers = [];
+    updatedPlayers.forEach(player => {
+      if (
+        player.whiskeyScore &&
+        player.mojitoScore &&
+        player.martiniScore &&
+        player.lemonadeScore >= 1
+      ) {
+        winningPlayers.push(player.name);
+      }
+    });
+    if (winningPlayers.length > 0) {
+      storeWinners(winningPlayers);
+      navigation.navigate('End Screen');
+    } else {
+      navigation.navigate('Score Screen');
+    }
+  };
+
   const complete = () => {
     let playersCopy = players;
     let updatedPlayers = [];
     playersCopy.forEach(player => {
-      if (player.name === currentPlayer[0].name) {
+      if (player.name === currentPlayer[0]) {
         player[cardColor] += 1;
         updatedPlayers.push(player);
       } else {
@@ -73,7 +93,7 @@ const ChallengeScreen = ({navigation}) => {
       }
     });
     dispatch(playersRequest(updatedPlayers));
-    navigation.navigate('Score Screen');
+    winnersCheck(updatedPlayers);
   };
 
   const notLemonadeChallenge = () => {

@@ -73,7 +73,6 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
     let playersCopy = players;
     let updatedPlayers = [];
     playersCopy.forEach(player => {
-      console.log(player[cardColor], 'here');
       if (checkedNames.includes(player.name)) {
         player[cardColor] += 1;
         updatedPlayers.push(player);

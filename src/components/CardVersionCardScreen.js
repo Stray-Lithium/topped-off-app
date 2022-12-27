@@ -16,7 +16,6 @@ const CardVersionCardScreen = ({navigation}) => {
   const storeCurrentName = () => {
     const randomNameIndex = Math.floor(Math.random() * players.length) + 0;
     const currentPlayer = players[randomNameIndex];
-    console.log(players, currentPlayer);
     return currentPlayer;
   };
 

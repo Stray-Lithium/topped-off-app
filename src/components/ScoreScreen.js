@@ -17,8 +17,6 @@ const ScoreScreen = ({navigation}) => {
 
   useEffect(() => {}, [players, cardColor]);
 
-  console.log(players, 'players');
-
   const exitButton = () => {
     {
       navigation.navigate(
@@ -28,7 +26,7 @@ const ScoreScreen = ({navigation}) => {
   };
 
   if (players && cardColor) {
-    navigation.navigate('End Screen');
+    // navigation.navigate('End Screen');
     return (
       <>
         <Background background={cardColor} />
