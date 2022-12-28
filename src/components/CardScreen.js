@@ -5,6 +5,7 @@ import BackOfCard from './background/BackOfCard';
 import {cardColorRequest} from '../actions/card-color';
 import {useDispatch, useSelector} from 'react-redux';
 import {currentPlayerRequest} from '../actions/current-player';
+import {turnRandomizer} from '../algorithms/turn';
 
 const CardScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -14,7 +15,6 @@ const CardScreen = ({navigation}) => {
   );
 
   const ingredientRandomizer = () => {
-    console.log('randomizing');
     const cards = [
       'lemonadeScore',
       'whiskeyScore',
@@ -27,18 +27,14 @@ const CardScreen = ({navigation}) => {
   };
 
   useEffect(() => {
-    console.log();
     if (!cardColor) {
-      console.log('random');
       ingredientRandomizer();
     }
   }, [players, cardColor]);
 
   const storeCurrentCard = () => {
-    const randomNameIndex = Math.floor(Math.random() * players.length) + 0;
-    const currentPlayer = players[randomNameIndex];
-    setIngredientCardToRender(false);
-    dispatch(currentPlayerRequest([currentPlayer.name]));
+    const playerTurn = turnRandomizer(players);
+    dispatch(currentPlayerRequest([playerTurn]));
     dispatch(cardColorRequest(`${cardColor}`));
     navigation.navigate(
       cardColor === 'lemonadeScore'
@@ -47,8 +43,7 @@ const CardScreen = ({navigation}) => {
     );
   };
 
-  console.log('in here', cardColor);
-  if (cardColor !== false && players) {
+  if (cardColor && players) {
     return (
       <ScreenContainer>
         <Background background={cardColor} />

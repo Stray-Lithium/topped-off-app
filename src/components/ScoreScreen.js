@@ -7,6 +7,7 @@ import Background from './background/Background';
 import ScoreIcon from './background/ScoreIcon';
 import {Dimensions} from 'react-native';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
+import {cardColorRequest} from '../actions/card-color';
 
 const ScoreScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -18,15 +19,13 @@ const ScoreScreen = ({navigation}) => {
   useEffect(() => {}, [players, cardColor]);
 
   const exitButton = () => {
-    {
-      navigation.navigate(
-        gameVersion === 'FULL' ? 'Card Screen' : 'Card Version Card Screen',
-      );
-    }
+    dispatch(cardColorRequest(false));
+    navigation.navigate(
+      gameVersion === 'FULL' ? 'Card Screen' : 'Card Version Card Screen',
+    );
   };
 
   if (players && cardColor) {
-    // navigation.navigate('End Screen');
     return (
       <>
         <Background background={cardColor} />
