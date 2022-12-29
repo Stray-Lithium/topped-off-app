@@ -4,18 +4,15 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import AnimatedCheckbox from 'react-native-checkbox-reanimated';
 import styled from 'styled-components';
 import Background from './background/Background';
-import Button from './button/Button';
 import {playersRequest} from '../actions/players';
-import {currentPlayerRequest} from '../actions/current-player';
 import {drinkersRequest} from '../actions/drinkers';
-import {completedRequest} from '../actions/completed';
 import {useDispatch, useSelector} from 'react-redux';
 import {storeWinners} from './storage/storage';
 
 const LemonadeWhoCompletedScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const players = useSelector(state => state.Players.players);
-  const cardColor = useSelector(state => state.CardColor.cardColor);
+  const currentCard = useSelector(state => state.CurrentCard.currentCard);
   const currentPlayer = useSelector(state => state.CurrentPlayer.currentPlayer);
   const [checkedNames, setCheckedNames] = useState([]);
 
@@ -99,7 +96,7 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
         player.turns += 1;
       }
       if (checkedNames.includes(player.name)) {
-        player[cardColor] += 1;
+        player[currentCard.cardColor] += 1;
         updatedPlayers.push(player);
       } else {
         updatedPlayers.push(player);

@@ -151,7 +151,7 @@ const ChallengeScreen = ({navigation}) => {
         ) : (
           <>
             <CardContainer>
-              <ChallengeCardBackground image={cardColor} />
+              <ChallengeCardBackground image={currentCard.cardColor} />
               <CVCardContentContainer>
                 <PlayerName>{`${names}`}</PlayerName>
                 <CVCardContent>{`${cardContent.content}`}</CVCardContent>
@@ -166,9 +166,10 @@ const ChallengeScreen = ({navigation}) => {
     );
   };
 
-  console.log(cardContent, 'card content');
+  console.log(currentCard, 'card content before render');
 
   if (currentPlayer && currentCard) {
+    console.log(currentCard, 'card content');
     return (
       <ChallengeScreenContainer>
         <Background />

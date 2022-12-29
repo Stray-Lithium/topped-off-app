@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components';
 import Background from './background/Background';
 import BackOfCard from './background/BackOfCard';
@@ -12,9 +12,6 @@ const CardScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const players = useSelector(state => state.Players.players);
   const currentCard = useSelector(state => state.CurrentCard.currentCard);
-  const cardColor = useSelector(state =>
-    state.CardColor.cardColor ? state.CardColor.cardColor : false,
-  );
   const gameVersion = useSelector(state => state.GameVersion.gameVersion);
 
   const ingredientRandomizer = () => {
@@ -36,29 +33,16 @@ const CardScreen = ({navigation}) => {
     }
   }, [players, currentCard]);
 
-  const storeCurrentCard = isCardColor => {
+  const storeCurrentCard = cardColor => {
     const playerTurn = turnRandomizer(players);
     dispatch(currentPlayerRequest([playerTurn]));
-    dispatch(currentCardRequest({cardColor: `${currentCard.cardColor}`}));
+    dispatch(currentCardRequest({cardColor: `${cardColor}`}));
+    console.log(cardColor, 'cardddd colorrr');
     navigation.navigate(
-      currentCard.cardColor === 'lemonadeScore'
+      cardColor === 'lemonadeScore'
         ? 'Lemonade Players Screen'
         : 'Challenge Screen',
     );
-    dispatch(cardColorRequest(`${isCardColor ? isCardColor : cardColor}`));
-    if (isCardColor) {
-      navigation.navigate(
-        isCardColor === 'lemonadeScore'
-          ? 'Lemonade Players Screen'
-          : 'Challenge Screen',
-      );
-    } else {
-      navigation.navigate(
-        cardColor === 'lemonadeScore'
-          ? 'Lemonade Players Screen'
-          : 'Challenge Screen',
-      );
-    }
   };
   console.log(currentCard, 'in card scree');
 
@@ -67,14 +51,11 @@ const CardScreen = ({navigation}) => {
     return (
       <ScreenContainer>
         <Background background={currentCard.cardColor} />
-        <CardTouch onPress={() => storeCurrentCard()}>
-          <BackOfCard image={currentCard.cardColor} />
-        </CardTouch>
         {gameVersion === 'FULL' ? (
           <>
-            <Background background={cardColor} />
-            <CardTouch onPress={() => storeCurrentCard(false)}>
-              <BackOfCard image={cardColor} />
+            <Background background={currentCard.cardColor} />
+            <CardTouch onPress={() => storeCurrentCard(currentCard.cardColor)}>
+              <BackOfCard image={currentCard.cardColor} />
             </CardTouch>
           </>
         ) : (

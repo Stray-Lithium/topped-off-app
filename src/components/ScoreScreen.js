@@ -3,14 +3,10 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import Background from './background/Background';
-import ScoreIcon from './background/ScoreIcon';
 import {Dimensions} from 'react-native';
-import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import {currentCardRequest} from '../actions/current-card';
-import {cardColorRequest} from '../actions/card-color';
 import ScoreBoard from './scoreboard/scoreboard';
 import AutoHeightImage from 'react-native-auto-height-image';
-import {Dimensions} from 'react-native';
 
 const ScoreScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -22,10 +18,6 @@ const ScoreScreen = ({navigation}) => {
 
   const exitButton = () => {
     dispatch(currentCardRequest(false));
-    navigation.navigate(
-      gameVersion === 'FULL' ? 'Card Screen' : 'Card Version Card Screen',
-    );
-    dispatch(cardColorRequest(false));
     navigation.navigate('Card Screen');
   };
 
