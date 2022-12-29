@@ -1,19 +1,22 @@
 import {useEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
-import AutoHeightImage from 'react-native-auto-height-image';
 import styled from 'styled-components';
 import Background from './background/Background';
 import ScoreIcon from './background/ScoreIcon';
 import {Dimensions} from 'react-native';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import {currentCardRequest} from '../actions/current-card';
+import {cardColorRequest} from '../actions/card-color';
+import ScoreBoard from './scoreboard/scoreboard';
+import AutoHeightImage from 'react-native-auto-height-image';
+import {Dimensions} from 'react-native';
+
 const ScoreScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const players = useSelector(state => state.Players.players);
   const currentCard = useSelector(state => state.CurrentCard.currentCard);
   const windowWidth = Dimensions.get('window').width * 0.8;
-  const gameVersion = useSelector(state => state.GameVersion.gameVersion);
 
   useEffect(() => {}, [players, currentCard]);
 
@@ -22,6 +25,8 @@ const ScoreScreen = ({navigation}) => {
     navigation.navigate(
       gameVersion === 'FULL' ? 'Card Screen' : 'Card Version Card Screen',
     );
+    dispatch(cardColorRequest(false));
+    navigation.navigate('Card Screen');
   };
 
   if (players && currentCard) {
@@ -29,67 +34,27 @@ const ScoreScreen = ({navigation}) => {
       <>
         <Background background={currentCard.cardColor} />
         <SafeAreaView style={{flex: 1}}>
-          <Pressable
+          <ExitPressable
             onPress={() => {
               exitButton();
             }}>
             <ExitButton>X</ExitButton>
-          </Pressable>
+          </ExitPressable>
           <ScreenContainer>
-            <ScoreboardContainer>
-              <AutoHeightImage
-                style={{marginBottom: 20}}
-                width={windowWidth}
-                source={require('../assets/scoreboard.png')}
-              />
-              <ScoreList>
-                {players.map(player => {
-                  return (
-                    <EachPersonsScoreContainer>
-                      <ScoreNameContainer>
-                        <ScoreName>{player.name}</ScoreName>
-                      </ScoreNameContainer>
-                      <IconsContainer>
-                        <IconDiv>
-                          <ScoreIcon
-                            image={
-                              player.whiskeyScore > 0 ? 'whiskeyScore' : false
-                            }
-                          />
-                        </IconDiv>
-                        <IconDiv>
-                          <ScoreIcon
-                            image={
-                              player.lemonadeScore > 0 ? 'lemonadeScore' : false
-                            }
-                          />
-                        </IconDiv>
-                        <IconDiv>
-                          <ScoreIcon
-                            image={
-                              player.martiniScore > 0 ? 'martiniScore' : false
-                            }
-                          />
-                        </IconDiv>
-                        <IconDiv>
-                          <ScoreIcon
-                            image={
-                              player.mojitoScore > 0 ? 'mojitoScore' : false
-                            }
-                          />
-                        </IconDiv>
-                      </IconsContainer>
-                    </EachPersonsScoreContainer>
-                  );
-                })}
-              </ScoreList>
-            </ScoreboardContainer>
+            <AutoHeightImage
+              style={{marginBottom: 20}}
+              width={windowWidth}
+              source={require('../assets/scoreboard.png')}
+            />
+            <ScoreBoard />
           </ScreenContainer>
         </SafeAreaView>
       </>
     );
   } else return <Text>Hello</Text>;
 };
+
+const ExitPressable = styled.Pressable``;
 
 const ExitButton = styled.Text`
   position: absolute;
@@ -105,79 +70,9 @@ const ScreenContainer = styled.View`
   color: black;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   height: 100%;
   width: 100%;
   margin-top: 50px;
-`;
-
-const ScoreboardContainer = styled.View`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 90%;
-  height: 100%;
-`;
-
-const Title = styled.Image`
-  width: 80%;
-  margin-bottom: 10px;
-  margin-top: 80px;
-`;
-
-const ScoreList = styled.View`
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 40px;
-  width: 100%;
-`;
-
-const EachPersonsScoreContainer = styled.View`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 96%;
-  padding-bottom: 8px;
-  border: solid 4px black;
-  background-color: #808184;
-  border-radius: 30px;
-  margin-bottom: 20px;
-`;
-
-const IconsContainer = styled.View`
-  display: flex;
-  flex-direction: row;
-  align-items: space-between;
-  justify-content: space-evenly;
-  width: 100%;
-`;
-
-const IconDiv = styled.View`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 2px;
-  border-bottom: 3px solid black;
-`;
-
-const ScoreNameContainer = styled.View`
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-`;
-
-const ScoreName = styled.Text`
-  font-size: 24px;
-  letter-spacing: 2px;
-  text-align: center;
-  width: 100%;
-  margin: 10px;
-  font-family: Morning Breeze;
 `;
 
 export default ScoreScreen;

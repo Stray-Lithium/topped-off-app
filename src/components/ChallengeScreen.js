@@ -63,16 +63,18 @@ const ChallengeScreen = ({navigation}) => {
 
   const winnersCheck = updatedPlayers => {
     let winningPlayers = [];
+    console.log(updatedPlayers, 'updated');
     updatedPlayers.forEach(player => {
       if (
-        player.whiskeyScore &&
-        player.mojitoScore &&
-        player.martiniScore &&
-        player.lemonadeScore >= 1
+        player.whiskeyScore === 1 &&
+        player.mojitoScore === 1 &&
+        player.martiniScore === 1 &&
+        player.lemonadeScore === 1
       ) {
         winningPlayers.push(player.name);
       }
     });
+    console.log(winningPlayers, 'winning');
     if (winningPlayers.length > 0) {
       storeWinners(winningPlayers);
       navigation.navigate('End Screen');
