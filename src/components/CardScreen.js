@@ -6,6 +6,8 @@ import {cardColorRequest} from '../actions/card-color';
 import {useDispatch, useSelector} from 'react-redux';
 import {currentPlayerRequest} from '../actions/current-player';
 import {turnRandomizer} from '../algorithms/turn';
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
+import CardScreenBackground from './background/CardScreenBackgrounds';
 
 const CardScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -13,6 +15,7 @@ const CardScreen = ({navigation}) => {
   const cardColor = useSelector(state =>
     state.CardColor.cardColor ? state.CardColor.cardColor : false,
   );
+  const gameVersion = useSelector(state => state.GameVersion.gameVersion);
 
   const ingredientRandomizer = () => {
     const cards = [
@@ -32,24 +35,55 @@ const CardScreen = ({navigation}) => {
     }
   }, [players, cardColor]);
 
-  const storeCurrentCard = () => {
+  const storeCurrentCard = isCardColor => {
     const playerTurn = turnRandomizer(players);
     dispatch(currentPlayerRequest([playerTurn]));
-    dispatch(cardColorRequest(`${cardColor}`));
-    navigation.navigate(
-      cardColor === 'lemonadeScore'
-        ? 'Lemonade Players Screen'
-        : 'Challenge Screen',
-    );
+    dispatch(cardColorRequest(`${isCardColor ? isCardColor : cardColor}`));
+    if (isCardColor) {
+      navigation.navigate(
+        isCardColor === 'lemonadeScore'
+          ? 'Lemonade Players Screen'
+          : 'Challenge Screen',
+      );
+    } else {
+      navigation.navigate(
+        cardColor === 'lemonadeScore'
+          ? 'Lemonade Players Screen'
+          : 'Challenge Screen',
+      );
+    }
   };
 
   if (cardColor && players) {
     return (
       <ScreenContainer>
-        <Background background={cardColor} />
-        <CardTouch onPress={() => storeCurrentCard()}>
-          <BackOfCard image={cardColor} />
-        </CardTouch>
+        {gameVersion === 'FULL' ? (
+          <>
+            <Background background={cardColor} />
+            <CardTouch onPress={() => storeCurrentCard(false)}>
+              <BackOfCard image={cardColor} />
+            </CardTouch>
+          </>
+        ) : (
+          <>
+            <Background />
+            <Title>Pick a card</Title>
+            <CardsContainer>
+              <Pressable onPress={() => storeCurrentCard('whiskeyScore')}>
+                <CardScreenBackground image={'whiskeyScore'} />
+              </Pressable>
+              <Pressable onPress={() => storeCurrentCard('mojitoScore')}>
+                <CardScreenBackground image={'mojitoScore'} />
+              </Pressable>
+              <Pressable onPress={() => storeCurrentCard('martiniScore')}>
+                <CardScreenBackground image={'martiniScore'} />
+              </Pressable>
+              <Pressable onPress={() => storeCurrentCard('lemonadeScore')}>
+                <CardScreenBackground image={'lemonadeScore'} />
+              </Pressable>
+            </CardsContainer>
+          </>
+        )}
       </ScreenContainer>
     );
   }
@@ -71,6 +105,29 @@ const CardTouch = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   width: 80%;
+`;
+
+const Title = styled.Text`
+  font-family: Morning Breeze;
+  font-size: 36px;
+  margin-bottom: 12px;
+`;
+
+const CardsContainer = styled.View`
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Card = styled.View`
+  background-color: black;
+  height: 40px;
+  margin: 4px;
+  width: 45%;
+  height: 200px;
 `;
 
 export default CardScreen;

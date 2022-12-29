@@ -20,9 +20,7 @@ const ScoreScreen = ({navigation}) => {
 
   const exitButton = () => {
     dispatch(cardColorRequest(false));
-    navigation.navigate(
-      gameVersion === 'FULL' ? 'Card Screen' : 'Card Version Card Screen',
-    );
+    navigation.navigate('Card Screen');
   };
 
   if (players && cardColor) {

@@ -130,8 +130,6 @@ const ChallengeScreen = ({navigation}) => {
     );
   };
 
-  console.log(cardColor, 'herjjsnkjfn');
-
   const displayCardContent = () => {
     return (
       <>

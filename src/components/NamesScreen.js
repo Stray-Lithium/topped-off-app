@@ -38,9 +38,7 @@ const NamesScreen = ({navigation}) => {
 
   const ready = () => {
     dispatch(playersRequest(players));
-    navigation.navigate(
-      gameVersion === 'FULL' ? 'Card Screen' : 'Card Version Card Screen',
-    );
+    navigation.navigate('Card Screen');
   };
 
   if (gameVersion) {
