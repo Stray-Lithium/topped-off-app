@@ -6,7 +6,6 @@ import {cardColorRequest} from '../actions/card-color';
 import {useDispatch, useSelector} from 'react-redux';
 import {currentPlayerRequest} from '../actions/current-player';
 import {turnRandomizer} from '../algorithms/turn';
-import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import CardScreenBackground from './background/CardScreenBackgrounds';
 
 const CardScreen = ({navigation}) => {
@@ -69,18 +68,18 @@ const CardScreen = ({navigation}) => {
             <Background />
             <Title>Pick a card</Title>
             <CardsContainer>
-              <Pressable onPress={() => storeCurrentCard('whiskeyScore')}>
+              <CardSelect onPress={() => storeCurrentCard('whiskeyScore')}>
                 <CardScreenBackground image={'whiskeyScore'} />
-              </Pressable>
-              <Pressable onPress={() => storeCurrentCard('mojitoScore')}>
+              </CardSelect>
+              <CardSelect onPress={() => storeCurrentCard('mojitoScore')}>
                 <CardScreenBackground image={'mojitoScore'} />
-              </Pressable>
-              <Pressable onPress={() => storeCurrentCard('martiniScore')}>
+              </CardSelect>
+              <CardSelect onPress={() => storeCurrentCard('martiniScore')}>
                 <CardScreenBackground image={'martiniScore'} />
-              </Pressable>
-              <Pressable onPress={() => storeCurrentCard('lemonadeScore')}>
+              </CardSelect>
+              <CardSelect onPress={() => storeCurrentCard('lemonadeScore')}>
                 <CardScreenBackground image={'lemonadeScore'} />
-              </Pressable>
+              </CardSelect>
             </CardsContainer>
           </>
         )}
@@ -129,5 +128,7 @@ const Card = styled.View`
   width: 45%;
   height: 200px;
 `;
+
+const CardSelect = styled.Pressable``;
 
 export default CardScreen;

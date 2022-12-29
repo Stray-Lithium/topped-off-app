@@ -10,6 +10,7 @@ import {currentPlayerRequest} from '../actions/current-player';
 import {drinkersRequest} from '../actions/drinkers';
 import {completedRequest} from '../actions/completed';
 import {useDispatch, useSelector} from 'react-redux';
+import {storeWinners} from './storage/storage';
 
 const LemonadeWhoCompletedScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -69,6 +70,27 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
     dispatch(drinkersRequest(drinkers));
   };
 
+  const winnersCheck = updatedPlayers => {
+    let winningPlayers = [];
+    updatedPlayers.forEach(player => {
+      if (
+        player.whiskeyScore === 1 &&
+        player.mojitoScore === 1 &&
+        player.martiniScore === 1 &&
+        player.lemonadeScore === 1
+      ) {
+        winningPlayers.push(player.name);
+      }
+    });
+    console.log(winningPlayers, 'winners');
+    if (winningPlayers.length > 0) {
+      storeWinners(winningPlayers);
+      navigation.navigate('End Screen');
+    } else {
+      navigation.navigate('Drink Screen');
+    }
+  };
+
   const setCompleted = () => {
     let playersCopy = players;
     let updatedPlayers = [];
@@ -84,17 +106,13 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
       }
     });
     dispatch(playersRequest(updatedPlayers));
+    winnersCheck(updatedPlayers);
   };
 
   const confirm = () => {
+    setDrinkers();
     if (checkedNames) {
       setCompleted();
-    }
-    if (checkedNames.length === currentPlayer.length) {
-      navigation.navigate('Score Screen');
-    } else {
-      setDrinkers();
-      navigation.navigate('Drink Screen');
     }
   };
 
