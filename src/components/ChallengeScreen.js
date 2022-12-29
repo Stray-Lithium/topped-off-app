@@ -13,28 +13,27 @@ import {mojitoCard} from '../cards/mojito';
 import {lemonadeCard} from '../cards/lemonade';
 import {playersRequest} from '../actions/players';
 import {drinkersRequest} from '../actions/drinkers';
-import {playerTurn} from '../algorithms/turn';
 import {storeWinners} from './storage/storage';
 
 const ChallengeScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const players = useSelector(state => state.Players.players);
-  const cardColor = useSelector(state => state.CardColor.cardColor);
+  const currentCard = useSelector(state => state.CurrentCard.currentCard);
   const [cardContent, setCardContent] = useState(false);
   const currentPlayer = useSelector(state => state.CurrentPlayer.currentPlayer);
   const gameVersion = useSelector(state => state.GameVersion.gameVersion);
 
   const blankWord = () => {
-    if (cardColor === 'whiskeyScore') {
+    if (currentCard.cardColor === 'whiskeyScore') {
       setCardContent(whiskeyCard(whiskeyBlank()));
     }
-    if (cardColor === 'martiniScore') {
+    if (currentCard.cardColor === 'martiniScore') {
       setCardContent(martiniCard(martiniBlank()));
     }
-    if (cardColor === 'mojitoScore') {
+    if (currentCard.cardColor === 'mojitoScore') {
       setCardContent(mojitoCard());
     }
-    if (cardColor === 'lemonadeScore') {
+    if (currentCard.cardColor === 'lemonadeScore') {
       setCardContent(lemonadeCard());
     }
   };
@@ -43,7 +42,7 @@ const ChallengeScreen = ({navigation}) => {
     if (!cardContent) {
       blankWord();
     }
-  }, [cardContent, currentPlayer, players, cardColor]);
+  }, [currentCard, currentPlayer, players]);
 
   const nameMaker = () => {
     const playersLength = currentPlayer.length;
@@ -89,7 +88,7 @@ const ChallengeScreen = ({navigation}) => {
       if (player.name === currentPlayer[0]) {
         player.turns += 1;
         if (completed) {
-          player[cardColor] += 1;
+          player[currentCard.cardColor] += 1;
         }
         updatedPlayers.push(player);
       } else {
@@ -130,22 +129,20 @@ const ChallengeScreen = ({navigation}) => {
     );
   };
 
-  console.log(cardColor, 'herjjsnkjfn');
-
   const displayCardContent = () => {
     return (
       <>
         {gameVersion === 'FULL' ? (
           <>
             <CardContainer>
-              <ChallengeCardBackground image={cardColor} />
+              <ChallengeCardBackground image={currentCard.cardColor} />
               <CardContentContainer>
                 <CardTitle>{cardContent.title}</CardTitle>
                 <CardContent>{`${names} ${cardContent.content}`}</CardContent>
                 <CardComment>{cardContent.comment}</CardComment>
               </CardContentContainer>
             </CardContainer>
-            {cardColor !== 'lemonadeScore'
+            {currentCard.cardColor !== 'lemonadeScore'
               ? notLemonadeChallenge()
               : lemonadeChallenge()}
           </>
@@ -158,7 +155,7 @@ const ChallengeScreen = ({navigation}) => {
                 <CVCardContent>{`${cardContent.content}`}</CVCardContent>
               </CVCardContentContainer>
             </CardContainer>
-            {cardColor !== 'lemonadeScore'
+            {currentCard.cardColor !== 'lemonadeScore'
               ? notLemonadeChallenge()
               : lemonadeChallenge()}
           </>
@@ -167,7 +164,9 @@ const ChallengeScreen = ({navigation}) => {
     );
   };
 
-  if (currentPlayer) {
+  console.log(cardContent, 'card content');
+
+  if (currentPlayer && currentCard) {
     return (
       <ChallengeScreenContainer>
         <Background />

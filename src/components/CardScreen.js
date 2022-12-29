@@ -2,17 +2,15 @@ import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import Background from './background/Background';
 import BackOfCard from './background/BackOfCard';
-import {cardColorRequest} from '../actions/card-color';
 import {useDispatch, useSelector} from 'react-redux';
+import {currentCardRequest} from '../actions/current-card';
 import {currentPlayerRequest} from '../actions/current-player';
 import {turnRandomizer} from '../algorithms/turn';
 
 const CardScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const players = useSelector(state => state.Players.players);
-  const cardColor = useSelector(state =>
-    state.CardColor.cardColor ? state.CardColor.cardColor : false,
-  );
+  const currentCard = useSelector(state => state.CurrentCard.currentCard);
 
   const ingredientRandomizer = () => {
     const cards = [
@@ -23,32 +21,35 @@ const CardScreen = ({navigation}) => {
     ];
     const randomWordIndex = Math.floor(Math.random() * cards.length) + 0;
     const card = cards[randomWordIndex];
-    dispatch(cardColorRequest(`${card}`));
+    console.log(card, 'card mate');
+    dispatch(currentCardRequest({cardColor: `${card}`}));
   };
 
   useEffect(() => {
-    if (!cardColor) {
+    if (!currentCard) {
       ingredientRandomizer();
     }
-  }, [players, cardColor]);
+  }, [players, currentCard]);
 
   const storeCurrentCard = () => {
     const playerTurn = turnRandomizer(players);
     dispatch(currentPlayerRequest([playerTurn]));
-    dispatch(cardColorRequest(`${cardColor}`));
+    dispatch(currentCardRequest({cardColor: `${currentCard.cardColor}`}));
     navigation.navigate(
-      cardColor === 'lemonadeScore'
+      currentCard.cardColor === 'lemonadeScore'
         ? 'Lemonade Players Screen'
         : 'Challenge Screen',
     );
   };
+  console.log(currentCard, 'in card scree');
 
-  if (cardColor && players) {
+  if (currentCard && players) {
+    console.log(currentCard, 'in card screen render');
     return (
       <ScreenContainer>
-        <Background background={cardColor} />
+        <Background background={currentCard.cardColor} />
         <CardTouch onPress={() => storeCurrentCard()}>
-          <BackOfCard image={cardColor} />
+          <BackOfCard image={currentCard.cardColor} />
         </CardTouch>
       </ScreenContainer>
     );

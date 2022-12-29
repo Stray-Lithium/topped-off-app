@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import CardColorReducer from './card-color';
+import CurrentCardReducer from './current-card';
 import PlayersReducer from './players';
 import CurrentPlayerReducer from './current-player';
 import GameVersionReducer from './game-version';
@@ -7,7 +7,7 @@ import DrinkersReducer from './drinkers';
 import CompletedReducer from './completed';
 
 export default combineReducers({
-  CardColor: CardColorReducer,
+  CurrentCard: CurrentCardReducer,
   Players: PlayersReducer,
   CurrentPlayer: CurrentPlayerReducer,
   GameVersion: GameVersionReducer,

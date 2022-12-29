@@ -7,6 +7,7 @@ import {cardColorRequest} from '../actions/card-color';
 import {playerTurn} from '../algorithms/turn';
 import {useEffect, useState} from 'react';
 import {currentPlayerRequest} from '../actions/current-player';
+import {currentCardRequest} from '../actions/current-card';
 
 const CardVersionCardScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const CardVersionCardScreen = ({navigation}) => {
   }, [players]);
 
   const process = card => {
-    dispatch(cardColorRequest(`${card}Score`));
+    dispatch(currentCardRequest({cardColor: `${card}Score`}));
     dispatch(currentPlayerRequest([turn.name]));
     navigation.navigate('Challenge Screen');
   };

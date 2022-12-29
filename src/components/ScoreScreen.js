@@ -7,28 +7,27 @@ import Background from './background/Background';
 import ScoreIcon from './background/ScoreIcon';
 import {Dimensions} from 'react-native';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
-import {cardColorRequest} from '../actions/card-color';
-
+import {currentCardRequest} from '../actions/current-card';
 const ScoreScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const players = useSelector(state => state.Players.players);
-  const cardColor = useSelector(state => state.CardColor.cardColor);
+  const currentCard = useSelector(state => state.CurrentCard.currentCard);
   const windowWidth = Dimensions.get('window').width * 0.8;
   const gameVersion = useSelector(state => state.GameVersion.gameVersion);
 
-  useEffect(() => {}, [players, cardColor]);
+  useEffect(() => {}, [players, currentCard]);
 
   const exitButton = () => {
-    dispatch(cardColorRequest(false));
+    dispatch(currentCardRequest(false));
     navigation.navigate(
       gameVersion === 'FULL' ? 'Card Screen' : 'Card Version Card Screen',
     );
   };
 
-  if (players && cardColor) {
+  if (players && currentCard) {
     return (
       <>
-        <Background background={cardColor} />
+        <Background background={currentCard.cardColor} />
         <SafeAreaView style={{flex: 1}}>
           <Pressable
             onPress={() => {
