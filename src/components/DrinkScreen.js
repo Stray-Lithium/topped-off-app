@@ -1,16 +1,40 @@
-import React, {useEffect} from 'react';
-import {StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components';
 import Background from './background/Background';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {currentPlayerRequest} from '../actions/current-player';
 
 const DrinkScreen = ({navigation}) => {
+  const dispatch = useDispatch();
   const players = useSelector(state => state.Players.players);
+  const currentCard = useSelector(state => state.CurrentCard.currentCard);
   const currentPlayer = useSelector(state => state.CurrentPlayer.currentPlayer);
   const drinkers = useSelector(state => state.Drinkers.drinkers);
+  const [stealer, setStealer] = useState([]);
 
-  useEffect(() => {}, [players, currentPlayer, drinkers]);
+  const stealChecker = () => {
+    let potentialStealers = [];
+    players.forEach(player => {
+      if (
+        player.name !== currentPlayer[0] &&
+        player[`${currentCard.cardColor}`] < 1
+      ) {
+        potentialStealers.push(player.name);
+      }
+    });
+    const randomPlayerIndex =
+      Math.floor(Math.random() * potentialStealers.length) + 0;
+    const stealer = potentialStealers[randomPlayerIndex];
+    setStealer([stealer]);
+    return stealer;
+  };
+
+  useEffect(() => {
+    if (stealer.length === 0) {
+      stealChecker();
+    }
+  }, [players, currentPlayer, drinkers, currentCard]);
 
   const drinkTitle = () => {
     let title = '';
@@ -28,16 +52,33 @@ const DrinkScreen = ({navigation}) => {
     navigation.navigate('Score Screen');
   };
 
-  if (players && currentPlayer && drinkers) {
+  const steal = () => {
+    dispatch(currentPlayerRequest(stealer));
+    navigation.navigate('Challenge Screen');
+  };
+
+  if (players && currentPlayer && drinkers && currentCard) {
     return (
       <>
         <Background />
         <SafeAreaView style={{flex: 1}}>
           <ScreenContainer>
-            <Title>{`${drinkTitle()} you must drink!`}</Title>
-            <ButtonContainer onPress={() => confirm()}>
-              <CustomButton>NEXT ROUND</CustomButton>
-            </ButtonContainer>
+            <Title>{`${drinkTitle()}you must drink!`}</Title>
+            {stealer.length > 0 && currentCard.cardColor !== 'lemonadeScore' ? (
+              <>
+                <Title>{`${stealer[0]}, do you want to steal?`}</Title>
+                <ButtonContainer onPress={() => steal()}>
+                  <CustomButton>YES</CustomButton>
+                </ButtonContainer>
+                <ButtonContainer onPress={() => confirm()}>
+                  <CustomButton>NO</CustomButton>
+                </ButtonContainer>
+              </>
+            ) : (
+              <ButtonContainer onPress={() => confirm()}>
+                <CustomButton>NEXT ROUND</CustomButton>
+              </ButtonContainer>
+            )}
           </ScreenContainer>
         </SafeAreaView>
       </>
@@ -46,18 +87,6 @@ const DrinkScreen = ({navigation}) => {
     return <Background />;
   }
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  checkbox: {
-    width: 50,
-    height: 50,
-  },
-});
 
 const ScreenContainer = styled.View`
   flex: 1;

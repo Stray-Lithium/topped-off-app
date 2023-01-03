@@ -13,6 +13,7 @@ import {mojitoCard} from '../cards/mojito';
 import {lemonadeCard} from '../cards/lemonade';
 import {playersRequest} from '../actions/players';
 import {drinkersRequest} from '../actions/drinkers';
+import {currentCardRequest} from '../actions/current-card';
 import {storeWinners} from './storage/storage';
 
 const ChallengeScreen = ({navigation}) => {
@@ -25,21 +26,25 @@ const ChallengeScreen = ({navigation}) => {
 
   const blankWord = () => {
     if (currentCard.cardColor === 'whiskeyScore') {
-      setCardContent(whiskeyCard(whiskeyBlank()));
+      // setCardContent(whiskeyCard(whiskeyBlank()));
+      dispatch(currentCardRequest(whiskeyCard(whiskeyBlank())));
     }
     if (currentCard.cardColor === 'martiniScore') {
-      setCardContent(martiniCard(martiniBlank()));
+      // setCardContent(martiniCard(martiniBlank()));
+      dispatch(currentCardRequest(martiniCard(martiniBlank())));
     }
     if (currentCard.cardColor === 'mojitoScore') {
-      setCardContent(mojitoCard());
+      // setCardContent(mojitoCard());
+      dispatch(currentCardRequest(mojitoCard()));
     }
     if (currentCard.cardColor === 'lemonadeScore') {
-      setCardContent(lemonadeCard());
+      // setCardContent(lemonadeCard());
+      dispatch(currentCardRequest(lemonadeCard()));
     }
   };
 
   useEffect(() => {
-    if (!cardContent) {
+    if (!currentCard.content) {
       blankWord();
     }
   }, [currentCard, currentPlayer, players]);
@@ -63,7 +68,6 @@ const ChallengeScreen = ({navigation}) => {
 
   const winnersCheck = updatedPlayers => {
     let winningPlayers = [];
-    console.log(updatedPlayers, 'updated');
     updatedPlayers.forEach(player => {
       if (
         player.whiskeyScore === 1 &&
@@ -74,7 +78,6 @@ const ChallengeScreen = ({navigation}) => {
         winningPlayers.push(player.name);
       }
     });
-    console.log(winningPlayers, 'winning');
     if (winningPlayers.length > 0) {
       storeWinners(winningPlayers);
       navigation.navigate('End Screen');
@@ -89,8 +92,11 @@ const ChallengeScreen = ({navigation}) => {
     playersCopy.forEach(player => {
       if (player.name === currentPlayer[0]) {
         player.turns += 1;
-        if (completed) {
+        if (completed && player[currentCard.cardColor] === 0) {
           player[currentCard.cardColor] += 1;
+        }
+        if (!completed && player[currentCard.cardColor] === 1) {
+          player[currentCard.cardColor] -= 1;
         }
         updatedPlayers.push(player);
       } else {
@@ -139,9 +145,9 @@ const ChallengeScreen = ({navigation}) => {
             <CardContainer>
               <ChallengeCardBackground image={currentCard.cardColor} />
               <CardContentContainer>
-                <CardTitle>{cardContent.title}</CardTitle>
-                <CardContent>{`${names} ${cardContent.content}`}</CardContent>
-                <CardComment>{cardContent.comment}</CardComment>
+                <CardTitle>{currentCard.title}</CardTitle>
+                <CardContent>{`${names} ${currentCard.content}`}</CardContent>
+                <CardComment>{currentCard.comment}</CardComment>
               </CardContentContainer>
             </CardContainer>
             {currentCard.cardColor !== 'lemonadeScore'
@@ -154,7 +160,7 @@ const ChallengeScreen = ({navigation}) => {
               <ChallengeCardBackground image={currentCard.cardColor} />
               <CVCardContentContainer>
                 <PlayerName>{`${names}`}</PlayerName>
-                <CVCardContent>{`${cardContent.content}`}</CVCardContent>
+                <CVCardContent>{`${currentCard.content}`}</CVCardContent>
               </CVCardContentContainer>
             </CardContainer>
             {currentCard.cardColor !== 'lemonadeScore'
@@ -166,10 +172,7 @@ const ChallengeScreen = ({navigation}) => {
     );
   };
 
-  console.log(currentCard, 'card content before render');
-
   if (currentPlayer && currentCard) {
-    console.log(currentCard, 'card content');
     return (
       <ChallengeScreenContainer>
         <Background />

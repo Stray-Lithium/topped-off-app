@@ -23,7 +23,6 @@ const CardScreen = ({navigation}) => {
     ];
     const randomWordIndex = Math.floor(Math.random() * cards.length) + 0;
     const card = cards[randomWordIndex];
-    console.log(card, 'card mate');
     dispatch(currentCardRequest({cardColor: `${card}`}));
   };
 
@@ -37,17 +36,14 @@ const CardScreen = ({navigation}) => {
     const playerTurn = turnRandomizer(players);
     dispatch(currentPlayerRequest([playerTurn]));
     dispatch(currentCardRequest({cardColor: `${cardColor}`}));
-    console.log(cardColor, 'cardddd colorrr');
     navigation.navigate(
       cardColor === 'lemonadeScore'
         ? 'Lemonade Players Screen'
         : 'Challenge Screen',
     );
   };
-  console.log(currentCard, 'in card scree');
 
   if (currentCard && players) {
-    console.log(currentCard, 'in card screen render');
     return (
       <ScreenContainer>
         <Background background={currentCard.cardColor} />

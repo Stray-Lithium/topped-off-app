@@ -2,9 +2,7 @@ import AutoHeightImage from 'react-native-auto-height-image';
 import {Dimensions} from 'react-native';
 
 const BackOfCard = ({image}) => {
-  const windowWidth = Dimensions.get('window').width * 0.9;
-
-  console.log(image, 'image plurrrrr');
+  const windowWidth = Dimensions.get('window').width * 0.83;
 
   const backgroundImage = () => {
     if (image === 'whiskeyScore') {

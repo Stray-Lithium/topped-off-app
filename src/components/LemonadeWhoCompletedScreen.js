@@ -19,12 +19,7 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
   useEffect(() => {}, [players, currentPlayer]);
 
   const checkboxClick = checkName => {
-    if (!checkedNames.includes(checkName)) {
-      setCheckedNames([...checkedNames, checkName]);
-    } else {
-      let filter = checkedNames.filter(player => player !== checkName);
-      setCheckedNames(filter);
-    }
+    setCheckedNames([checkName]);
   };
 
   const checkBoxes = () => {
@@ -64,7 +59,9 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
         drinkers.push(player);
       }
     });
-    dispatch(drinkersRequest(drinkers));
+    if (drinkers.length > 0) {
+      dispatch(drinkersRequest(drinkers));
+    }
   };
 
   const winnersCheck = updatedPlayers => {
@@ -79,7 +76,6 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
         winningPlayers.push(player.name);
       }
     });
-    console.log(winningPlayers, 'winners');
     if (winningPlayers.length > 0) {
       storeWinners(winningPlayers);
       navigation.navigate('End Screen');
@@ -92,13 +88,19 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
     let playersCopy = players;
     let updatedPlayers = [];
     playersCopy.forEach(player => {
-      if (currentPlayer.includes(player.name)) {
-        player.turns += 1;
-      }
       if (checkedNames.includes(player.name)) {
-        player[currentCard.cardColor] += 1;
+        player.turns += 1;
+        if (player[currentCard.cardColor] === 0) {
+          player[currentCard.cardColor] += 1;
+        }
         updatedPlayers.push(player);
       } else {
+        if (
+          player[currentCard.cardColor] === 1 &&
+          !checkedNames.includes(player.name)
+        ) {
+          player[currentCard.cardColor] -= 1;
+        }
         updatedPlayers.push(player);
       }
     });
@@ -107,10 +109,8 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
   };
 
   const confirm = () => {
+    setCompleted();
     setDrinkers();
-    if (checkedNames) {
-      setCompleted();
-    }
   };
 
   if ((players, currentPlayer)) {

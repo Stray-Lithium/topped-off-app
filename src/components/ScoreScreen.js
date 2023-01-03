@@ -7,6 +7,8 @@ import {Dimensions} from 'react-native';
 import {currentCardRequest} from '../actions/current-card';
 import ScoreBoard from './scoreboard/scoreboard';
 import AutoHeightImage from 'react-native-auto-height-image';
+import {currentPlayerRequest} from '../actions/current-player';
+import {drinkersRequest} from '../actions/drinkers';
 
 const ScoreScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -17,6 +19,8 @@ const ScoreScreen = ({navigation}) => {
   useEffect(() => {}, [players, currentCard]);
 
   const exitButton = () => {
+    dispatch(drinkersRequest(false));
+    dispatch(currentPlayerRequest(false));
     dispatch(currentCardRequest(false));
     navigation.navigate('Card Screen');
   };
