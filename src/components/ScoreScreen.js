@@ -47,7 +47,7 @@ const ScoreScreen = ({navigation}) => {
         </SafeAreaView>
       </>
     );
-  } else return <Text>Hello</Text>;
+  } else return <Text style={{fontSize: 48}}>Hello</Text>;
 };
 
 const ExitPressable = styled.Pressable``;

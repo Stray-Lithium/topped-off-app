@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Background from './background/Background';
 import {useDispatch, useSelector} from 'react-redux';
 import {currentPlayerRequest} from '../actions/current-player';
+import {playersRequest} from '../actions/players';
 
 const DrinkScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -15,19 +16,34 @@ const DrinkScreen = ({navigation}) => {
 
   const stealChecker = () => {
     let potentialStealers = [];
+    let doSteal = false;
+
     players.forEach(player => {
+      console.log(player.name, player.canSteal, 'can steal');
+
+      if (player.name === currentPlayer[0]) {
+        player.pointsAwarded >= 2 ? (doSteal = true) : null;
+      }
+
       if (
         player.name !== currentPlayer[0] &&
-        player[`${currentCard.cardColor}`] < 1
+        player[`${currentCard.cardColor}`] < 1 &&
+        player.canSteal === true
       ) {
         potentialStealers.push(player.name);
       }
     });
-    const randomPlayerIndex =
-      Math.floor(Math.random() * potentialStealers.length) + 0;
-    const stealer = potentialStealers[randomPlayerIndex];
-    setStealer([stealer]);
-    return stealer;
+
+    if (potentialStealers.length > 0 && doSteal) {
+      const randomPlayerIndex =
+        Math.floor(Math.random() * potentialStealers.length) + 0;
+      const stealer = potentialStealers[randomPlayerIndex];
+      setStealer([stealer]);
+      doSteal = false;
+      return stealer;
+    } else {
+      return [];
+    }
   };
 
   useEffect(() => {
@@ -53,9 +69,21 @@ const DrinkScreen = ({navigation}) => {
   };
 
   const steal = () => {
+    let updatedPlayers = [];
+
+    players.forEach(player => {
+      if (player.name === stealer[0]) {
+        player.canSteal = false;
+      }
+      updatedPlayers.push(player);
+    });
+
+    dispatch(playersRequest(updatedPlayers));
     dispatch(currentPlayerRequest(stealer));
     navigation.navigate('Challenge Screen');
   };
+
+  console.log(stealer, 'stealer');
 
   if (players && currentPlayer && drinkers && currentCard) {
     return (

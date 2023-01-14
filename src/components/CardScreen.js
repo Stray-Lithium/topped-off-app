@@ -17,7 +17,7 @@ const CardScreen = ({navigation}) => {
 
   const ingredientRandomizer = () => {
     const cards = [
-      'lemonadeScore',
+      // 'lemonadeScore',
       'whiskeyScore',
       'martiniScore',
       'mojitoScore',
