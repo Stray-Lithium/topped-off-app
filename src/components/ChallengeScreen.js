@@ -90,6 +90,7 @@ const ChallengeScreen = ({navigation}) => {
         player.turns += 1;
         if (completed && player[currentCard.cardColor] === 0) {
           player[currentCard.cardColor] += 1;
+          player.pointsAwarded += 1;
         }
         if (!completed && player[currentCard.cardColor] === 1) {
           player[currentCard.cardColor] -= 1;

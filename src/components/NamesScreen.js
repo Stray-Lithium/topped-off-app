@@ -27,6 +27,8 @@ const NamesScreen = ({navigation}) => {
       martiniScore: 0,
       mojitoScore: 0,
       turns: 0,
+      pointsAwarded: 0,
+      canSteal: true,
     };
     setPlayers([...players, playerObject]);
     setName('');
