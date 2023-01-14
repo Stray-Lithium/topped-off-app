@@ -7,6 +7,7 @@ import {currentCardRequest} from '../actions/current-card';
 import {currentPlayerRequest} from '../actions/current-player';
 import {turnRandomizer} from '../algorithms/turn';
 import CardScreenBackground from './background/CardScreenBackgrounds';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const CardScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -27,54 +28,70 @@ const CardScreen = ({navigation}) => {
   };
 
   useEffect(() => {
-    if (!currentCard) {
+    if (!currentCard && gameVersion === 'FULL') {
       ingredientRandomizer();
     }
-  }, [players, currentCard]);
+    if (!currentCard && gameVersion === 'CARD') {
+      dispatch(currentCardRequest({cardColor: 'gray'}));
+    }
+  }, [players, currentCard, gameVersion]);
 
-  const storeCurrentCard = cardColor => {
+  const storeCurrentPlayerAndCard = () => {
     const playerTurn = turnRandomizer(players);
     dispatch(currentPlayerRequest([playerTurn]));
-    dispatch(currentCardRequest({cardColor: `${cardColor}`}));
+    if (gameVersion === 'CARD') {
+      dispatch(currentCardRequest({cardColor: `${currentCard.cardColor}`}));
+    }
     navigation.navigate(
-      cardColor === 'lemonadeScore'
+      currentCard.cardColor === 'lemonadeScore'
         ? 'Lemonade Players Screen'
         : 'Challenge Screen',
     );
   };
 
-  if (currentCard && players) {
+  const fullVersion = () => {
     return (
-      <ScreenContainer>
-        <Background background={currentCard.cardColor} />
-        {gameVersion === 'FULL' ? (
-          <>
-            <Background background={currentCard.cardColor} />
-            <CardTouch onPress={() => storeCurrentCard(currentCard.cardColor)}>
-              <BackOfCard image={currentCard.cardColor} />
-            </CardTouch>
-          </>
-        ) : (
-          <>
-            <Background />
-            <Title>Pick a card</Title>
-            <CardsContainer>
-              <CardSelect onPress={() => storeCurrentCard('whiskeyScore')}>
-                <CardScreenBackground image={'whiskeyScore'} />
-              </CardSelect>
-              <CardSelect onPress={() => storeCurrentCard('mojitoScore')}>
-                <CardScreenBackground image={'mojitoScore'} />
-              </CardSelect>
-              <CardSelect onPress={() => storeCurrentCard('martiniScore')}>
-                <CardScreenBackground image={'martiniScore'} />
-              </CardSelect>
-              <CardSelect onPress={() => storeCurrentCard('lemonadeScore')}>
-                <CardScreenBackground image={'lemonadeScore'} />
-              </CardSelect>
-            </CardsContainer>
-          </>
-        )}
-      </ScreenContainer>
+      <CardTouch onPress={() => storeCurrentPlayerAndCard()}>
+        <BackOfCard image={currentCard.cardColor} />
+      </CardTouch>
+    );
+  };
+
+  const cardVersion = () => {
+    return (
+      <>
+        <Title>Pick a card</Title>
+        <CardsContainer>
+          <CardSelect onPress={() => storeCurrentPlayerAndCard('whiskeyScore')}>
+            <CardScreenBackground image={'whiskeyScore'} />
+          </CardSelect>
+          <CardSelect onPress={() => storeCurrentPlayerAndCard('mojitoScore')}>
+            <CardScreenBackground image={'mojitoScore'} />
+          </CardSelect>
+          <CardSelect onPress={() => storeCurrentPlayerAndCard('martiniScore')}>
+            <CardScreenBackground image={'martiniScore'} />
+          </CardSelect>
+          <CardSelect
+            onPress={() => storeCurrentPlayerAndCard('lemonadeScore')}>
+            <CardScreenBackground image={'lemonadeScore'} />
+          </CardSelect>
+        </CardsContainer>
+      </>
+    );
+  };
+
+  if (currentCard && players && gameVersion) {
+    return (
+      <>
+        <Background
+          background={gameVersion === 'FULL' ? currentCard.cardColor : null}
+        />
+        <SafeAreaView style={{flex: 1}}>
+          <ScreenContainer>
+            {gameVersion === 'FULL' ? fullVersion() : cardVersion()}
+          </ScreenContainer>
+        </SafeAreaView>
+      </>
     );
   }
 };

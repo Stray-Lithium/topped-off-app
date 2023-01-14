@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components';
@@ -15,39 +15,36 @@ import {playersRequest} from '../actions/players';
 import {drinkersRequest} from '../actions/drinkers';
 import {currentCardRequest} from '../actions/current-card';
 import {storeWinners} from './storage/storage';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {buttonShadow} from './button/button-shadow';
 
 const ChallengeScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const players = useSelector(state => state.Players.players);
   const currentCard = useSelector(state => state.CurrentCard.currentCard);
-  const [cardContent, setCardContent] = useState(false);
   const currentPlayer = useSelector(state => state.CurrentPlayer.currentPlayer);
   const gameVersion = useSelector(state => state.GameVersion.gameVersion);
 
-  const blankWord = () => {
+  const cardAndBlank = () => {
     if (currentCard.cardColor === 'whiskeyScore') {
-      // setCardContent(whiskeyCard(whiskeyBlank()));
       dispatch(currentCardRequest(whiskeyCard(whiskeyBlank())));
     }
     if (currentCard.cardColor === 'martiniScore') {
-      // setCardContent(martiniCard(martiniBlank()));
       dispatch(currentCardRequest(martiniCard(martiniBlank())));
     }
     if (currentCard.cardColor === 'mojitoScore') {
-      // setCardContent(mojitoCard());
       dispatch(currentCardRequest(mojitoCard()));
     }
     if (currentCard.cardColor === 'lemonadeScore') {
-      // setCardContent(lemonadeCard());
       dispatch(currentCardRequest(lemonadeCard()));
     }
   };
 
   useEffect(() => {
     if (!currentCard.content) {
-      blankWord();
+      cardAndBlank();
     }
-  }, [currentCard, currentPlayer, players]);
+  }, [currentCard, currentPlayer, players, gameVersion]);
 
   const nameMaker = () => {
     const playersLength = currentPlayer.length;
@@ -63,7 +60,6 @@ const ChallengeScreen = ({navigation}) => {
     });
     return names;
   };
-
   const names = nameMaker();
 
   const winnersCheck = updatedPlayers => {
@@ -98,10 +94,8 @@ const ChallengeScreen = ({navigation}) => {
         if (!completed && player[currentCard.cardColor] === 1) {
           player[currentCard.cardColor] -= 1;
         }
-        updatedPlayers.push(player);
-      } else {
-        updatedPlayers.push(player);
       }
+      updatedPlayers.push(player);
     });
     dispatch(playersRequest(updatedPlayers));
     if (completed) {
@@ -115,10 +109,10 @@ const ChallengeScreen = ({navigation}) => {
   const notLemonadeChallenge = () => {
     return (
       <>
-        <ButtonContainer onPress={() => complete(true)}>
+        <ButtonContainer onPress={() => complete(true)} style={buttonShadow}>
           <CustomButton>COMPLETED</CustomButton>
         </ButtonContainer>
-        <ButtonContainer onPress={() => complete(false)}>
+        <ButtonContainer onPress={() => complete(false)} style={buttonShadow}>
           <CustomButton>DRINK</CustomButton>
         </ButtonContainer>
       </>
@@ -137,47 +131,51 @@ const ChallengeScreen = ({navigation}) => {
     );
   };
 
-  const displayCardContent = () => {
+  const cardVersion = () => {
     return (
       <>
-        {gameVersion === 'FULL' ? (
-          <>
-            <CardContainer>
-              <ChallengeCardBackground image={currentCard.cardColor} />
-              <CardContentContainer>
-                <CardTitle>{currentCard.title}</CardTitle>
-                <CardContent>{`${names} ${currentCard.content}`}</CardContent>
-                <CardComment>{currentCard.comment}</CardComment>
-              </CardContentContainer>
-            </CardContainer>
-            {currentCard.cardColor !== 'lemonadeScore'
-              ? notLemonadeChallenge()
-              : lemonadeChallenge()}
-          </>
-        ) : (
-          <>
-            <CardContainer>
-              <ChallengeCardBackground image={currentCard.cardColor} />
-              <CVCardContentContainer>
-                <PlayerName>{`${names}`}</PlayerName>
-                <CVCardContent>{`${currentCard.content}`}</CVCardContent>
-              </CVCardContentContainer>
-            </CardContainer>
-            {currentCard.cardColor !== 'lemonadeScore'
-              ? notLemonadeChallenge()
-              : lemonadeChallenge()}
-          </>
-        )}
+        <CardContainer>
+          <ChallengeCardBackground image={currentCard.cardColor} />
+          <CVCardContentContainer>
+            <PlayerName>{`${names}`}</PlayerName>
+            <CVCardContent>{`${currentCard.content}`}</CVCardContent>
+          </CVCardContentContainer>
+        </CardContainer>
+        {currentCard.cardColor !== 'lemonadeScore'
+          ? notLemonadeChallenge()
+          : lemonadeChallenge()}
       </>
     );
   };
 
-  if (currentPlayer && currentCard) {
+  const fullVersion = () => {
     return (
-      <ChallengeScreenContainer>
+      <>
+        <CardContainer>
+          <ChallengeCardBackground image={currentCard.cardColor} />
+          <CardContentContainer>
+            <CardTitle>{currentCard.title}</CardTitle>
+            <CardContent>{`${names} ${currentCard.content}`}</CardContent>
+            <CardComment>{currentCard.comment}</CardComment>
+          </CardContentContainer>
+        </CardContainer>
+        {currentCard.cardColor !== 'lemonadeScore'
+          ? notLemonadeChallenge()
+          : lemonadeChallenge()}
+      </>
+    );
+  };
+
+  if (currentPlayer && currentCard && gameVersion) {
+    return (
+      <>
         <Background />
-        {displayCardContent()}
-      </ChallengeScreenContainer>
+        <SafeAreaView style={{flex: 1}}>
+          <ChallengeScreenContainer>
+            {gameVersion === 'FULL' ? fullVersion() : cardVersion()}
+          </ChallengeScreenContainer>
+        </SafeAreaView>
+      </>
     );
   }
 };

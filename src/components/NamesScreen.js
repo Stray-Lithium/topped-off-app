@@ -3,20 +3,17 @@ import {StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components';
 import Background from './background/Background';
-import Button from './button/Button';
 import Icon from 'react-native-vector-icons/Feather';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {playersRequest} from '../actions/players';
-import {TouchableHighlight} from 'react-native-gesture-handler';
+import {buttonShadow} from './button/button-shadow';
 
 const NamesScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [players, setPlayers] = useState([]);
-  const [howManyPlayers, setHowManyPlayers] = useState(0);
-  const gameVersion = useSelector(state => state.GameVersion.gameVersion);
 
-  useEffect(() => {}, [players, gameVersion]);
+  useEffect(() => {}, [players]);
 
   const onChangeText = input => {
     setName(input);
@@ -31,7 +28,6 @@ const NamesScreen = ({navigation}) => {
       mojitoScore: 0,
       turns: 0,
     };
-    setHowManyPlayers(howManyPlayers + 1);
     setPlayers([...players, playerObject]);
     setName('');
   };
@@ -41,44 +37,44 @@ const NamesScreen = ({navigation}) => {
     navigation.navigate('Card Screen');
   };
 
-  if (gameVersion) {
+  const pageContent = () => {
     return (
-      <>
-        <Background />
-        <SafeAreaView style={{flex: 1}}>
-          <ScreenContainer>
-            <TitleContainer>
-              <Title source={require('../assets/whos-playing.png')} />
-            </TitleContainer>
-            <PlayersList>
-              {players.map(player => {
-                return <PlayerName key={player.name}>{player.name}</PlayerName>;
-              })}
-            </PlayersList>
-            <NameInputContainer>
-              <IconTouch onPress={() => handleSubmit()}>
-                <Icon name="plus" style={styles.plusIcon} />
-              </IconTouch>
-              <NameInput
-                onChangeText={text => onChangeText(text)}
-                value={name}
-                placeholder="Enter Name..."
-                placeholderTextColor="gray"
-                onSubmitEditing={() => handleSubmit()}
-              />
-            </NameInputContainer>
-            <TouchableHighlight style={{width: '100%'}} onPress={() => ready()}>
-              <Button
-                buttonInfo={{
-                  text: 'READY!',
-                }}
-              />
-            </TouchableHighlight>
-          </ScreenContainer>
-        </SafeAreaView>
-      </>
+      <SafeAreaView style={{flex: 1}}>
+        <ScreenContainer>
+          <TitleContainer>
+            <Title source={require('../assets/whos-playing.png')} />
+          </TitleContainer>
+          <PlayersList>
+            {players.map(player => {
+              return <PlayerName key={player.name}>{player.name}</PlayerName>;
+            })}
+          </PlayersList>
+          <NameInputContainer>
+            <IconTouch onPress={() => handleSubmit()}>
+              <Icon name="plus" style={styles.plusIcon} />
+            </IconTouch>
+            <NameInput
+              onChangeText={text => onChangeText(text)}
+              value={name}
+              placeholder="Enter Name..."
+              placeholderTextColor="gray"
+              onSubmitEditing={() => handleSubmit()}
+            />
+          </NameInputContainer>
+          <ButtonContainer onPress={() => ready()} style={buttonShadow}>
+            <CustomButton>READY!</CustomButton>
+          </ButtonContainer>
+        </ScreenContainer>
+      </SafeAreaView>
     );
-  }
+  };
+
+  return (
+    <>
+      <Background />
+      {pageContent()}
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -139,6 +135,27 @@ const NameInputContainer = styled.View`
   justify-content: center;
   width: 80%;
   margin-bottom: 20px;
+`;
+
+const ButtonContainer = styled.Pressable`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  background-color: #ee3347;
+  border-radius: 10px;
+  border: solid 3px black;
+  margin-bottom: 20px;
+`;
+
+const CustomButton = styled.Text`
+  text-align: center;
+  color: black;
+  font-size: 26px;
+  padding: 12px 12px 12px 12px;
+  letter-spacing: 5px;
+  font-family: Morning Breeze;
+  overflow: hidden;
 `;
 
 const NameInput = styled.TextInput`

@@ -2,8 +2,8 @@ import * as React from 'react-native';
 import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
 import Background from './background/Background';
-import Button from './button/Button';
 import {gameVersionRequest} from '../actions/game-version';
+import {buttonShadow} from './button/button-shadow';
 
 const GameVersionScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -16,10 +16,10 @@ const GameVersionScreen = ({navigation}) => {
   return (
     <ScreenContainer>
       <Background />
-      <ButtonContainer onPress={() => confirm('FULL')}>
+      <ButtonContainer onPress={() => confirm('FULL')} style={buttonShadow}>
         <CustomButton>FULL VERSION</CustomButton>
       </ButtonContainer>
-      <ButtonContainer onPress={() => confirm('CARD')}>
+      <ButtonContainer onPress={() => confirm('CARD')} style={buttonShadow}>
         <CustomButton>CARD VERSION</CustomButton>
       </ButtonContainer>
     </ScreenContainer>

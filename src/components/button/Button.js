@@ -1,27 +1,21 @@
 import styled from 'styled-components';
-import {StyleSheet} from 'react-native';
+import {buttonShadow} from './button-shadow';
 
 const Button = ({buttonInfo}) => {
+  const isNavigate = () => {
+    if (buttonInfo.navigate) {
+      buttonInfo.navigation.navigate(`${buttonInfo.navigate}`);
+    }
+  };
+
   return (
-    <ButtonContainer style={styles.shadowProp}>
-      <CustomButton
-        onPress={() =>
-          buttonInfo.navigation.navigate(`${buttonInfo.navigate}`)
-        }>{`${buttonInfo.text}`}</CustomButton>
+    <ButtonContainer onPress={() => isNavigate()} style={buttonShadow}>
+      <CustomButton>{`${buttonInfo.text}`}</CustomButton>
     </ButtonContainer>
   );
 };
 
-const styles = StyleSheet.create({
-  shadowProp: {
-    shadowColor: '#5A5A5A',
-    shadowOffset: {width: 4, height: 4},
-    shadowOpacity: 1,
-    shadowRadius: 0,
-  },
-});
-
-const ButtonContainer = styled.View`
+const ButtonContainer = styled.Pressable`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,7 +23,6 @@ const ButtonContainer = styled.View`
   background-color: #ee3347;
   border-radius: 10px;
   border: solid 3px black;
-  margin-bottom: 20px;
 `;
 
 const CustomButton = styled.Text`
