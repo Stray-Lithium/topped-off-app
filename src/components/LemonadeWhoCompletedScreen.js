@@ -15,8 +15,14 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
   const currentCard = useSelector(state => state.CurrentCard.currentCard);
   const currentPlayer = useSelector(state => state.CurrentPlayer.currentPlayer);
   const [checkedNames, setCheckedNames] = useState([]);
+  const [yesOrNo, setYesOrNo] = useState([]);
+  const [displayMessage, setDisplayMessage] = useState(false);
 
-  useEffect(() => {}, [players, currentPlayer]);
+  useEffect(() => {
+    if (yesOrNo.length > 0) {
+      setDisplayMessage(false);
+    }
+  }, [players, currentPlayer, yesOrNo]);
 
   const checkboxClick = checkName => {
     setCheckedNames([checkName]);
@@ -52,19 +58,62 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
     );
   };
 
-  const setDrinkers = () => {
-    const drinkers = [];
-    currentPlayer.forEach(player => {
-      if (!checkedNames.includes(player)) {
-        drinkers.push(player);
-      }
-    });
-    if (drinkers.length > 0) {
-      dispatch(drinkersRequest(drinkers));
+  const yesAndNoMap = ['Yes', 'No'];
+
+  const yesOrNoClick = current => {
+    if (current === 'Yes') {
+      setCheckedNames([currentPlayer[0]]);
+    } else {
+      setCheckedNames([]);
     }
+    setYesOrNo(current);
+  };
+
+  const yesOrNoBoxes = () => {
+    return (
+      <>
+        {yesAndNoMap.map(current => {
+          return (
+            <>
+              <CheckboxContainer>
+                <NamePosition>
+                  <PlayerName>{current}</PlayerName>
+                </NamePosition>
+                <CheckboxPosition>
+                  <Pressable
+                    onPress={() => yesOrNoClick(current)}
+                    style={styles.checkbox}>
+                    <AnimatedCheckbox
+                      checked={yesOrNo.includes(current)}
+                      highlightColor="#ee3347"
+                      checkmarkColor="#ffffff"
+                      boxOutlineColor="#000000"
+                    />
+                  </Pressable>
+                </CheckboxPosition>
+              </CheckboxContainer>
+            </>
+          );
+        })}
+      </>
+    );
   };
 
   const winnersCheck = updatedPlayers => {
+    const setDrinkers = () => {
+      const drinkers = [];
+      currentPlayer.forEach(player => {
+        if (!checkedNames.includes(player)) {
+          drinkers.push(player);
+        }
+      });
+      if (drinkers.length > 0) {
+        dispatch(drinkersRequest(drinkers));
+      }
+      return drinkers.length > 0 ? drinkers : false;
+    };
+    const isDrinkers = setDrinkers();
+
     let winningPlayers = [];
     updatedPlayers.forEach(player => {
       if (
@@ -79,8 +128,14 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
     if (winningPlayers.length > 0) {
       storeWinners(winningPlayers);
       navigation.navigate('End Screen');
+    } else if (currentPlayer.length === 1) {
+      if (isDrinkers) {
+        navigation.navigate('Drink Screen');
+      } else {
+        navigation.navigate('Score Screen');
+      }
     } else {
-      navigation.navigate('Drink Screen');
+      navigation.navigate('Score Screen');
     }
   };
 
@@ -97,7 +152,8 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
       } else {
         if (
           player[currentCard.cardColor] === 1 &&
-          !checkedNames.includes(player.name)
+          !checkedNames.includes(player.name) &&
+          currentPlayer.includes(player.name)
         ) {
           player[currentCard.cardColor] -= 1;
         }
@@ -109,8 +165,11 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
   };
 
   const confirm = () => {
-    setCompleted();
-    setDrinkers();
+    if (yesOrNo.length === 0 && currentPlayer.length === 1) {
+      setDisplayMessage(true);
+    } else {
+      setCompleted();
+    }
   };
 
   if ((players, currentPlayer)) {
@@ -119,8 +178,26 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
         <Background />
         <SafeAreaView style={{flex: 1}}>
           <ScreenContainer>
-            <Title>WHO COMPLETED THE CHALLENGE?</Title>
-            <CheckboxesContainer>{checkBoxes()}</CheckboxesContainer>
+            {currentPlayer.length > 1 ? (
+              <>
+                <Title>WHO WON THE CHALLENGE?</Title>
+                <CheckboxesContainer>{checkBoxes()}</CheckboxesContainer>
+              </>
+            ) : (
+              <>
+                <Title>
+                  DID{' '}
+                  <Title style={{color: 'yellow'}}>{currentPlayer[0]} </Title>
+                  BEAT EVERYONE ELSE?
+                </Title>
+                <CheckboxesContainer>{yesOrNoBoxes()}</CheckboxesContainer>
+              </>
+            )}
+            {displayMessage ? (
+              <Message>Please select 'Yes' or 'No' to continue.</Message>
+            ) : (
+              <></>
+            )}
             <ButtonContainer onPress={() => confirm()}>
               <CustomButton>CONFIRM</CustomButton>
             </ButtonContainer>
@@ -160,13 +237,13 @@ const Title = styled.Text`
   font-size: 30px;
   margin-bottom: 20px;
   text-align: center;
-  width: 90%;
+  width: 80%;
   font-family: Morning Breeze;
 `;
 
 const CheckboxesContainer = styled.ScrollView`
   display: flex;
-  max-height: 50%;
+  max-height: 40%;
   margin-bottom: 20px;
 `;
 
@@ -217,6 +294,15 @@ const CustomButton = styled.Text`
   letter-spacing: 5px;
   font-family: Morning Breeze;
   overflow: hidden;
+`;
+
+const Message = styled.Text`
+  width: 80%;
+  padding: 20px 0 20px 0;
+  text-align: center;
+  color: yellow;
+  font-size: 26px;
+  font-family: Morning Breeze;
 `;
 
 export default LemonadeWhoCompletedScreen;

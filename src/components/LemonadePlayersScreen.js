@@ -14,6 +14,7 @@ const LemonadePlayersScreen = ({navigation}) => {
   const players = useSelector(state => state.Players.players);
   const [lemonFill, setLemonFill] = useState(false);
   const [checkedNames, setCheckedNames] = useState([]);
+  const [displayRefresh, setDisplayRefresh] = useState(false);
 
   useEffect(() => {
     if (!lemonFill) {
@@ -61,8 +62,12 @@ const LemonadePlayersScreen = ({navigation}) => {
   };
 
   const confirm = () => {
-    dispatch(currentPlayerRequest(checkedNames));
-    navigation.navigate('Challenge Screen');
+    if (checkedNames.length > 0) {
+      dispatch(currentPlayerRequest(checkedNames));
+      navigation.navigate('Challenge Screen');
+    } else {
+      setDisplayRefresh(true);
+    }
   };
 
   if (lemonFill && players) {
@@ -73,9 +78,23 @@ const LemonadePlayersScreen = ({navigation}) => {
           <ScreenContainer>
             <Title>{lemonFill}?</Title>
             <CheckboxesContainer>{checkBoxes()}</CheckboxesContainer>
+            {displayRefresh ? (
+              <RefreshMessage>
+                Please select a player or refresh the prompt if no one applies
+              </RefreshMessage>
+            ) : (
+              <></>
+            )}
             <ButtonContainer onPress={() => confirm()}>
               <CustomButton>CONFIRM</CustomButton>
             </ButtonContainer>
+            {displayRefresh ? (
+              <ButtonContainer onPress={() => setLemonFill(false)}>
+                <CustomButton>REFRESH</CustomButton>
+              </ButtonContainer>
+            ) : (
+              <></>
+            )}
           </ScreenContainer>
         </SafeAreaView>
       </>
@@ -118,7 +137,7 @@ const Title = styled.Text`
 
 const CheckboxesContainer = styled.ScrollView`
   display: flex;
-  max-height: 50%;
+  max-height: 40%;
   margin-bottom: 20px;
 `;
 
@@ -169,6 +188,15 @@ const CustomButton = styled.Text`
   letter-spacing: 5px;
   font-family: Morning Breeze;
   overflow: hidden;
+`;
+
+const RefreshMessage = styled.Text`
+  width: 80%;
+  padding: 20px 0 20px 0;
+  text-align: center;
+  color: yellow;
+  font-size: 26px;
+  font-family: Morning Breeze;
 `;
 
 export default LemonadePlayersScreen;

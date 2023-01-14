@@ -17,6 +17,7 @@ const ScoreScreen = ({navigation}) => {
   const windowWidth = Dimensions.get('window').width * 0.8;
 
   useEffect(() => {}, [players, currentCard]);
+  console.log('in score screen');
 
   const exitButton = () => {
     dispatch(drinkersRequest(false));

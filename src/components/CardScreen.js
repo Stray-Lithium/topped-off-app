@@ -18,9 +18,9 @@ const CardScreen = ({navigation}) => {
   const ingredientRandomizer = () => {
     const cards = [
       'lemonadeScore',
-      'whiskeyScore',
-      'martiniScore',
-      'mojitoScore',
+      // 'whiskeyScore',
+      // 'martiniScore',
+      // 'mojitoScore',
     ];
     const randomWordIndex = Math.floor(Math.random() * cards.length) + 0;
     const card = cards[randomWordIndex];
