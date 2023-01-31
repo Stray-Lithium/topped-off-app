@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet} from 'react-native';
+import {Text, StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components';
 import Background from './background/Background';
@@ -7,11 +7,16 @@ import Icon from 'react-native-vector-icons/Feather';
 import {useDispatch} from 'react-redux';
 import {playersRequest} from '../actions/players';
 import {buttonShadow} from './button/button-shadow';
+import ReadyButton from './button/ReadyButton';
+import PlusButton from './button/PlusButton';
+import XButton from './button/XButton';
 
 const NamesScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [players, setPlayers] = useState([]);
+
+  const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0;
 
   useEffect(() => {}, [players]);
 
@@ -34,6 +39,16 @@ const NamesScreen = ({navigation}) => {
     setName('');
   };
 
+  const deleteName = currentDelete => {
+    let updatedPlayers = [];
+    players.forEach(player => {
+      if (player.name !== currentDelete) {
+        updatedPlayers.push(player);
+      }
+    });
+    setPlayers(updatedPlayers);
+  };
+
   const ready = () => {
     dispatch(playersRequest(players));
     navigation.navigate('Card Screen');
@@ -44,27 +59,53 @@ const NamesScreen = ({navigation}) => {
       <SafeAreaView style={{flex: 1}}>
         <ScreenContainer>
           <TitleContainer>
-            <Title source={require('../assets/whos-playing.png')} />
+            <Text
+              style={{
+                fontSize: 38,
+                color: '#ffcf00',
+                fontFamily: 'Morning Breeze Bold',
+              }}>
+              WHO's PLAYING?
+            </Text>
+            {/* <Title source={require('../assets/whos-playing.png')} /> */}
           </TitleContainer>
           <PlayersList>
             {players.map(player => {
-              return <PlayerName key={player.name}>{player.name}</PlayerName>;
+              return (
+                <NameContainer>
+                  <PlayerName key={player.name}>{player.name}</PlayerName>
+                  <ButtonContainer onPress={() => deleteName(player.name)}>
+                    <XButton />
+                  </ButtonContainer>
+                  {/* <IconCross
+                    style={styles.crossIcon}
+                    onPress={() => deleteName(player.name)}>
+                    <Icon name="x" style={styles.plusIcon} />
+                  </IconCross> */}
+                </NameContainer>
+              );
             })}
           </PlayersList>
-          <NameInputContainer>
-            <IconTouch onPress={() => handleSubmit()}>
-              <Icon name="plus" style={styles.plusIcon} />
-            </IconTouch>
-            <NameInput
-              onChangeText={text => onChangeText(text)}
-              value={name}
-              placeholder="Enter Name..."
-              placeholderTextColor="gray"
-              onSubmitEditing={() => handleSubmit()}
-            />
-          </NameInputContainer>
+          <KeyboardAvoidingView
+            style={{width: '100%'}}
+            behavior="position"
+            keyboardVerticalOffset={keyboardVerticalOffset}>
+            <NameInputContainer>
+              <NameInput
+                onChangeText={text => onChangeText(text)}
+                value={name}
+                placeholder="Enter Name..."
+                placeholderTextColor="#808080"
+                onSubmitEditing={() => handleSubmit()}
+              />
+              <IconTouch onPress={() => handleSubmit()}>
+                <PlusButton />
+                {/* <Icon name="plus" style={styles.plusIcon} /> */}
+              </IconTouch>
+            </NameInputContainer>
+          </KeyboardAvoidingView>
           <ButtonContainer onPress={() => ready()} style={buttonShadow}>
-            <CustomButton>READY!</CustomButton>
+            <ReadyButton />
           </ButtonContainer>
         </ScreenContainer>
       </SafeAreaView>
@@ -81,7 +122,11 @@ const NamesScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   plusIcon: {
-    fontSize: 26,
+    fontSize: 32,
+  },
+  crossIcon: {
+    padding: 1,
+    backgroundColor: '#ffcf00',
   },
 });
 
@@ -116,16 +161,23 @@ const PlayersList = styled.ScrollView`
   margin-bottom: 20px;
 `;
 
+const NameContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
 const PlayerName = styled.Text`
   font-size: 22px;
-  margin: 4px;
+  margin: 6px 6px 6px 6px;
   border-radius: 10px;
   text-align: center;
   min-width: 40%;
   padding: 6px;
   letter-spacing: 1px;
-  background-color: white;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: #ccc;
   border: solid 3px black;
   overflow: hidden;
   font-family: Morning Breeze;
@@ -133,9 +185,10 @@ const PlayerName = styled.Text`
 
 const NameInputContainer = styled.View`
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 80%;
+  width: 100%;
   margin-bottom: 20px;
 `;
 
@@ -143,11 +196,6 @@ const ButtonContainer = styled.Pressable`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50%;
-  background-color: #ee3347;
-  border-radius: 10px;
-  border: solid 3px black;
-  margin-bottom: 20px;
 `;
 
 const CustomButton = styled.Text`
@@ -161,26 +209,24 @@ const CustomButton = styled.Text`
 `;
 
 const NameInput = styled.TextInput`
-  width: 100%;
+  width: 75%;
   height: 50px;
-  border-radius: 20px;
+  border-radius: 10px;
   font-size: 20px;
   padding-left: 14px;
+  margin-right: 8px;
   font-family: Morning Breeze;
   border: solid 3px black;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: #ccc;
 `;
 
-const IconTouch = styled.TouchableOpacity`
-  position: absolute;
-  right: -20px;
-  top: -20px;
-  padding: 10px;
-  border-radius: 20px;
-  background-color: #ee3347;
+const IconTouch = styled.Pressable``;
+
+const IconCross = styled.TouchableOpacity`
+  padding: 2px;
+  border-radius: 10px;
+  background-color: #ffcf00;
   border: solid 3px black;
-  z-index: 1;
-  overflow: hidden;
 `;
 
 export default NamesScreen;

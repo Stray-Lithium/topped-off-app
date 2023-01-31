@@ -35,7 +35,7 @@
 		00E356EE1AD99517003FC87E /* topped_offTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = topped_offTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* topped_offTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = topped_offTests.m; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* topped_off.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = topped_off.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Topped Off.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Topped Off.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = topped_off/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = topped_off/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = topped_off/Images.xcassets; sourceTree = "<group>"; };
@@ -155,7 +155,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* topped_off.app */,
+				13B07F961A680F5B00A75B9A /* Topped Off.app */,
 				00E356EE1AD99517003FC87E /* topped_offTests.xctest */,
 			);
 			name = Products;
@@ -222,7 +222,7 @@
 			);
 			name = topped_off;
 			productName = topped_off;
-			productReference = 13B07F961A680F5B00A75B9A /* topped_off.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Topped Off.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -525,6 +525,7 @@
 				DEVELOPMENT_TEAM = X276XFPD4D;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = topped_off/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Topped Off";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -534,8 +535,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = topped_off;
+				PRODUCT_BUNDLE_IDENTIFIER = .com;
+				PRODUCT_NAME = "Topped Off";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -551,6 +552,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = X276XFPD4D;
 				INFOPLIST_FILE = topped_off/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Topped Off";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -560,8 +562,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = topped_off;
+				PRODUCT_BUNDLE_IDENTIFIER = .com;
+				PRODUCT_NAME = "Topped Off";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -634,6 +636,7 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
+				PRODUCT_NAME = "Topped Off";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 			};
@@ -698,6 +701,7 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
+				PRODUCT_NAME = "Topped Off";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

@@ -6,16 +6,16 @@ const CardScreenBackground = ({image}) => {
 
   const backgroundImage = () => {
     if (image === 'whiskeyScore') {
-      return require(`../../assets/whiskey-card.png`);
+      return require(`../../assets/card-screen-background.png`);
     }
     if (image === 'martiniScore') {
-      return require(`../../assets/martini-card.png`);
+      return require(`../../assets/card-screen-background.png`);
     }
     if (image === 'mojitoScore') {
-      return require(`../../assets/mojito-card.png`);
+      return require(`../../assets/card-screen-background.png`);
     }
     if (image === 'lemonadeScore') {
-      return require(`../../assets/lemonade-card.png`);
+      return require(`../../assets/card-screen-background.png`);
     }
   };
   const uri = backgroundImage();

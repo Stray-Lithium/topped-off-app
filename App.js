@@ -1,4 +1,4 @@
-import React from 'react-native';
+import React, {StatusBar} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -27,6 +27,8 @@ sagaMiddleware.run(routeSaga);
 const App = () => {
   return (
     <Provider store={store}>
+      <StatusBar barStyle="light-content" translucent={true} />
+
       <SafeAreaProvider>
         <NavigationContainer>
           <Stack.Navigator>

@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:topped_off.xcodeproj">
+      location = "group:/Users/nate/Documents/Topped-Off/topped-off-app/ios/topped_off.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

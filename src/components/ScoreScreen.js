@@ -1,5 +1,5 @@
-import {useEffect} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {useEffect, useState} from 'react';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import Background from './background/Background';
@@ -9,20 +9,26 @@ import ScoreBoard from './scoreboard/scoreboard';
 import AutoHeightImage from 'react-native-auto-height-image';
 import {currentPlayerRequest} from '../actions/current-player';
 import {drinkersRequest} from '../actions/drinkers';
+import ScoreScreenClose from './button/ScoreScreenClose';
+import {checkScoreRequest} from '../actions/check-score';
 
 const ScoreScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const players = useSelector(state => state.Players.players);
   const currentCard = useSelector(state => state.CurrentCard.currentCard);
+  const checkScore = useSelector(state => state.CheckScore.checkScore);
   const windowWidth = Dimensions.get('window').width * 0.8;
+  const insets = useSafeAreaInsets();
 
-  useEffect(() => {}, [players, currentCard]);
-  console.log('in score screen');
+  useEffect(() => {}, [players, currentCard, checkScore]);
 
   const exitButton = () => {
-    dispatch(drinkersRequest(false));
-    dispatch(currentPlayerRequest(false));
-    dispatch(currentCardRequest(false));
+    if (!checkScore) {
+      dispatch(drinkersRequest(false));
+      dispatch(currentPlayerRequest(false));
+      dispatch(currentCardRequest(false));
+    }
+    dispatch(checkScoreRequest(false));
     navigation.navigate('Card Screen');
   };
 
@@ -32,18 +38,18 @@ const ScoreScreen = ({navigation}) => {
         <Background background={currentCard.cardColor} />
         <SafeAreaView style={{flex: 1}}>
           <ExitPressable
+            style={{top: insets.top}}
             onPress={() => {
               exitButton();
             }}>
-            <ExitButton>X</ExitButton>
+            <ScoreScreenClose />
+            {/* <ExitButton>X</ExitButton> */}
           </ExitPressable>
           <ScreenContainer>
-            <AutoHeightImage
-              style={{marginBottom: 20}}
-              width={windowWidth}
-              source={require('../assets/scoreboard.png')}
-            />
-            <ScoreBoard />
+            <TitleContainer>
+              <Title>SCOREBOARD</Title>
+            </TitleContainer>
+            <ScoreBoard players={players} />
           </ScreenContainer>
         </SafeAreaView>
       </>
@@ -51,7 +57,10 @@ const ScoreScreen = ({navigation}) => {
   } else return <Text style={{fontSize: 48}}>Hello</Text>;
 };
 
-const ExitPressable = styled.Pressable``;
+const ExitPressable = styled.Pressable`
+  position: absolute;
+  left: 8px;
+`;
 
 const ExitButton = styled.Text`
   position: absolute;
@@ -70,6 +79,22 @@ const ScreenContainer = styled.View`
   height: 100%;
   width: 100%;
   margin-top: 50px;
+`;
+
+const TitleContainer = styled.View`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  height: 50px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+`;
+
+const Title = styled.Text`
+  font-size: 38px;
+  color: #ffcf00;
+  font-family: Morning Breeze Bold;
 `;
 
 export default ScoreScreen;

@@ -17,6 +17,8 @@ import {currentCardRequest} from '../actions/current-card';
 import {storeWinners} from './storage/storage';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {buttonShadow} from './button/button-shadow';
+import CompleteAndDrinkButton from './button/CompleteAndDringButton';
+import {checkScoreRequest} from '../actions/check-score';
 
 const ChallengeScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -109,26 +111,27 @@ const ChallengeScreen = ({navigation}) => {
 
   const notLemonadeChallenge = () => {
     return (
-      <>
-        <ButtonContainer onPress={() => complete(true)} style={buttonShadow}>
-          <CustomButton>COMPLETED</CustomButton>
-        </ButtonContainer>
+      <ButtonBar>
         <ButtonContainer onPress={() => complete(false)} style={buttonShadow}>
-          <CustomButton>DRINK</CustomButton>
+          <CompleteAndDrinkButton completeOrDrink={'DRINK'} />
         </ButtonContainer>
-      </>
+        {/* <OrText>or</OrText> */}
+        <ButtonContainer onPress={() => complete(true)} style={buttonShadow}>
+          <CompleteAndDrinkButton completeOrDrink={'DONE'} />
+        </ButtonContainer>
+      </ButtonBar>
     );
   };
 
   const lemonadeChallenge = () => {
     return (
-      <Button
-        buttonInfo={{
-          text: 'OK',
-          navigate: 'Lemonade Who Completed Screen',
-          navigation,
-        }}
-      />
+      <ButtonBar>
+        <ButtonContainer
+          onPress={() => navigation.navigate('Lemonade Who Completed Screen')}
+          style={buttonShadow}>
+          <CompleteAndDrinkButton completeOrDrink={'DONE'} />
+        </ButtonContainer>
+      </ButtonBar>
     );
   };
 
@@ -211,25 +214,30 @@ const CardContentContainer = styled.View`
 `;
 
 const CardTitle = styled.Text`
-  font-size: 26px;
+  font-size: 34px;
   text-align: center;
   width: 80%;
   margin-top: 20px;
+  padding: 2px;
   font-family: Morning Breeze;
 `;
 
 const CardContent = styled.Text`
-  font-size: 22px;
+  font-size: 26px;
   text-align: center;
-  width: 80%;
+  width: 86%;
+  line-height: 30px;
+  padding: 2px;
   font-family: Morning Breeze;
 `;
 
 const CardComment = styled.Text`
-  font-size: 20px;
+  font-size: 24px;
   text-align: center;
   width: 80%;
   margin-bottom: 20px;
+  padding: 2px;
+  margin-top: 40px;
   font-family: Morning Breeze;
   font-style: italic;
 `;
@@ -258,25 +266,18 @@ const PlayerName = styled.Text`
   font-family: Morning Breeze;
 `;
 
-const ButtonContainer = styled.Pressable`
+const ButtonBar = styled.View`
+  position: absolute;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 55%;
-  background-color: #ee3347;
-  border-radius: 10px;
-  border: solid 3px black;
-  margin-bottom: 20px;
+  width: 100%;
+  bottom: 0px;
 `;
 
-const CustomButton = styled.Text`
-  text-align: center;
-  color: black;
-  font-size: 24px;
-  padding: 12px 12px 12px 12px;
-  letter-spacing: 5px;
-  font-family: Morning Breeze;
-  overflow: hidden;
+const ButtonContainer = styled.Pressable`
+  margin: 0 3px 0 3px;
 `;
 
 export default ChallengeScreen;

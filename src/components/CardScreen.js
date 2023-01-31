@@ -8,6 +8,7 @@ import {currentPlayerRequest} from '../actions/current-player';
 import {turnRandomizer} from '../algorithms/turn';
 import CardScreenBackground from './background/CardScreenBackgrounds';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import BottomBar from './bar/BottomBar';
 
 const CardScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const CardScreen = ({navigation}) => {
 
   const ingredientRandomizer = () => {
     const cards = [
-      // 'lemonadeScore',
+      'lemonadeScore',
       'whiskeyScore',
       'martiniScore',
       'mojitoScore',
@@ -90,6 +91,7 @@ const CardScreen = ({navigation}) => {
           <ScreenContainer>
             {gameVersion === 'FULL' ? fullVersion() : cardVersion()}
           </ScreenContainer>
+          <BottomBar navigation={navigation} />
         </SafeAreaView>
       </>
     );
@@ -138,5 +140,7 @@ const Card = styled.View`
 `;
 
 const CardSelect = styled.Pressable``;
+
+const BottomBarContainer = styled.View``;
 
 export default CardScreen;

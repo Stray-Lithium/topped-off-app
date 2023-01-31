@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Background from './background/Background';
 import {gameVersionRequest} from '../actions/game-version';
 import {buttonShadow} from './button/button-shadow';
+import GameVersionButtons from './button/game-version-buttons';
 
 const GameVersionScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -16,11 +17,11 @@ const GameVersionScreen = ({navigation}) => {
   return (
     <ScreenContainer>
       <Background />
-      <ButtonContainer onPress={() => confirm('FULL')} style={buttonShadow}>
-        <CustomButton>FULL VERSION</CustomButton>
+      <ButtonContainer onPress={() => confirm('FULL')}>
+        <GameVersionButtons button={'DIGITAL VERSION'} />
       </ButtonContainer>
       <ButtonContainer onPress={() => confirm('CARD')} style={buttonShadow}>
-        <CustomButton>CARD VERSION</CustomButton>
+        <GameVersionButtons button={'CARD VERSION'} />
       </ButtonContainer>
     </ScreenContainer>
   );
@@ -41,11 +42,6 @@ const ButtonContainer = styled.Pressable`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50%;
-  background-color: #ee3347;
-  border-radius: 10px;
-  border: solid 3px black;
-  margin-bottom: 20px;
 `;
 
 const CustomButton = styled.Text`

@@ -38,6 +38,7 @@ const DrinkScreen = ({navigation}) => {
       const randomPlayerIndex =
         Math.floor(Math.random() * potentialStealers.length) + 0;
       const stealer = potentialStealers[randomPlayerIndex];
+      console.log(stealer, ' thisss one ');
       setStealer([stealer]);
       doSteal = false;
       return stealer;
@@ -83,7 +84,7 @@ const DrinkScreen = ({navigation}) => {
     navigation.navigate('Challenge Screen');
   };
 
-  console.log(stealer, 'stealer');
+  console.log(stealer, 'hereee');
 
   if (players && currentPlayer && drinkers && currentCard) {
     return (

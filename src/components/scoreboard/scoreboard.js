@@ -1,16 +1,31 @@
 import ScoreIcon from '../background/ScoreIcon';
-import {useSelector} from 'react-redux';
 import styled from 'styled-components';
-import AutoHeightImage from 'react-native-auto-height-image';
-import {Dimensions} from 'react-native';
 
-const ScoreBoard = () => {
-  const players = useSelector(state => state.Players.players);
+const ScoreBoard = ({players}) => {
+  const sortPlayers = () => {
+    const sortedPlayers = [];
+    for (let i = 5; i >= 0; i--) {
+      console.log(players, 'score players');
+      players.forEach(player => {
+        const playerScore =
+          player.lemonadeScore +
+          player.mojitoScore +
+          player.whiskeyScore +
+          player.martiniScore;
+        if (playerScore === i) {
+          sortedPlayers.push(player);
+        }
+      });
+    }
+    return sortedPlayers;
+  };
+
+  const sortedPlayers = sortPlayers();
 
   return (
     <ScoreboardContainer>
       <ScoreList>
-        {players.map(player => {
+        {sortedPlayers.map(player => {
           return (
             <EachPersonsScoreContainer>
               <ScoreNameContainer>
@@ -53,12 +68,6 @@ const ScoreboardContainer = styled.View`
   width: 90%;
 `;
 
-const Title = styled.Image`
-  width: 80%;
-  margin-bottom: 10px;
-  margin-top: 80px;
-`;
-
 const ScoreList = styled.View`
   overflow-y: auto;
   display: flex;
@@ -77,7 +86,7 @@ const EachPersonsScoreContainer = styled.View`
   padding-bottom: 8px;
   border: solid 4px black;
   background-color: #808184;
-  border-radius: 30px;
+  border-radius: 16px;
   margin-bottom: 20px;
 `;
 

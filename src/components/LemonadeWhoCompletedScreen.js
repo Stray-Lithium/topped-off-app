@@ -8,6 +8,7 @@ import {playersRequest} from '../actions/players';
 import {drinkersRequest} from '../actions/drinkers';
 import {useDispatch, useSelector} from 'react-redux';
 import {storeWinners} from './storage/storage';
+import LemonadeConfirmButton from './button/LemonadeConfirmButton';
 
 const LemonadeWhoCompletedScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -198,9 +199,14 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
             ) : (
               <></>
             )}
-            <ButtonContainer onPress={() => confirm()}>
+            <ButtonBar>
+              <ButtonContainer onPress={() => confirm()}>
+                <LemonadeConfirmButton />
+              </ButtonContainer>
+            </ButtonBar>
+            {/* <ButtonContainer onPress={() => confirm()}>
               <CustomButton>CONFIRM</CustomButton>
-            </ButtonContainer>
+            </ButtonContainer> */}
           </ScreenContainer>
         </SafeAreaView>
       </>
@@ -275,26 +281,26 @@ const CheckboxPosition = styled.View`
   width: 50%;
 `;
 
-const ButtonContainer = styled.Pressable`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50%;
-  background-color: #ee3347;
-  border-radius: 10px;
-  border: solid 3px black;
-  margin-bottom: 20px;
-`;
+// const ButtonContainer = styled.Pressable`
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   width: 50%;
+//   background-color: #ee3347;
+//   border-radius: 10px;
+//   border: solid 3px black;
+//   margin-bottom: 20px;
+// `;
 
-const CustomButton = styled.Text`
-  text-align: center;
-  color: black;
-  font-size: 26px;
-  padding: 12px 12px 12px 12px;
-  letter-spacing: 5px;
-  font-family: Morning Breeze;
-  overflow: hidden;
-`;
+// const CustomButton = styled.Text`
+//   text-align: center;
+//   color: black;
+//   font-size: 26px;
+//   padding: 12px 12px 12px 12px;
+//   letter-spacing: 5px;
+//   font-family: Morning Breeze;
+//   overflow: hidden;
+// `;
 
 const Message = styled.Text`
   width: 80%;
@@ -303,6 +309,20 @@ const Message = styled.Text`
   color: yellow;
   font-size: 26px;
   font-family: Morning Breeze;
+`;
+
+const ButtonBar = styled.View`
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  bottom: 0px;
+`;
+
+const ButtonContainer = styled.Pressable`
+  margin: 0 3px 0 3px;
 `;
 
 export default LemonadeWhoCompletedScreen;

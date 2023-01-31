@@ -8,6 +8,8 @@ import Button from './button/Button';
 import {lemonadeBlankFill} from '../blanks/lemonade';
 import {currentPlayerRequest} from '../actions/current-player';
 import {useDispatch, useSelector} from 'react-redux';
+import LemonadeConfirmButton from './button/LemonadeConfirmButton';
+import RefreshButton from './button/RefreshButton';
 
 const LemonadePlayersScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -85,16 +87,18 @@ const LemonadePlayersScreen = ({navigation}) => {
             ) : (
               <></>
             )}
-            <ButtonContainer onPress={() => confirm()}>
-              <CustomButton>CONFIRM</CustomButton>
-            </ButtonContainer>
-            {displayRefresh ? (
-              <ButtonContainer onPress={() => setLemonFill(false)}>
-                <CustomButton>REFRESH</CustomButton>
+            <ButtonBar>
+              {displayRefresh ? (
+                <ButtonContainer onPress={() => setLemonFill(false)}>
+                  <RefreshButton displayRefresh={true} />
+                </ButtonContainer>
+              ) : (
+                <></>
+              )}
+              <ButtonContainer onPress={() => confirm()}>
+                <LemonadeConfirmButton />
               </ButtonContainer>
-            ) : (
-              <></>
-            )}
+            </ButtonBar>
           </ScreenContainer>
         </SafeAreaView>
       </>
@@ -169,25 +173,18 @@ const CheckboxPosition = styled.View`
   width: 50%;
 `;
 
-const ButtonContainer = styled.Pressable`
+const ButtonBar = styled.View`
+  position: absolute;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 50%;
-  background-color: #ee3347;
-  border-radius: 10px;
-  border: solid 3px black;
-  margin-bottom: 20px;
+  width: 100%;
+  bottom: 0px;
 `;
 
-const CustomButton = styled.Text`
-  text-align: center;
-  color: black;
-  font-size: 26px;
-  padding: 12px 12px 12px 12px;
-  letter-spacing: 5px;
-  font-family: Morning Breeze;
-  overflow: hidden;
+const ButtonContainer = styled.Pressable`
+  margin: 0 3px 0 3px;
 `;
 
 const RefreshMessage = styled.Text`

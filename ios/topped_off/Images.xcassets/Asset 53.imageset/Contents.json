@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Topped-Off-App-Logo-vRed.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

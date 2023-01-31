@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Background from './background/Background';
 import {useEffect, useState} from 'react';
@@ -6,6 +7,7 @@ import ScoreBoard from './scoreboard/scoreboard';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 const EndScreen = () => {
+  const players = useSelector(state => state.Players.players);
   const [winners, setWinners] = useState(false);
 
   useEffect(() => {
@@ -20,7 +22,7 @@ const EndScreen = () => {
       };
       getWinners();
     }
-  }, [winners]);
+  }, [winners, players]);
 
   const nameMaker = () => {
     const winnersLength = winners.length;
@@ -47,7 +49,7 @@ const EndScreen = () => {
             <WinnersText>
               {winningNames} you topped off all of your drinks! Congratulations!
             </WinnersText>
-            <ScoreBoard />
+            <ScoreBoard players={players} />
           </ScreenContainer>
         </SafeAreaView>
       </>
