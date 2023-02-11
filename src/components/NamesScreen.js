@@ -34,6 +34,12 @@ const NamesScreen = ({navigation}) => {
       turns: 0,
       pointsAwarded: 0,
       canSteal: true,
+      cardTurns: [
+        {name: 'lemonadeScore', turns: 0},
+        {name: 'martiniScore', turns: 0},
+        {name: 'whiskeyScore', turns: 0},
+        {name: 'mojitoScore', turns: 0},
+      ],
     };
     setPlayers([...players, playerObject]);
     setName('');
@@ -67,7 +73,6 @@ const NamesScreen = ({navigation}) => {
               }}>
               WHO's PLAYING?
             </Text>
-            {/* <Title source={require('../assets/whos-playing.png')} /> */}
           </TitleContainer>
           <PlayersList>
             {players.map(player => {
