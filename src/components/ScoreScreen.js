@@ -1,12 +1,11 @@
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
+import {ScrollView} from 'react-native-gesture-handler';
 import styled from 'styled-components';
 import Background from './background/Background';
-import {Dimensions} from 'react-native';
 import {currentCardRequest} from '../actions/current-card';
 import ScoreBoard from './scoreboard/scoreboard';
-import AutoHeightImage from 'react-native-auto-height-image';
 import {currentPlayerRequest} from '../actions/current-player';
 import {drinkersRequest} from '../actions/drinkers';
 import ScoreScreenClose from './button/ScoreScreenClose';
@@ -17,7 +16,6 @@ const ScoreScreen = ({navigation}) => {
   const players = useSelector(state => state.Players.players);
   const currentCard = useSelector(state => state.CurrentCard.currentCard);
   const checkScore = useSelector(state => state.CheckScore.checkScore);
-  const windowWidth = Dimensions.get('window').width * 0.8;
   const insets = useSafeAreaInsets();
 
   useEffect(() => {}, [players, currentCard, checkScore]);
@@ -43,13 +41,14 @@ const ScoreScreen = ({navigation}) => {
               exitButton();
             }}>
             <ScoreScreenClose />
-            {/* <ExitButton>X</ExitButton> */}
           </ExitPressable>
           <ScreenContainer>
             <TitleContainer>
               <Title>SCOREBOARD</Title>
             </TitleContainer>
-            <ScoreBoard players={players} />
+            <ScoreScroll>
+              <ScoreBoard players={players} />
+            </ScoreScroll>
           </ScreenContainer>
         </SafeAreaView>
       </>
@@ -60,14 +59,6 @@ const ScoreScreen = ({navigation}) => {
 const ExitPressable = styled.Pressable`
   position: absolute;
   left: 8px;
-`;
-
-const ExitButton = styled.Text`
-  position: absolute;
-  top: 8px;
-  left: 24px;
-  font-size: 32px;
-  font-weight: bold;
 `;
 
 const ScreenContainer = styled.View`
@@ -95,6 +86,10 @@ const Title = styled.Text`
   font-size: 38px;
   color: #ffcf00;
   font-family: Morning Breeze Bold;
+`;
+
+const ScoreScroll = styled.ScrollView`
+  width: 90%;
 `;
 
 export default ScoreScreen;

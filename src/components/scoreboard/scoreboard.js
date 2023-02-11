@@ -65,7 +65,7 @@ const ScoreboardContainer = styled.View`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 90%;
+  width: 100%;
 `;
 
 const ScoreList = styled.View`
