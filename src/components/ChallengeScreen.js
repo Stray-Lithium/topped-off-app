@@ -29,10 +29,18 @@ const ChallengeScreen = ({navigation}) => {
 
   const cardAndBlank = () => {
     if (currentCard.cardColor === 'whiskeyScore') {
-      dispatch(currentCardRequest(whiskeyCard(whiskeyBlank())));
+      if (gameVersion === 'CARD') {
+        dispatch(currentCardRequest(whiskeyBlank()));
+      } else {
+        dispatch(currentCardRequest(whiskeyCard(whiskeyBlank())));
+      }
     }
     if (currentCard.cardColor === 'martiniScore') {
-      dispatch(currentCardRequest(martiniCard(martiniBlank())));
+      if (gameVersion === 'CARD') {
+        dispatch(currentCardRequest(martiniBlank()));
+      } else {
+        dispatch(currentCardRequest(martiniCard(martiniBlank())));
+      }
     }
     if (currentCard.cardColor === 'mojitoScore') {
       dispatch(currentCardRequest(mojitoCard()));
@@ -136,13 +144,19 @@ const ChallengeScreen = ({navigation}) => {
   };
 
   const cardVersion = () => {
+    console.log(currentCard, 'current card');
     return (
       <>
         <CardContainer>
           <ChallengeCardBackground image={currentCard.cardColor} />
           <CVCardContentContainer>
-            <PlayerName>{`${names}`}</PlayerName>
-            <CVCardContent>{`${currentCard.content}`}</CVCardContent>
+            <CVPlayerName>{`${names}`}</CVPlayerName>
+            {currentCard.cardColor !== 'mojitoScore' ? (
+              <CVBlankPrompt>Your blank is:</CVBlankPrompt>
+            ) : null}
+            {currentCard.cardColor !== 'mojitoScore' ? (
+              <CVCardContent>{`${currentCard.content}`}</CVCardContent>
+            ) : null}
           </CVCardContentContainer>
         </CardContainer>
         {currentCard.cardColor !== 'lemonadeScore'
@@ -247,9 +261,17 @@ const CVCardContentContainer = styled.View`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
   width: 100%;
   height: 100%;
+`;
+
+const CVBlankPrompt = styled.Text`
+  font-size: 22px;
+  text-align: center;
+  width: 70%;
+  font-family: Morning Breeze;
+  margin-bottom: 4px;
 `;
 
 const CVCardContent = styled.Text`
@@ -257,6 +279,7 @@ const CVCardContent = styled.Text`
   text-align: center;
   width: 70%;
   font-family: Morning Breeze;
+  padding-bottom: 2px;
 `;
 
 const PlayerName = styled.Text`
@@ -264,6 +287,14 @@ const PlayerName = styled.Text`
   text-align: center;
   width: 70%;
   font-family: Morning Breeze;
+`;
+
+const CVPlayerName = styled.Text`
+  font-size: 22px;
+  text-align: center;
+  width: 70%;
+  font-family: Morning Breeze;
+  margin-bottom: 8px;
 `;
 
 const ButtonBar = styled.View`

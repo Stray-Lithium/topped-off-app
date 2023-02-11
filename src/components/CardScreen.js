@@ -37,12 +37,19 @@ const CardScreen = ({navigation}) => {
     }
   }, [players, currentCard, gameVersion]);
 
-  const storeCurrentPlayerAndCard = () => {
+  const storeCurrentPlayerAndCard = pressedCard => {
     const playerTurn = turnRandomizer(players);
     dispatch(currentPlayerRequest([playerTurn]));
+
     if (gameVersion === 'CARD') {
-      dispatch(currentCardRequest({cardColor: `${currentCard.cardColor}`}));
+      dispatch(currentCardRequest({cardColor: pressedCard}));
+      navigation.navigate(
+        pressedCard === 'lemonadeScore'
+          ? 'Lemonade Players Screen'
+          : 'Challenge Screen',
+      );
     }
+
     navigation.navigate(
       currentCard.cardColor === 'lemonadeScore'
         ? 'Lemonade Players Screen'
