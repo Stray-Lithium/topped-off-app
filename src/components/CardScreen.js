@@ -43,18 +43,19 @@ const CardScreen = ({navigation}) => {
 
     if (gameVersion === 'CARD') {
       dispatch(currentCardRequest({cardColor: pressedCard}));
+      console.log(pressedCard, 'navigating to');
       navigation.navigate(
         pressedCard === 'lemonadeScore'
           ? 'Lemonade Players Screen'
           : 'Challenge Screen',
       );
+    } else {
+      navigation.navigate(
+        currentCard.cardColor === 'lemonadeScore'
+          ? 'Lemonade Players Screen'
+          : 'Challenge Screen',
+      );
     }
-
-    navigation.navigate(
-      currentCard.cardColor === 'lemonadeScore'
-        ? 'Lemonade Players Screen'
-        : 'Challenge Screen',
-    );
   };
 
   const fullVersion = () => {

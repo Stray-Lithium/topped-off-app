@@ -33,33 +33,25 @@ const LemonadePlayersScreen = ({navigation}) => {
     }
   };
 
-  const checkBoxes = () => {
+  const renderCheckBox = ({item}) => {
     return (
-      <>
-        {players.map(player => {
-          return (
-            <>
-              <CheckboxContainer>
-                <NamePosition>
-                  <PlayerName>{player.name}</PlayerName>
-                </NamePosition>
-                <CheckboxPosition>
-                  <Pressable
-                    onPress={() => checkboxClick(player.name)}
-                    style={styles.checkbox}>
-                    <AnimatedCheckbox
-                      checked={checkedNames.includes(player.name)}
-                      highlightColor="#ee3347"
-                      checkmarkColor="#ffffff"
-                      boxOutlineColor="#000000"
-                    />
-                  </Pressable>
-                </CheckboxPosition>
-              </CheckboxContainer>
-            </>
-          );
-        })}
-      </>
+      <CheckboxContainer>
+        <NamePosition>
+          <PlayerName>{item.name}</PlayerName>
+        </NamePosition>
+        <CheckboxPosition>
+          <Pressable
+            onPress={() => checkboxClick(item.name)}
+            style={styles.checkbox}>
+            <AnimatedCheckbox
+              checked={checkedNames.includes(item.name)}
+              highlightColor="#ee3347"
+              checkmarkColor="#ffffff"
+              boxOutlineColor="#000000"
+            />
+          </Pressable>
+        </CheckboxPosition>
+      </CheckboxContainer>
     );
   };
 
@@ -79,7 +71,11 @@ const LemonadePlayersScreen = ({navigation}) => {
         <SafeAreaView style={{flex: 1}}>
           <ScreenContainer>
             <Title>{lemonFill}?</Title>
-            <CheckboxesContainer>{checkBoxes()}</CheckboxesContainer>
+            <CheckBoxes
+              data={players}
+              renderItem={renderCheckBox}
+              keyExtractor={item => item.id}
+            />
             {displayRefresh ? (
               <RefreshMessage>
                 Please select a player or refresh the prompt if no one applies
@@ -126,28 +122,31 @@ const ScreenContainer = styled.View`
   color: black;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   height: 100%;
   width: 100%;
 `;
 
 const Title = styled.Text`
   font-size: 30px;
+  margin-top: 48px;
   margin-bottom: 20px;
   text-align: center;
   width: 90%;
   font-family: Morning Breeze;
+  font-weight: bold;
+  color: #ffcf00;
 `;
 
-const CheckboxesContainer = styled.ScrollView`
-  display: flex;
-  max-height: 40%;
-  margin-bottom: 20px;
+const CheckBoxes = styled.FlatList`
+  width: 90%;
+  max-height: 60%;
+  margin-top: 48px;
 `;
 
 const CheckboxContainer = styled.View`
   display: flex;
   flex-direction: row;
+  justify-content: center;
   align-items: center;
   width: 100%;
 `;
@@ -157,20 +156,20 @@ const NamePosition = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
-  width: 50%;
+  width: 55%;
 `;
 
 const PlayerName = styled.Text`
-  font-size: 20px;
+  font-size: 24px;
   font-family: Morning Breeze;
   margin-right: 10px;
 `;
 
 const CheckboxPosition = styled.View`
   display: flex;
-  align-items: center;
   align-items: flex-start;
-  width: 50%;
+  justify-content: center;
+  width: 45%;
 `;
 
 const ButtonBar = styled.View`
@@ -190,8 +189,9 @@ const ButtonContainer = styled.Pressable`
 const RefreshMessage = styled.Text`
   width: 80%;
   padding: 20px 0 20px 0;
+  margin-bottom: 80px;
   text-align: center;
-  color: yellow;
+  color: #ffcf00;
   font-size: 26px;
   font-family: Morning Breeze;
 `;

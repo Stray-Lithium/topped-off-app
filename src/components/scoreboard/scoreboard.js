@@ -5,7 +5,6 @@ const ScoreBoard = ({players}) => {
   const sortPlayers = () => {
     const sortedPlayers = [];
     for (let i = 5; i >= 0; i--) {
-      console.log(players, 'score players');
       players.forEach(player => {
         const playerScore =
           player.lemonadeScore +
