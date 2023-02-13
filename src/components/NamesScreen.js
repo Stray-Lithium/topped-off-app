@@ -56,6 +56,7 @@ const NamesScreen = ({navigation}) => {
   };
 
   const ready = () => {
+    console.log(players, 'what is sent to dispatch');
     dispatch(playersRequest(players));
     navigation.navigate('Card Screen');
   };
@@ -82,11 +83,6 @@ const NamesScreen = ({navigation}) => {
                   <ButtonContainer onPress={() => deleteName(player.name)}>
                     <XButton />
                   </ButtonContainer>
-                  {/* <IconCross
-                    style={styles.crossIcon}
-                    onPress={() => deleteName(player.name)}>
-                    <Icon name="x" style={styles.plusIcon} />
-                  </IconCross> */}
                 </NameContainer>
               );
             })}
@@ -105,7 +101,6 @@ const NamesScreen = ({navigation}) => {
               />
               <IconTouch onPress={() => handleSubmit()}>
                 <PlusButton />
-                {/* <Icon name="plus" style={styles.plusIcon} /> */}
               </IconTouch>
             </NameInputContainer>
           </KeyboardAvoidingView>
@@ -156,11 +151,6 @@ const TitleContainer = styled.View`
   margin-bottom: 20px;
 `;
 
-const Title = styled.Image`
-  flex: 1;
-  width: 100%;
-`;
-
 const PlayersList = styled.ScrollView`
   flex: 1;
   margin-bottom: 20px;
@@ -203,16 +193,6 @@ const ButtonContainer = styled.Pressable`
   justify-content: center;
 `;
 
-const CustomButton = styled.Text`
-  text-align: center;
-  color: black;
-  font-size: 26px;
-  padding: 12px 12px 12px 12px;
-  letter-spacing: 5px;
-  font-family: Morning Breeze;
-  overflow: hidden;
-`;
-
 const NameInput = styled.TextInput`
   width: 75%;
   height: 50px;
@@ -226,12 +206,5 @@ const NameInput = styled.TextInput`
 `;
 
 const IconTouch = styled.Pressable``;
-
-const IconCross = styled.TouchableOpacity`
-  padding: 2px;
-  border-radius: 10px;
-  background-color: #ffcf00;
-  border: solid 3px black;
-`;
 
 export default NamesScreen;

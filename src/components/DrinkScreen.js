@@ -19,8 +19,6 @@ const DrinkScreen = ({navigation}) => {
     let doSteal = false;
 
     players.forEach(player => {
-      console.log(player.name, player.canSteal, 'can steal');
-
       if (player.name === currentPlayer[0]) {
         player.pointsAwarded >= 2 ? (doSteal = true) : null;
       }
@@ -38,7 +36,6 @@ const DrinkScreen = ({navigation}) => {
       const randomPlayerIndex =
         Math.floor(Math.random() * potentialStealers.length) + 0;
       const stealer = potentialStealers[randomPlayerIndex];
-      console.log(stealer, ' thisss one ');
       setStealer([stealer]);
       doSteal = false;
       return stealer;
@@ -83,8 +80,6 @@ const DrinkScreen = ({navigation}) => {
     dispatch(currentPlayerRequest(stealer));
     navigation.navigate('Challenge Screen');
   };
-
-  console.log(stealer, 'hereee');
 
   if (players && currentPlayer && drinkers && currentCard) {
     return (

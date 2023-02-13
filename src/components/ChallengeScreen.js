@@ -144,7 +144,6 @@ const ChallengeScreen = ({navigation}) => {
   };
 
   const cardVersion = () => {
-    console.log(currentCard, 'current card');
     return (
       <>
         <CardContainer>

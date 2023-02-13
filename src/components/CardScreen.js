@@ -16,33 +16,40 @@ const CardScreen = ({navigation}) => {
   const currentCard = useSelector(state => state.CurrentCard.currentCard);
   const gameVersion = useSelector(state => state.GameVersion.gameVersion);
 
-  const ingredientRandomizer = () => {
+  const ingredientRandomizer = players => {
     const cards = [
       'lemonadeScore',
       'whiskeyScore',
       'martiniScore',
       'mojitoScore',
     ];
-    // const isFirstTurn = () => {
-    //   players.forEach((player) => {
-    //     if (player.turn > 0) {
-    //       return false;
-    //     }
-    //   })
-    //   return true;
-    // }
-    // if (!isFirstTurn) {
-    //   const card = turnRandomizer(cards)
-    // }
-    // console.log(players, 'playerrrrr');
-    const randomWordIndex = Math.floor(Math.random() * cards.length) + 0;
-    const card = cards[randomWordIndex];
-    dispatch(currentCardRequest({cardColor: `${card}`}));
+    const isFirstTurn = () => {
+      let total = 0;
+      players.forEach(player => {
+        console.log(player.turns, 'player.turns');
+        // if (player.turns > 0) {
+        //   total += player.turns
+        // }
+      });
+      console.log('true');
+      return true;
+    };
+    const firstTurn = isFirstTurn();
+    if (!firstTurn) {
+      console.log('not first turn');
+      const card = turnRandomizer(cards);
+      dispatch(currentCardRequest({cardColor: `${card}`}));
+    } else {
+      console.log('first turn');
+      const randomWordIndex = Math.floor(Math.random() * cards.length) + 0;
+      const card = cards[randomWordIndex];
+      dispatch(currentCardRequest({cardColor: `${card}`}));
+    }
   };
 
   useEffect(() => {
-    if (!currentCard && gameVersion === 'FULL') {
-      ingredientRandomizer();
+    if (!currentCard && gameVersion === 'FULL' && players) {
+      ingredientRandomizer(players);
     }
     if (!currentCard && gameVersion === 'CARD') {
       dispatch(currentCardRequest({cardColor: 'gray'}));
@@ -55,18 +62,19 @@ const CardScreen = ({navigation}) => {
 
     if (gameVersion === 'CARD') {
       dispatch(currentCardRequest({cardColor: pressedCard}));
+      console.log(pressedCard, 'navigating to');
       navigation.navigate(
         pressedCard === 'lemonadeScore'
           ? 'Lemonade Players Screen'
           : 'Challenge Screen',
       );
+    } else {
+      navigation.navigate(
+        currentCard.cardColor === 'lemonadeScore'
+          ? 'Lemonade Players Screen'
+          : 'Challenge Screen',
+      );
     }
-
-    navigation.navigate(
-      currentCard.cardColor === 'lemonadeScore'
-        ? 'Lemonade Players Screen'
-        : 'Challenge Screen',
-    );
   };
 
   const fullVersion = () => {
