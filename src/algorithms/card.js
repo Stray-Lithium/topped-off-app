@@ -26,11 +26,10 @@ const algorythm = cards => {
     cardTickets.push(card);
     cardTickets[index].turnTickets = reverseSortedCards[index].turns;
   });
-  console.log(cardTickets, 'card tickets');
   return cardTickets;
 };
 
-const turnRandomizer = cards => {
+export const turnRandomizer = cards => {
   const cardTurns = algorythm(cards);
   let turnPool = [];
   let lowestCard = 0;
@@ -52,28 +51,28 @@ const turnRandomizer = cards => {
   return turnPool[Math.floor(Math.random() * turnPool.length)];
 };
 
-const runHundredTimes = cards => {
-  let percent = [];
-  for (let i = 0; i <= 100; i++) {
-    percent.push(turnRandomizer(cards));
-  }
+// const runHundredTimes = cards => {
+//   let percent = [];
+//   for (let i = 0; i <= 100; i++) {
+//     percent.push(turnRandomizer(cards));
+//   }
 
-  let endResult = {};
-  cards.forEach(card => {
-    endResult[card.name] = percent.filter(element => element === card.name);
-  });
-  cards.forEach(card => {
-    console.log(
-      `${card.name} was chosen for the next turn ${
-        endResult[card.name].length
-      }% of the time.`,
-    );
-  });
-};
+//   let endResult = {};
+//   cards.forEach(card => {
+//     endResult[card.name] = percent.filter(element => element === card.name);
+//   });
+//   cards.forEach(card => {
+//     console.log(
+//       `${card.name} was chosen for the next turn ${
+//         endResult[card.name].length
+//       }% of the time.`,
+//     );
+//   });
+// };
 
-runHundredTimes([
-  {name: 'lemonadeScore', turns: 2},
-  {name: 'martiniScore', turns: 1},
-  {name: 'whiskeyScore', turns: 0},
-  {name: 'mojitoScore', turns: 0},
-]);
+// runHundredTimes([
+//   {name: 'lemonadeScore', turns: 2},
+//   {name: 'martiniScore', turns: 1},
+//   {name: 'whiskeyScore', turns: 0},
+//   {name: 'mojitoScore', turns: 0},
+// ]);

@@ -23,6 +23,18 @@ const CardScreen = ({navigation}) => {
       'martiniScore',
       'mojitoScore',
     ];
+    // const isFirstTurn = () => {
+    //   players.forEach((player) => {
+    //     if (player.turn > 0) {
+    //       return false;
+    //     }
+    //   })
+    //   return true;
+    // }
+    // if (!isFirstTurn) {
+    //   const card = turnRandomizer(cards)
+    // }
+    // console.log(players, 'playerrrrr');
     const randomWordIndex = Math.floor(Math.random() * cards.length) + 0;
     const card = cards[randomWordIndex];
     dispatch(currentCardRequest({cardColor: `${card}`}));
