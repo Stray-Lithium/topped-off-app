@@ -1,7 +1,11 @@
 import ScoreIcon from '../background/ScoreIcon';
 import styled from 'styled-components';
+import AutoHeightImage from 'react-native-auto-height-image';
+import {Dimensions} from 'react-native';
 
 const ScoreBoard = ({players}) => {
+  const windowWidth = Dimensions.get('window').width * 0.9;
+
   const sortPlayers = () => {
     const sortedPlayers = [];
     for (let i = 5; i >= 0; i--) {
@@ -33,25 +37,47 @@ const ScoreBoard = ({players}) => {
               <IconsContainer>
                 <IconDiv>
                   <ScoreIcon
-                    image={player.whiskeyScore > 0 ? 'whiskeyScore' : false}
+                    image={
+                      player.whiskeyScore > 0
+                        ? 'whiskeyScore'
+                        : 'whiskeyScoreEmpty'
+                    }
                   />
                 </IconDiv>
                 <IconDiv>
                   <ScoreIcon
-                    image={player.lemonadeScore > 0 ? 'lemonadeScore' : false}
+                    image={
+                      player.martiniScore > 0
+                        ? 'martiniScore'
+                        : 'martiniScoreEmpty'
+                    }
                   />
                 </IconDiv>
                 <IconDiv>
                   <ScoreIcon
-                    image={player.martiniScore > 0 ? 'martiniScore' : false}
+                    image={
+                      player.mojitoScore > 0
+                        ? 'mojitoScore'
+                        : 'mojitoScoreEmpty'
+                    }
                   />
                 </IconDiv>
                 <IconDiv>
                   <ScoreIcon
-                    image={player.mojitoScore > 0 ? 'mojitoScore' : false}
+                    image={
+                      player.lemonadeScore > 0
+                        ? 'lemonadeScore'
+                        : 'lemonadeScoreEmpty'
+                    }
                   />
                 </IconDiv>
               </IconsContainer>
+              <PlankContainer>
+                <AutoHeightImage
+                  width={windowWidth}
+                  source={require('../../assets/plank.png')}
+                />
+              </PlankContainer>
             </EachPersonsScoreContainer>
           );
         })}
@@ -80,29 +106,28 @@ const EachPersonsScoreContainer = styled.View`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 96%;
-  padding-bottom: 8px;
-  border: solid 4px black;
-  background-color: #808184;
-  border-radius: 16px;
+  justify-content: flex-end;
+  width: 100%;
   margin-bottom: 20px;
 `;
 
 const IconsContainer = styled.View`
   display: flex;
   flex-direction: row;
-  align-items: space-between;
-  justify-content: space-evenly;
-  width: 100%;
+  align-items: center;
+  justify-content: center;
+  width: 84%;
 `;
 
 const IconDiv = styled.View`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-bottom: 2px;
-  border-bottom: 3px solid black;
+`;
+
+const PlankContainer = styled.View`
+  position: absolute;
+  z-index: -1;
 `;
 
 const ScoreNameContainer = styled.View`
@@ -119,6 +144,8 @@ const ScoreName = styled.Text`
   text-align: center;
   width: 100%;
   margin: 10px;
+  color: #ffcf00;
+
   font-family: Morning Breeze;
 `;
 

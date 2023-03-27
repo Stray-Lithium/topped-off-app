@@ -23,8 +23,12 @@ const BottomBar = ({navigation}) => {
       />
       <AutoHeightImage
         width={baseValue}
-        source={require(`../../assets/rules-button.png`)}
-      />
+        source={require(`../../assets/rules-button.png`)}>
+        <Pressable
+          style={{flex: 1}}
+          onPress={() => navigation.navigate('Rules Screen')}
+        />
+      </AutoHeightImage>
       <AutoHeightImage
         width={baseValue * 3}
         source={require(`../../assets/score-button.png`)}>

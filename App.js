@@ -17,6 +17,7 @@ import LemonadeWhoCompletedScreen from './src/components/LemonadeWhoCompletedScr
 import DrinkScreen from './src/components/DrinkScreen';
 import ScoreScreen from './src/components/ScoreScreen';
 import EndScreen from './src/components/EndScreen';
+import RulesScreen from './src/components/RulesScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -91,6 +92,14 @@ const App = () => {
               component={EndScreen}
               options={{
                 title: 'End Screen',
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Rules Screen"
+              component={RulesScreen}
+              options={{
+                title: 'Rules Screen',
                 headerShown: false,
               }}
             />

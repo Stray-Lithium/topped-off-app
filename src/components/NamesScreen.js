@@ -3,13 +3,20 @@ import {Text, StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components';
 import Background from './background/Background';
-import Icon from 'react-native-vector-icons/Feather';
 import {useDispatch} from 'react-redux';
 import {playersRequest} from '../actions/players';
 import {buttonShadow} from './button/button-shadow';
 import ReadyButton from './button/ReadyButton';
 import PlusButton from './button/PlusButton';
 import XButton from './button/XButton';
+import {cardsRequest} from '../actions/cards';
+import {lemonadeCardData} from '../cards/lemonade-data';
+import {lemonadeBlankData} from '../blanks/lemonade-data';
+import {martiniCardData} from '../cards/martini-data';
+import {martiniBlankData} from '../blanks/martini-data';
+import {whiskeyCardData} from '../cards/whiskey-data';
+import {whiskeyBlankData} from '../blanks/whiskey-data';
+import {mojitoCardData} from '../cards/mojito-data';
 
 const NamesScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -25,23 +32,19 @@ const NamesScreen = ({navigation}) => {
   };
 
   const handleSubmit = () => {
-    let playerObject = {
-      name: name.toUpperCase(),
-      lemonadeScore: 0,
-      whiskeyScore: 0,
-      martiniScore: 0,
-      mojitoScore: 0,
-      turns: 0,
-      pointsAwarded: 0,
-      canSteal: true,
-      cardTurns: [
-        {name: 'lemonadeScore', turns: 0},
-        {name: 'martiniScore', turns: 0},
-        {name: 'whiskeyScore', turns: 0},
-        {name: 'mojitoScore', turns: 0},
-      ],
-    };
-    setPlayers([...players, playerObject]);
+    if (name.length > 0) {
+      let playerObject = {
+        name: name.toUpperCase(),
+        lemonadeScore: 0,
+        whiskeyScore: 0,
+        martiniScore: 0,
+        mojitoScore: 0,
+        turns: 0,
+        pointsAwarded: 0,
+        canSteal: true,
+      };
+      setPlayers([...players, playerObject]);
+    }
     setName('');
   };
 
@@ -56,8 +59,23 @@ const NamesScreen = ({navigation}) => {
   };
 
   const ready = () => {
-    console.log(players, 'what is sent to dispatch');
     dispatch(playersRequest(players));
+    dispatch(
+      cardsRequest({
+        turns: [
+          {name: 'lemonadeScore', turns: 0},
+          {name: 'martiniScore', turns: 0},
+          {name: 'whiskeyScore', turns: 0},
+          {name: 'mojitoScore', turns: 0},
+        ],
+        cardData: {
+          lemonadeScore: {cards: lemonadeCardData, blanks: lemonadeBlankData},
+          martiniScore: {cards: martiniCardData, blanks: martiniBlankData},
+          whiskeyScore: {cards: whiskeyCardData, blanks: whiskeyBlankData},
+          mojitoScore: {cards: mojitoCardData},
+        },
+      }),
+    );
     navigation.navigate('Card Screen');
   };
 

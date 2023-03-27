@@ -5,6 +5,8 @@ import Background from './background/Background';
 import {useDispatch, useSelector} from 'react-redux';
 import {currentPlayerRequest} from '../actions/current-player';
 import {playersRequest} from '../actions/players';
+import ChallengeCardBackground from './background/ChallengeCardBackground';
+import DrinkBottomBar from './bar/DrinkBottomBar';
 
 const DrinkScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -54,7 +56,7 @@ const DrinkScreen = ({navigation}) => {
     let title = '';
     drinkers.forEach((player, index) => {
       if (drinkers.length === 1 || index !== drinkers.length - 1) {
-        title += `${player} `;
+        title += `${player}, `;
       } else {
         title += `and ${player}, `;
       }
@@ -68,40 +70,50 @@ const DrinkScreen = ({navigation}) => {
 
   const steal = () => {
     let updatedPlayers = [];
-
     players.forEach(player => {
       if (player.name === stealer[0]) {
         player.canSteal = false;
       }
       updatedPlayers.push(player);
     });
-
     dispatch(playersRequest(updatedPlayers));
     dispatch(currentPlayerRequest(stealer));
     navigation.navigate('Challenge Screen');
   };
 
+  console.log(stealer, 'stealer');
+
   if (players && currentPlayer && drinkers && currentCard) {
+    const isSteal =
+      stealer.length > 0 && currentCard.cardColor !== 'lemonadeScore';
     return (
       <>
-        <Background />
+        <Background background={'Drinks Screen'} />
         <SafeAreaView style={{flex: 1}}>
           <ScreenContainer>
-            <Title>{`${drinkTitle()}you must drink!`}</Title>
+            <>
+              <CardContainer>
+                <ChallengeCardBackground image={'drinkCard'} />
+                <CardContentContainer>
+                  <CardTitle>
+                    {`${drinkTitle()}`}
+                    <DrinkText>{'\n'}DRINK!</DrinkText>
+                  </CardTitle>
+                  <CardComment>
+                    Yeah, yeah, you've "just been thirsty"
+                  </CardComment>
+                </CardContentContainer>
+              </CardContainer>
+            </>
+            {/* <Title>{`${drinkTitle()}you must drink!`}</Title> */}
             {stealer.length > 0 && currentCard.cardColor !== 'lemonadeScore' ? (
-              <>
-                <Title>{`${stealer[0]}, do you want to steal?`}</Title>
-                <ButtonContainer onPress={() => steal()}>
-                  <CustomButton>YES</CustomButton>
-                </ButtonContainer>
-                <ButtonContainer onPress={() => confirm()}>
-                  <CustomButton>NO</CustomButton>
-                </ButtonContainer>
-              </>
+              <BarContainer onPress={() => steal()}>
+                <DrinkBottomBar params={{navigation, isSteal}} />
+              </BarContainer>
             ) : (
-              <ButtonContainer onPress={() => confirm()}>
-                <CustomButton>NEXT ROUND</CustomButton>
-              </ButtonContainer>
+              <BarContainer onPress={() => confirm()}>
+                <DrinkBottomBar params={{navigation, isSteal}} />
+              </BarContainer>
             )}
           </ScreenContainer>
         </SafeAreaView>
@@ -111,6 +123,12 @@ const DrinkScreen = ({navigation}) => {
     return <Background />;
   }
 };
+
+{
+  /* <ButtonContainer onPress={() => confirm()}>
+                <CustomButton>NEXT ROUND</CustomButton>
+              </ButtonContainer> */
+}
 
 const ScreenContainer = styled.View`
   flex: 1;
@@ -184,6 +202,61 @@ const CustomButton = styled.Text`
   letter-spacing: 5px;
   font-family: Morning Breeze;
   overflow: hidden;
+`;
+
+const CardContainer = styled.View`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+`;
+
+const CardContentContainer = styled.View`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  height: 100%;
+`;
+
+const CardTitle = styled.Text`
+  font-size: 34px;
+  text-align: center;
+  width: 80%;
+  margin-top: 20px;
+  padding: 2px;
+  color: #ffcf00;
+  font-family: Morning Breeze;
+`;
+
+const DrinkText = styled.Text`
+  font-size: 80px;
+  text-align: center;
+  width: 80%;
+  margin-top: 20px;
+  padding: 2px;
+  color: #ffcf00;
+  font-family: Morning Breeze;
+`;
+
+const CardComment = styled.Text`
+  font-size: 30px;
+  text-align: center;
+  width: 80%;
+  margin-bottom: 20px;
+  padding: 2px;
+  margin-top: 40px;
+  color: #f2415b;
+  font-family: Morning Breeze;
+  font-style: italic;
+`;
+
+const BarContainer = styled.Pressable`
+  position: absolute;
+  bottom: 0;
 `;
 
 export default DrinkScreen;

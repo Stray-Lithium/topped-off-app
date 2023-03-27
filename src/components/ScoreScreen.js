@@ -1,7 +1,6 @@
 import {useEffect} from 'react';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
-import {ScrollView} from 'react-native-gesture-handler';
 import styled from 'styled-components';
 import Background from './background/Background';
 import {currentCardRequest} from '../actions/current-card';
@@ -10,18 +9,36 @@ import {currentPlayerRequest} from '../actions/current-player';
 import {drinkersRequest} from '../actions/drinkers';
 import ScoreScreenClose from './button/ScoreScreenClose';
 import {checkScoreRequest} from '../actions/check-score';
+import {cardsRequest} from '../actions/cards';
 
 const ScoreScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const players = useSelector(state => state.Players.players);
+  const cards = useSelector(state => state.Cards.cards);
   const currentCard = useSelector(state => state.CurrentCard.currentCard);
   const checkScore = useSelector(state => state.CheckScore.checkScore);
   const insets = useSafeAreaInsets();
 
   useEffect(() => {}, [players, currentCard, checkScore]);
 
+  const updateTurns = () => {
+    let cardsCopy = {...cards};
+    let newCards = [];
+    cards.turns.forEach(card => {
+      if (card.name === currentCard.cardColor) {
+        newCards.push({name: card.name, turns: (card.turns += 1)});
+      } else {
+        newCards.push(card);
+      }
+    });
+    cardsCopy.turns = newCards;
+    return cardsCopy;
+  };
+
   const exitButton = () => {
     if (!checkScore) {
+      const updatedTurns = updateTurns();
+      dispatch(cardsRequest(updatedTurns));
       dispatch(drinkersRequest(false));
       dispatch(currentPlayerRequest(false));
       dispatch(currentCardRequest(false));
@@ -30,10 +47,10 @@ const ScoreScreen = ({navigation}) => {
     navigation.navigate('Card Screen');
   };
 
-  if (players && currentCard) {
+  if (players && currentCard && cards) {
     return (
       <>
-        <Background background={currentCard.cardColor} />
+        <Background background={'Score Screen'} />
         <SafeAreaView style={{flex: 1}}>
           <ExitPressable
             style={{top: insets.top}}
@@ -44,7 +61,7 @@ const ScoreScreen = ({navigation}) => {
           </ExitPressable>
           <ScreenContainer>
             <TitleContainer>
-              <Title>SCOREBOARD</Title>
+              <Title>SCORE</Title>
             </TitleContainer>
             <ScoreScroll>
               <ScoreBoard players={players} />
@@ -77,13 +94,13 @@ const TitleContainer = styled.View`
   align-items: center;
   justify-content: center;
   width: 90%;
-  height: 50px;
+  height: 60px;
   margin-top: 10px;
   margin-bottom: 20px;
 `;
 
 const Title = styled.Text`
-  font-size: 38px;
+  font-size: 70px;
   color: #ffcf00;
   font-family: Morning Breeze Bold;
 `;

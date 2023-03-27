@@ -6,6 +6,7 @@ import GameVersionReducer from './game-version';
 import DrinkersReducer from './drinkers';
 import CompletedReducer from './completed';
 import CheckScoreReducer from './check-score';
+import CardsReducer from './cards';
 
 export default combineReducers({
   CurrentCard: CurrentCardReducer,
@@ -15,4 +16,5 @@ export default combineReducers({
   Drinkers: DrinkersReducer,
   Completed: CompletedReducer,
   CheckScore: CheckScoreReducer,
+  Cards: CardsReducer,
 });

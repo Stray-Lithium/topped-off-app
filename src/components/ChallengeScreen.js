@@ -4,13 +4,8 @@ import {useSelector} from 'react-redux';
 import styled from 'styled-components';
 import Background from './background/Background';
 import ChallengeCardBackground from './background/ChallengeCardBackground';
-import Button from './button/Button';
 import {whiskeyBlank} from '../blanks/whiskey';
 import {martiniBlank} from '../blanks/martini';
-import {martiniCard} from '../cards/martini';
-import {whiskeyCard} from '../cards/whiskey';
-import {mojitoCard} from '../cards/mojito';
-import {lemonadeCard} from '../cards/lemonade';
 import {playersRequest} from '../actions/players';
 import {drinkersRequest} from '../actions/drinkers';
 import {currentCardRequest} from '../actions/current-card';
@@ -19,6 +14,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {buttonShadow} from './button/button-shadow';
 import CompleteAndDrinkButton from './button/CompleteAndDringButton';
 import {checkScoreRequest} from '../actions/check-score';
+import {cardsRequest} from '../actions/cards';
 
 const ChallengeScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -26,35 +22,69 @@ const ChallengeScreen = ({navigation}) => {
   const currentCard = useSelector(state => state.CurrentCard.currentCard);
   const currentPlayer = useSelector(state => state.CurrentPlayer.currentPlayer);
   const gameVersion = useSelector(state => state.GameVersion.gameVersion);
+  const cards = useSelector(state => state.Cards.cards);
+  console.log('getting in challenge screen');
+
+  const randomizer = (cardOrBlank, category) => {
+    let cardsCopy = {...cards};
+    const content = cardsCopy.cardData[category][cardOrBlank];
+    const randomIndex = Math.floor(Math.random() * content.length) + 0;
+    const challenge = content[randomIndex];
+    console.log(challenge, 'before');
+    content.forEach(item => {
+      // console.log(item.id);
+    });
+    content.forEach((item, index) => {
+      if (item.id === challenge.id) {
+        // console.log(item.id, 'id to remove');
+        content.splice(index, 1);
+      }
+    });
+    // console.log(content, 'after');
+    content.forEach(item => {
+      // console.log(item.id);
+    });
+    dispatch(cardsRequest(cardsCopy));
+    return challenge;
+  };
 
   const cardAndBlank = () => {
     if (currentCard.cardColor === 'whiskeyScore') {
       if (gameVersion === 'CARD') {
         dispatch(currentCardRequest(whiskeyBlank()));
       } else {
-        dispatch(currentCardRequest(whiskeyCard(whiskeyBlank())));
+        const card = randomizer('cards', 'whiskeyScore');
+        card.blank = randomizer('blanks', 'whiskeyScore');
+        dispatch(currentCardRequest(card));
       }
     }
     if (currentCard.cardColor === 'martiniScore') {
       if (gameVersion === 'CARD') {
         dispatch(currentCardRequest(martiniBlank()));
       } else {
-        dispatch(currentCardRequest(martiniCard(martiniBlank())));
+        const card = randomizer('cards', 'martiniScore');
+        card.blank = randomizer('blanks', 'martiniScore');
+        dispatch(currentCardRequest(card));
       }
     }
     if (currentCard.cardColor === 'mojitoScore') {
-      dispatch(currentCardRequest(mojitoCard()));
+      dispatch(currentCardRequest(randomizer('cards', 'mojitoScore')));
     }
     if (currentCard.cardColor === 'lemonadeScore') {
-      dispatch(currentCardRequest(lemonadeCard()));
+      const card = randomizer('cards', 'lemonadeScore');
+      card.blank = randomizer('blanks', 'lemonadeScore');
+      dispatch(currentCardRequest(card));
     }
   };
+  // dispatch(currentCardRequest(martiniCard(martiniBlank())));
+  // dispatch(currentCardRequest(mojitoCard()));
 
   useEffect(() => {
-    if (!currentCard.content) {
+    if (!currentCard.content_line_one) {
       cardAndBlank();
     }
-  }, [currentCard, currentPlayer, players, gameVersion]);
+  }, [currentCard, currentPlayer, players, gameVersion, cards]);
+  console.log(currentCard, 'jksajksja');
 
   const nameMaker = () => {
     const playersLength = currentPlayer.length;
@@ -166,13 +196,20 @@ const ChallengeScreen = ({navigation}) => {
   };
 
   const fullVersion = () => {
+    console.log(currentCard.content_line_two, currentCard.blank, 'line 2');
     return (
       <>
         <CardContainer>
           <ChallengeCardBackground image={currentCard.cardColor} />
           <CardContentContainer>
             <CardTitle>{currentCard.title}</CardTitle>
-            <CardContent>{`${names} ${currentCard.content}`}</CardContent>
+            <CardContent>{`${names} ${currentCard.content_line_one}${
+              currentCard.blank && currentCard.cardColor !== 'lemonadeScore'
+                ? currentCard.blank.content
+                : ''
+            }${
+              currentCard.content_line_two ? currentCard.content_line_two : ''
+            }`}</CardContent>
             <CardComment>{currentCard.comment}</CardComment>
           </CardContentContainer>
         </CardContainer>

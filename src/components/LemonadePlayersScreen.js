@@ -10,6 +10,8 @@ import {currentPlayerRequest} from '../actions/current-player';
 import {useDispatch, useSelector} from 'react-redux';
 import LemonadeConfirmButton from './button/LemonadeConfirmButton';
 import RefreshButton from './button/RefreshButton';
+import AutoHeightImage from 'react-native-auto-height-image';
+import {Dimensions} from 'react-native';
 
 const LemonadePlayersScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -17,6 +19,10 @@ const LemonadePlayersScreen = ({navigation}) => {
   const [lemonFill, setLemonFill] = useState(false);
   const [checkedNames, setCheckedNames] = useState([]);
   const [displayRefresh, setDisplayRefresh] = useState(false);
+
+  const windowWidth = Dimensions.get('window').width;
+
+  const baseValue = windowWidth * 0.18;
 
   useEffect(() => {
     if (!lemonFill) {
@@ -30,6 +36,9 @@ const LemonadePlayersScreen = ({navigation}) => {
     } else {
       let filter = checkedNames.filter(player => player !== checkName);
       setCheckedNames(filter);
+    }
+    if (checkedNames.length > 0) {
+      setDisplayRefresh(false);
     }
   };
 
@@ -76,25 +85,31 @@ const LemonadePlayersScreen = ({navigation}) => {
               renderItem={renderCheckBox}
               keyExtractor={item => item.id}
             />
-            {displayRefresh ? (
-              <RefreshMessage>
-                Please select a player or refresh the prompt if no one applies
-              </RefreshMessage>
-            ) : (
-              <></>
-            )}
+            <RefreshMessage>
+              Please select a player or refresh the prompt if no one applies
+            </RefreshMessage>
             <ButtonBar>
-              {displayRefresh ? (
-                <ButtonContainer onPress={() => setLemonFill(false)}>
-                  <RefreshButton displayRefresh={true} />
-                </ButtonContainer>
-              ) : (
-                <></>
-              )}
-              <ButtonContainer onPress={() => confirm()}>
-                <LemonadeConfirmButton />
-              </ButtonContainer>
+              <ImageContainer>
+                <Pressable onPress={() => setLemonFill(false)}>
+                  <AutoHeightImage
+                    width={baseValue}
+                    source={require(`../assets/refresh-button.png`)}
+                  />
+                </Pressable>
+                <Pressable onPress={() => confirm()}>
+                  <AutoHeightImage
+                    width={baseValue * 4}
+                    source={require(`../assets/red-button-four.png`)}>
+                    <PlayContainer>
+                      <PlayText>CONFIRM</PlayText>
+                    </PlayContainer>
+                  </AutoHeightImage>
+                </Pressable>
+              </ImageContainer>
             </ButtonBar>
+            {/* <ButtonContainer onPress={() => confirm()}>
+                <LemonadeConfirmButton />
+              </ButtonContainer> */}
           </ScreenContainer>
         </SafeAreaView>
       </>
@@ -163,6 +178,7 @@ const PlayerName = styled.Text`
   font-size: 24px;
   font-family: Morning Breeze;
   margin-right: 10px;
+  color: #ffcd00;
 `;
 
 const CheckboxPosition = styled.View`
@@ -173,6 +189,7 @@ const CheckboxPosition = styled.View`
 `;
 
 const ButtonBar = styled.View`
+  flex: 1;
   position: absolute;
   display: flex;
   flex-direction: row;
@@ -180,10 +197,6 @@ const ButtonBar = styled.View`
   justify-content: center;
   width: 100%;
   bottom: 0px;
-`;
-
-const ButtonContainer = styled.Pressable`
-  margin: 0 3px 0 3px;
 `;
 
 const RefreshMessage = styled.Text`
@@ -194,6 +207,29 @@ const RefreshMessage = styled.Text`
   color: #ffcf00;
   font-size: 26px;
   font-family: Morning Breeze;
+`;
+
+const ImageContainer = styled.View`
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
+const PlayContainer = styled.View`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const PlayText = styled.Text`
+  text-align: center;
+  color: #262020;
+  font-size: 36px;
+  letter-spacing: 1px;
+  font-family: Morning Breeze Bold;
 `;
 
 export default LemonadePlayersScreen;

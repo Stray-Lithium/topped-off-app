@@ -18,6 +18,9 @@ const ChallengeCardBackground = ({image}) => {
     if (image === 'lemonadeScore') {
       return require(`../../assets/yellow-card.png`);
     }
+    if (image === 'drinkCard') {
+      return require(`../../assets/drink-card.png`);
+    }
   };
   const uri = backgroundImage();
 

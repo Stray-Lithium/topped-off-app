@@ -5,7 +5,7 @@ import BackOfCard from './background/BackOfCard';
 import {useDispatch, useSelector} from 'react-redux';
 import {currentCardRequest} from '../actions/current-card';
 import {currentPlayerRequest} from '../actions/current-player';
-import {turnRandomizer} from '../algorithms/turn';
+import {turnRandomizer} from '../algorithms/card';
 import CardScreenBackground from './background/CardScreenBackgrounds';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import BottomBar from './bar/BottomBar';
@@ -13,48 +13,45 @@ import BottomBar from './bar/BottomBar';
 const CardScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const players = useSelector(state => state.Players.players);
+  const cards = useSelector(state => state.Cards.cards);
   const currentCard = useSelector(state => state.CurrentCard.currentCard);
   const gameVersion = useSelector(state => state.GameVersion.gameVersion);
 
-  const ingredientRandomizer = players => {
-    const cards = [
+  const ingredientRandomizer = () => {
+    const cardNames = [
+      // 'martiniScore',
       'lemonadeScore',
-      'whiskeyScore',
-      'martiniScore',
-      'mojitoScore',
+      // 'whiskeyScore',
+      // 'mojitoScore',
     ];
     const isFirstTurn = () => {
       let total = 0;
       players.forEach(player => {
-        console.log(player.turns, 'player.turns');
-        // if (player.turns > 0) {
-        //   total += player.turns
-        // }
+        if (player.turns > 0) {
+          total += player.turns;
+        }
       });
-      console.log('true');
-      return true;
+      return total === 0;
     };
     const firstTurn = isFirstTurn();
     if (!firstTurn) {
-      console.log('not first turn');
-      const card = turnRandomizer(cards);
+      const card = turnRandomizer(cards.turns);
       dispatch(currentCardRequest({cardColor: `${card}`}));
     } else {
-      console.log('first turn');
-      const randomWordIndex = Math.floor(Math.random() * cards.length) + 0;
-      const card = cards[randomWordIndex];
+      const randomWordIndex = Math.floor(Math.random() * cardNames.length) + 0;
+      const card = cardNames[randomWordIndex];
       dispatch(currentCardRequest({cardColor: `${card}`}));
     }
   };
 
   useEffect(() => {
     if (!currentCard && gameVersion === 'FULL' && players) {
-      ingredientRandomizer(players);
+      ingredientRandomizer();
     }
     if (!currentCard && gameVersion === 'CARD') {
       dispatch(currentCardRequest({cardColor: 'gray'}));
     }
-  }, [players, currentCard, gameVersion]);
+  }, [players, currentCard, gameVersion, cards]);
 
   const storeCurrentPlayerAndCard = pressedCard => {
     const playerTurn = turnRandomizer(players);
@@ -108,7 +105,7 @@ const CardScreen = ({navigation}) => {
     );
   };
 
-  if (currentCard && players && gameVersion) {
+  if (currentCard && players && gameVersion && cards) {
     return (
       <>
         <Background

@@ -6,6 +6,7 @@ import gameVersionSaga from './game-version';
 import drinkersSaga from './drinkers';
 import completedSaga from './completed';
 import checkScoreSaga from './check-score';
+import cardsSaga from './cards';
 
 export default function* routeSaga() {
   yield all([
@@ -16,5 +17,6 @@ export default function* routeSaga() {
     ...drinkersSaga,
     ...completedSaga,
     ...checkScoreSaga,
+    ...cardsSaga,
   ]);
 }

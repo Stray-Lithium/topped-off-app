@@ -4,28 +4,32 @@ import {Dimensions} from 'react-native';
 import styled from 'styled-components';
 
 const LemonadeConfirmButton = ({displayRefresh}) => {
-  const windowWidth = Dimensions.get('window').width * 0.66;
+  const windowWidth = Dimensions.get('window').width;
+
+  const baseValue = windowWidth * 0.18;
 
   return (
-    <>
+    <ImageContainer>
       <AutoHeightImage
-        width={windowWidth}
-        source={require(`../../assets/red-button-three.png`)}>
+        width={baseValue}
+        source={require(`../../assets/refresh-button.png`)}
+      />
+      <AutoHeightImage
+        width={baseValue * 4}
+        source={require(`../../assets/red-button-four.png`)}>
         <PlayContainer>
           <PlayText>CONFIRM</PlayText>
         </PlayContainer>
       </AutoHeightImage>
-      {displayRefresh ? (
-        <AutoHeightImage
-          width={windowWidth / 3}
-          source={require(`../../assets/refresh-button.png`)}
-        />
-      ) : (
-        <></>
-      )}
-    </>
+    </ImageContainer>
   );
 };
+
+const ImageContainer = styled.View`
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+`;
 
 const PlayContainer = styled.View`
   flex: 1;
