@@ -30,7 +30,7 @@ const ScoreBoard = ({players}) => {
       <ScoreList>
         {sortedPlayers.map(player => {
           return (
-            <EachPersonsScoreContainer>
+            <EachPersonsScoreContainer key={player.name}>
               <ScoreNameContainer>
                 <ScoreName>{player.name}</ScoreName>
               </ScoreNameContainer>

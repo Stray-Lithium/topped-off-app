@@ -4,11 +4,12 @@ import {Dimensions} from 'react-native';
 import styled from 'styled-components';
 
 const CompleteAndDrinkButton = ({completeOrDrink}) => {
-  const windowWidth = Dimensions.get('window').width * 0.44;
+  const windowWidth = Dimensions.get('window').width;
+  const baseValue = windowWidth * 0.18;
 
   return (
     <AutoHeightImage
-      width={windowWidth}
+      width={baseValue * 2}
       source={require(`../../assets/red-button-two.png`)}>
       <PlayContainer>
         <PlayText>{completeOrDrink}</PlayText>

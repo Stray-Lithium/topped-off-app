@@ -29,7 +29,6 @@ const App = () => {
   return (
     <Provider store={store}>
       <StatusBar barStyle="light-content" translucent={true} />
-
       <SafeAreaProvider>
         <NavigationContainer>
           <Stack.Navigator>

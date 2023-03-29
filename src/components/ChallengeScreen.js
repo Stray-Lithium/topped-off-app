@@ -153,7 +153,6 @@ const ChallengeScreen = ({navigation}) => {
         <ButtonContainer onPress={() => complete(false)} style={buttonShadow}>
           <CompleteAndDrinkButton completeOrDrink={'DRINK'} />
         </ButtonContainer>
-        {/* <OrText>or</OrText> */}
         <ButtonContainer onPress={() => complete(true)} style={buttonShadow}>
           <CompleteAndDrinkButton completeOrDrink={'DONE'} />
         </ButtonContainer>
@@ -196,7 +195,6 @@ const ChallengeScreen = ({navigation}) => {
   };
 
   const fullVersion = () => {
-    console.log(currentCard.content_line_two, currentCard.blank, 'line 2');
     return (
       <>
         <CardContainer>

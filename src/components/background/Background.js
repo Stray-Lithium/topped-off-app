@@ -28,6 +28,15 @@ const Background = ({background}) => {
     if (background === 'Score Screen') {
       return require(`../../assets/score-screen-background.png`);
     }
+    if (background === 'Home Screen') {
+      return require(`../../assets/home-screen-background.png`);
+    }
+    if (background === 'End Screen') {
+      return require(`../../assets/end-screen-background.png`);
+    }
+    if (background === 'Name Screen') {
+      return require(`../../assets/names-screen-background.png`);
+    }
   };
   const uri = backgroundImage();
 

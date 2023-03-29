@@ -96,7 +96,7 @@ const NamesScreen = ({navigation}) => {
           <PlayersList>
             {players.map(player => {
               return (
-                <NameContainer>
+                <NameContainer key={player.name}>
                   <PlayerName key={player.name}>{player.name}</PlayerName>
                   <ButtonContainer onPress={() => deleteName(player.name)}>
                     <XButton />
@@ -132,7 +132,7 @@ const NamesScreen = ({navigation}) => {
 
   return (
     <>
-      <Background />
+      <Background background={'Name Screen'} />
       {pageContent()}
     </>
   );

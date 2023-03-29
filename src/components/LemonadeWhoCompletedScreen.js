@@ -67,25 +67,23 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
       <>
         {yesAndNoMap.map(current => {
           return (
-            <>
-              <CheckboxContainer>
-                <NamePosition>
-                  <PlayerName>{current}</PlayerName>
-                </NamePosition>
-                <CheckboxPosition>
-                  <Pressable
-                    onPress={() => yesOrNoClick(current)}
-                    style={styles.checkbox}>
-                    <AnimatedCheckbox
-                      checked={yesOrNo.includes(current)}
-                      highlightColor="#ee3347"
-                      checkmarkColor="#ffffff"
-                      boxOutlineColor="#000000"
-                    />
-                  </Pressable>
-                </CheckboxPosition>
-              </CheckboxContainer>
-            </>
+            <CheckboxContainer key={current}>
+              <NamePosition>
+                <PlayerName>{current}</PlayerName>
+              </NamePosition>
+              <CheckboxPosition>
+                <Pressable
+                  onPress={() => yesOrNoClick(current)}
+                  style={styles.checkbox}>
+                  <AnimatedCheckbox
+                    checked={yesOrNo.includes(current)}
+                    highlightColor="#ee3347"
+                    checkmarkColor="#ffffff"
+                    boxOutlineColor="#000000"
+                  />
+                </Pressable>
+              </CheckboxPosition>
+            </CheckboxContainer>
           );
         })}
       </>
@@ -197,7 +195,7 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
             )}
             <ButtonBar>
               <ButtonContainer onPress={() => confirm()}>
-                <LemonadeConfirmButton />
+                <LemonadeConfirmButton refresh={false} />
               </ButtonContainer>
             </ButtonBar>
             {/* <ButtonContainer onPress={() => confirm()}>

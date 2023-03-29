@@ -15,7 +15,7 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <ScreenContainer>
-      <Background />
+      <Background background={'Home Screen'} />
       <PlayButtonContainer onPress={() => confirm()}>
         <PlayButton />
       </PlayButtonContainer>

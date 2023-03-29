@@ -3,17 +3,22 @@ import AutoHeightImage from 'react-native-auto-height-image';
 import {Dimensions} from 'react-native';
 import styled from 'styled-components';
 
-const LemonadeConfirmButton = ({displayRefresh}) => {
+const LemonadeConfirmButton = ({refresh}) => {
   const windowWidth = Dimensions.get('window').width;
+  console.log(refresh, 'refresh');
 
   const baseValue = windowWidth * 0.18;
 
   return (
     <ImageContainer>
-      <AutoHeightImage
-        width={baseValue}
-        source={require(`../../assets/refresh-button.png`)}
-      />
+      {!refresh ? (
+        <></>
+      ) : (
+        <AutoHeightImage
+          width={baseValue}
+          source={require(`../../assets/refresh-button.png`)}
+        />
+      )}
       <AutoHeightImage
         width={baseValue * 4}
         source={require(`../../assets/red-button-four.png`)}>

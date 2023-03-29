@@ -83,7 +83,9 @@ const LemonadePlayersScreen = ({navigation}) => {
             <CheckBoxes
               data={players}
               renderItem={renderCheckBox}
-              keyExtractor={item => item.id}
+              keyExtractor={item => {
+                return `#${item.id}`;
+              }}
             />
             <RefreshMessage>
               Please select a player or refresh the prompt if no one applies
