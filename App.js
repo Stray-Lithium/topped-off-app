@@ -18,7 +18,7 @@ import DrinkScreen from './src/components/DrinkScreen';
 import ScoreScreen from './src/components/ScoreScreen';
 import EndScreen from './src/components/EndScreen';
 import RulesScreen from './src/components/RulesScreen';
-
+import MenuScreen from './src/components/MenuScreen';
 const Stack = createNativeStackNavigator();
 
 const sagaMiddleware = createSagaMiddleware();
@@ -99,6 +99,14 @@ const App = () => {
               component={RulesScreen}
               options={{
                 title: 'Rules Screen',
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Menu Screen"
+              component={MenuScreen}
+              options={{
+                title: 'Menu Screen',
                 headerShown: false,
               }}
             />

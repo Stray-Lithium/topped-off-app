@@ -73,10 +73,12 @@ const LemonadePlayersScreen = ({navigation}) => {
     }
   };
 
+  // console.log(players, 'hahaha');
+
   if (lemonFill && players) {
     return (
       <>
-        <Background />
+        <Background background={'Lemonade Players Screen'} />
         <SafeAreaView style={{flex: 1}}>
           <ScreenContainer>
             <Title>{lemonFill}?</Title>
@@ -84,7 +86,7 @@ const LemonadePlayersScreen = ({navigation}) => {
               data={players}
               renderItem={renderCheckBox}
               keyExtractor={item => {
-                return `#${item.id}`;
+                return `#${item.name}`;
               }}
             />
             <RefreshMessage>
@@ -149,8 +151,7 @@ const Title = styled.Text`
   margin-bottom: 20px;
   text-align: center;
   width: 90%;
-  font-family: Morning Breeze;
-  font-weight: bold;
+  font-family: Morning Breeze Bold;
   color: #ffcf00;
 `;
 
@@ -229,9 +230,9 @@ const PlayContainer = styled.View`
 const PlayText = styled.Text`
   text-align: center;
   color: #262020;
-  font-size: 36px;
+  font-size: 30px;
   letter-spacing: 1px;
-  font-family: Morning Breeze Bold;
+  font-family: Morning Breeze;
 `;
 
 export default LemonadePlayersScreen;

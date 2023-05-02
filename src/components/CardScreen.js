@@ -20,8 +20,8 @@ const CardScreen = ({navigation}) => {
   const ingredientRandomizer = () => {
     const cardNames = [
       // 'martiniScore',
-      'lemonadeScore',
-      // 'whiskeyScore',
+      // 'lemonadeScore',
+      'whiskeyScore',
       // 'mojitoScore',
     ];
     const isFirstTurn = () => {
@@ -34,14 +34,14 @@ const CardScreen = ({navigation}) => {
       return total === 0;
     };
     const firstTurn = isFirstTurn();
-    if (!firstTurn) {
-      const card = turnRandomizer(cards.turns);
-      dispatch(currentCardRequest({cardColor: `${card}`}));
-    } else {
-      const randomWordIndex = Math.floor(Math.random() * cardNames.length) + 0;
-      const card = cardNames[randomWordIndex];
-      dispatch(currentCardRequest({cardColor: `${card}`}));
-    }
+    // if (!firstTurn) {
+    //   const card = turnRandomizer(cards.turns);
+    //   dispatch(currentCardRequest({cardColor: `${card}`}));
+    // } else {
+    const randomWordIndex = Math.floor(Math.random() * cardNames.length) + 0;
+    const card = cardNames[randomWordIndex];
+    dispatch(currentCardRequest({cardColor: `${card}`}));
+    // }
   };
 
   useEffect(() => {
@@ -108,9 +108,7 @@ const CardScreen = ({navigation}) => {
   if (currentCard && players && gameVersion && cards) {
     return (
       <>
-        <Background
-          background={gameVersion === 'FULL' ? currentCard.cardColor : null}
-        />
+        <Background background={'Card Screen'} />
         <SafeAreaView style={{flex: 1}}>
           <ScreenContainer>
             {gameVersion === 'FULL' ? fullVersion() : cardVersion()}

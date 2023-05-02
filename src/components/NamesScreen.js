@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Text, StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components';
+import * as R from 'ramda';
 import Background from './background/Background';
 import {useDispatch} from 'react-redux';
 import {playersRequest} from '../actions/players';
@@ -32,7 +33,13 @@ const NamesScreen = ({navigation}) => {
   };
 
   const handleSubmit = () => {
-    if (name.length > 0) {
+    let addName = true;
+    players.forEach(player => {
+      if (player.name === name) {
+        addName = false;
+      }
+    });
+    if (name.length > 0 && addName) {
       let playerObject = {
         name: name.toUpperCase(),
         lemonadeScore: 0,
@@ -58,6 +65,11 @@ const NamesScreen = ({navigation}) => {
     setPlayers(updatedPlayers);
   };
 
+  // console.log(whiskeyCardData, 'whisley card data');
+
+  const wCardTest = R.clone(whiskeyCardData);
+  const wBlankTest = R.clone(whiskeyBlankData);
+
   const ready = () => {
     dispatch(playersRequest(players));
     dispatch(
@@ -71,7 +83,10 @@ const NamesScreen = ({navigation}) => {
         cardData: {
           lemonadeScore: {cards: lemonadeCardData, blanks: lemonadeBlankData},
           martiniScore: {cards: martiniCardData, blanks: martiniBlankData},
-          whiskeyScore: {cards: whiskeyCardData, blanks: whiskeyBlankData},
+          whiskeyScore: {
+            cards: wCardTest,
+            blanks: wBlankTest,
+          },
           mojitoScore: {cards: mojitoCardData},
         },
       }),
@@ -122,7 +137,7 @@ const NamesScreen = ({navigation}) => {
               </IconTouch>
             </NameInputContainer>
           </KeyboardAvoidingView>
-          <ButtonContainer onPress={() => ready()} style={buttonShadow}>
+          <ButtonContainer onPress={() => ready()}>
             <ReadyButton />
           </ButtonContainer>
         </ScreenContainer>
@@ -138,23 +153,13 @@ const NamesScreen = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  plusIcon: {
-    fontSize: 32,
-  },
-  crossIcon: {
-    padding: 1,
-    backgroundColor: '#ffcf00',
-  },
-});
-
 const ScreenContainer = styled.View`
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: black;
+  // color: black;
   height: 100%;
   width: 100%;
 `;

@@ -5,7 +5,7 @@ import {Dimensions} from 'react-native';
 
 const ScoreBoard = ({players}) => {
   const windowWidth = Dimensions.get('window').width * 0.9;
-
+  // console.log(players, 'players bitch');
   const sortPlayers = () => {
     const sortedPlayers = [];
     for (let i = 5; i >= 0; i--) {

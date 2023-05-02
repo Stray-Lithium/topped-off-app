@@ -4,14 +4,14 @@ import AutoHeightImage from 'react-native-auto-height-image';
 import {Dimensions} from 'react-native';
 
 const PlayButton = ({navigation}) => {
-  const windowWidth = Dimensions.get('window').width * 0.5;
+  const windowWidth = Dimensions.get('window').width * 0.54;
 
   return (
     <AutoHeightImage
       width={windowWidth}
-      source={require(`../../assets/red-button-two.png`)}>
+      source={require(`../../assets/red-button-three.png`)}>
       <PlayContainer>
-        <PlayText>PLAY</PlayText>
+        <PlayText>ENTER</PlayText>
       </PlayContainer>
     </AutoHeightImage>
   );
@@ -27,9 +27,9 @@ const PlayContainer = styled.View`
 const PlayText = styled.Text`
   text-align: center;
   color: #262020;
-  font-size: 40px;
+  font-size: 30px;
   letter-spacing: 1px;
-  font-family: Morning Breeze Bold;
+  font-family: Morning Breeze;
 `;
 
 export default PlayButton;

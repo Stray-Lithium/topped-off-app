@@ -166,7 +166,7 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
   if ((players, currentPlayer)) {
     return (
       <>
-        <Background />
+        <Background background={'Lemonade Who Completed Screen'} />
         <SafeAreaView style={{flex: 1}}>
           <ScreenContainer>
             {currentPlayer.length > 1 ? (
@@ -175,14 +175,15 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
                 <CheckBoxes
                   data={currentPlayer}
                   renderItem={renderCheckBox}
-                  keyExtractor={item => item.id}
+                  keyExtractor={item => {
+                    return `#${item}`;
+                  }}
                 />
               </>
             ) : (
               <>
                 <Title>
-                  DID{' '}
-                  <Title style={{color: 'yellow'}}>{currentPlayer[0]} </Title>
+                  DID <Title>{currentPlayer[0]} </Title>
                   BEAT EVERYONE ELSE?
                 </Title>
                 <CheckboxesContainer>{yesOrNoBoxes()}</CheckboxesContainer>
@@ -274,6 +275,7 @@ const NamePosition = styled.View`
 const PlayerName = styled.Text`
   font-size: 24px;
   font-family: Morning Breeze;
+  color: #ffcf00;
   margin-right: 10px;
 `;
 

@@ -29,7 +29,7 @@ const PlayText = styled.Text`
   color: #262020;
   font-size: 28px;
   letter-spacing: 1px;
-  font-family: Morning Breeze Bold;
+  font-family: Morning Breeze;
 `;
 
 export default GameVersionButtons;

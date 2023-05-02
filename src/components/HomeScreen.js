@@ -1,4 +1,6 @@
 import * as React from 'react-native';
+
+import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components';
 import Background from './background/Background';
 import PlayButton from './button/play-button';
@@ -14,12 +16,16 @@ const HomeScreen = ({navigation}) => {
   };
 
   return (
-    <ScreenContainer>
+    <>
       <Background background={'Home Screen'} />
-      <PlayButtonContainer onPress={() => confirm()}>
-        <PlayButton />
-      </PlayButtonContainer>
-    </ScreenContainer>
+      <SafeAreaView style={{flex: 1}}>
+        <ScreenContainer>
+          <PlayButtonContainer onPress={() => confirm()}>
+            <PlayButton />
+          </PlayButtonContainer>
+        </ScreenContainer>
+      </SafeAreaView>
+    </>
   );
 };
 
@@ -29,7 +35,7 @@ const ScreenContainer = styled.View`
   color: black;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   height: 100%;
   width: 100%;
 `;

@@ -37,6 +37,15 @@ const Background = ({background}) => {
     if (background === 'Name Screen') {
       return require(`../../assets/names-screen-background.png`);
     }
+    if (background === 'Lemonade Players Screen') {
+      return require(`../../assets/score-screen-background.png`);
+    }
+    if (background === 'Lemonade Who Completed Screen') {
+      return require(`../../assets/score-screen-background.png`);
+    }
+    if (background === 'Card Screen') {
+      return require(`../../assets/card-screen-background.png`);
+    }
   };
   const uri = backgroundImage();
 

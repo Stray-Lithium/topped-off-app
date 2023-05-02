@@ -26,10 +26,10 @@ const PlayContainer = styled.View`
 
 const PlayText = styled.Text`
   text-align: center;
-  color: #262020;
-  font-size: 36px;
+  // color: #262020;
+  font-size: 30px;
   letter-spacing: 1px;
-  font-family: Morning Breeze Bold;
+  font-family: Morning Breeze;
 `;
 
 export default ReadyButton;

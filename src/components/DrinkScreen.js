@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {View, Dimensions} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components';
 import Background from './background/Background';
@@ -7,6 +8,7 @@ import {currentPlayerRequest} from '../actions/current-player';
 import {playersRequest} from '../actions/players';
 import ChallengeCardBackground from './background/ChallengeCardBackground';
 import DrinkBottomBar from './bar/DrinkBottomBar';
+import FlipCard from 'react-native-flip-card';
 
 const DrinkScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -15,6 +17,9 @@ const DrinkScreen = ({navigation}) => {
   const currentPlayer = useSelector(state => state.CurrentPlayer.currentPlayer);
   const drinkers = useSelector(state => state.Drinkers.drinkers);
   const [stealer, setStealer] = useState([]);
+
+  const windowWidth = Dimensions.get('window').width;
+  const ninetyPercent = windowWidth * 0.9;
 
   const stealChecker = () => {
     let potentialStealers = [];
@@ -81,8 +86,6 @@ const DrinkScreen = ({navigation}) => {
     navigation.navigate('Challenge Screen');
   };
 
-  console.log(stealer, 'stealer');
-
   if (players && currentPlayer && drinkers && currentCard) {
     const isSteal =
       stealer.length > 0 && currentCard.cardColor !== 'lemonadeScore';
@@ -91,28 +94,70 @@ const DrinkScreen = ({navigation}) => {
         <Background background={'Drinks Screen'} />
         <SafeAreaView style={{flex: 1}}>
           <ScreenContainer>
-            <>
-              <CardContainer>
-                <ChallengeCardBackground image={'drinkCard'} />
-                <CardContentContainer>
-                  <CardTitle>
-                    {`${drinkTitle()}`}
-                    <DrinkText>{'\n'}DRINK!</DrinkText>
-                  </CardTitle>
-                  <CardComment>
-                    Yeah, yeah, you've "just been thirsty"
-                  </CardComment>
-                </CardContentContainer>
-              </CardContainer>
-            </>
-            {/* <Title>{`${drinkTitle()}you must drink!`}</Title> */}
+            <View style={{height: ninetyPercent * 1.24}}>
+              <FlipCard
+                friction={6}
+                perspective={1000}
+                flipHorizontal={true}
+                flipVertical={false}
+                flip={false}
+                clickable={stealer.length > 0}
+                onFlipEnd={isFlipEnd => {
+                  console.log('isFlipEnd', isFlipEnd);
+                }}>
+                {/* Face Side */}
+                <CardContainer>
+                  <ChallengeCardBackground image={'drinkCard'} />
+                  <CardContentContainer>
+                    <CardTitle>
+                      {`${drinkTitle()}`}
+                      <DrinkText>{'\n'}DRINK!</DrinkText>
+                    </CardTitle>
+                    <CardComment>
+                      Yeah, yeah, you've "just been thirsty"
+                    </CardComment>
+                  </CardContentContainer>
+                </CardContainer>
+                {/* Back Side */}
+                <CardContainer>
+                  <ChallengeCardBackground image={currentCard.cardColor} />
+                  <CurrentCardContentContainer>
+                    <CurrentCardTitle>{currentCard.title}</CurrentCardTitle>
+                    <CurrentCardContent>{`${currentPlayer[0]} ${
+                      currentCard.content_line_one
+                    }${
+                      currentCard.blank &&
+                      currentCard.cardColor !== 'lemonadeScore'
+                        ? currentCard.blank.content
+                        : ''
+                    }${
+                      currentCard.content_line_two
+                        ? currentCard.content_line_two
+                        : ''
+                    }`}</CurrentCardContent>
+                    <CurrentCardComment>
+                      {currentCard.comment}
+                    </CurrentCardComment>
+                  </CurrentCardContentContainer>
+                </CardContainer>
+              </FlipCard>
+            </View>
             {stealer.length > 0 && currentCard.cardColor !== 'lemonadeScore' ? (
-              <BarContainer onPress={() => steal()}>
-                <DrinkBottomBar params={{navigation, isSteal}} />
-              </BarContainer>
+              <>
+                <RefreshMessage>
+                  {`${stealer[0]}`}, fancy stealing {`${drinkers[0]}`}'s
+                  challenge for a point?{' '}
+                </RefreshMessage>
+                <FlipText>
+                  (Click on the card to preview {`${drinkers[0]}`}'s challenge)
+                </FlipText>
+                <BarContainer onPress={() => steal()}>
+                  <DrinkBottomBar isSteal={isSteal} />
+                </BarContainer>
+              </>
             ) : (
               <BarContainer onPress={() => confirm()}>
-                <DrinkBottomBar params={{navigation, isSteal}} />
+                <DrinkBottomBar isSeal={isSteal} />
               </BarContainer>
             )}
           </ScreenContainer>
@@ -133,7 +178,6 @@ const DrinkScreen = ({navigation}) => {
 const ScreenContainer = styled.View`
   flex: 1;
   display: flex;
-  color: black;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -205,11 +249,10 @@ const CustomButton = styled.Text`
 `;
 
 const CardContainer = styled.View`
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
 `;
 
 const CardContentContainer = styled.View`
@@ -218,7 +261,7 @@ const CardContentContainer = styled.View`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 80%;
+  width: 90%;
   height: 100%;
 `;
 
@@ -233,7 +276,7 @@ const CardTitle = styled.Text`
 `;
 
 const DrinkText = styled.Text`
-  font-size: 80px;
+  font-size: 70px;
   text-align: center;
   width: 80%;
   margin-top: 20px;
@@ -254,9 +297,66 @@ const CardComment = styled.Text`
   font-style: italic;
 `;
 
+const CurrentCardContentContainer = styled.View`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+  height: 100%;
+`;
+
+const CurrentCardTitle = styled.Text`
+  font-size: 34px;
+  text-align: center;
+  width: 80%;
+  margin-top: 20px;
+  padding: 2px;
+  font-family: Morning Breeze;
+`;
+
+const CurrentCardContent = styled.Text`
+  font-size: 26px;
+  text-align: center;
+  width: 86%;
+  line-height: 30px;
+  padding: 2px;
+  font-family: Morning Breeze;
+`;
+
+const CurrentCardComment = styled.Text`
+  font-size: 24px;
+  text-align: center;
+  width: 80%;
+  margin-bottom: 20px;
+  padding: 2px;
+  margin-top: 40px;
+  font-family: Morning Breeze;
+  font-style: italic;
+`;
+
 const BarContainer = styled.Pressable`
   position: absolute;
   bottom: 0;
+`;
+
+const RefreshMessage = styled.Text`
+  padding: 20px 20px 20px 20px;
+  margin-top: 20px;
+  text-align: center;
+  color: #ffcf00;
+  font-size: 26px;
+  font-family: Morning Breeze;
+`;
+
+const FlipText = styled.Text`
+  padding: 0px 20px 20px 20px;
+  margin-top: 20px;
+  text-align: center;
+  color: #ffcf00;
+  font-size: 20px;
+  font-family: Morning Breeze;
 `;
 
 export default DrinkScreen;

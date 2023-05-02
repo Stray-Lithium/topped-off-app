@@ -1,7 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components';
+import * as R from 'ramda';
 import Background from './background/Background';
 import ChallengeCardBackground from './background/ChallengeCardBackground';
 import {whiskeyBlank} from '../blanks/whiskey';
@@ -12,9 +13,17 @@ import {currentCardRequest} from '../actions/current-card';
 import {storeWinners} from './storage/storage';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {buttonShadow} from './button/button-shadow';
-import CompleteAndDrinkButton from './button/CompleteAndDringButton';
+import CompleteAndDrinkButton from './button/CompleteAndDrinkButton';
 import {checkScoreRequest} from '../actions/check-score';
 import {cardsRequest} from '../actions/cards';
+import {lemonadeCardData} from '../cards/lemonade-data';
+import {lemonadeBlankData} from '../blanks/lemonade-data';
+import {martiniCardData} from '../cards/martini-data';
+import {martiniBlankData} from '../blanks/martini-data';
+import {whiskeyCardData, whiskeyCardDataCopy} from '../cards/whiskey-data';
+import {whiskeyBlankData} from '../blanks/whiskey-data';
+import {mojitoCardData} from '../cards/mojito-data';
+import {log} from 'react-native-reanimated';
 
 const ChallengeScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -23,68 +32,176 @@ const ChallengeScreen = ({navigation}) => {
   const currentPlayer = useSelector(state => state.CurrentPlayer.currentPlayer);
   const gameVersion = useSelector(state => state.GameVersion.gameVersion);
   const cards = useSelector(state => state.Cards.cards);
-  console.log('getting in challenge screen');
+  const [shouldTrigger, setShouldTrigger] = useState(true);
+  // console.log('getting in challenge screen');
+
+  // console.log('');
+  // console.log(cards, 'raw data');
+  // console.log('');
+
+  const cardReset = (cardOrBlank, category) => {
+    if (cardOrBlank === 'cards') {
+      if (category === 'whiskeyScore') {
+        console.log('getting here mateeee');
+        return R.clone(whiskeyCardDataCopy);
+      }
+      if (category === 'martiniScore') {
+        return martiniCardData;
+      }
+      if (category === 'mojitoScore') {
+        return mojitoCardData;
+      }
+      if (category === 'lemonadeScore') {
+        return lemonadeCardData;
+      }
+    }
+    if (cardOrBlank === 'blanks') {
+      if (category === 'whiskeyScore') {
+        return R.clone(whiskeyBlankData);
+      }
+      if (category === 'martiniScore') {
+        return martiniBlankData;
+      }
+      if (category === 'mojitoScore') {
+        return lemonadeBlankData;
+      }
+    }
+  };
 
   const randomizer = (cardOrBlank, category) => {
+    console.log(' ');
+    console.log(cards.cardData[category].cards, 'content before splice');
+
+    if (cards.cardData[category].cards.length === 0) {
+      const reset = cardReset('cards', category);
+      cards.cardData[category].cards = reset;
+      console.log(' ');
+      console.log(reset, 'the reset');
+    }
+    const randomIndex =
+      Math.floor(Math.random() * cards.cardData[category].cards.length) + 0;
+    const challenge = cards.cardData[category].cards[randomIndex];
+
+    cards.cardData[category].cards.forEach((item, index) => {
+      if (item.id === challenge.id) {
+        console.log('spliced');
+        cards.cardData[category].cards.splice(index, 1);
+      }
+    });
+    console.log(' ');
+    console.log(cards.cardData[category].cards, 'content after splice');
+
+    dispatch(cardsRequest(cards));
+    return challenge;
+  };
+
+  // const randomizer = (cardOrBlank, category) => {
+  //   let cardsCopy = {...cards};
+  //   let content = cardsCopy.cardData[category][cardOrBlank];
+  //   // console.log(' ');
+  //   if (cardOrBlank === 'cards') {
+  //     // console.log(content, 'content before splice');
+  //   }
+  //   if (content.length === 0) {
+  //     const reset = cardReset(cardOrBlank, category);
+  //     reset.forEach(challenge => {
+  //       delete challenge.blank;
+  //     });
+  //     content = reset;
+  //     // console.log(' ');
+  //     // console.log(reset, 'the reset');
+  //   }
+  //   const randomIndex = Math.floor(Math.random() * content.length) + 0;
+  //   const challenge = content[randomIndex];
+
+  //   content.forEach((item, index) => {
+  //     if (item.id === challenge.id) {
+  //       content.splice(index, 1);
+  //     }
+  //   });
+  //   if (cardOrBlank === 'cards') {
+  //     // console.log(' ');
+  //     // console.log(content, 'content after splice');
+  //   }
+  //   dispatch(cardsRequest(cardsCopy));
+  //   return challenge;
+  // };
+
+  const blankRandomizer = (cardOrBlank, category) => {
     let cardsCopy = {...cards};
-    const content = cardsCopy.cardData[category][cardOrBlank];
+    let content = [...cardsCopy.cardData[category][cardOrBlank]];
+    // console.log(' gettign here atleast');
+    if (cardOrBlank === 'blanks') {
+      // console.log(content, 'content before splice blank');
+    }
+    if (content.length === 0) {
+      const reset = cardReset(cardOrBlank, category);
+      reset.forEach(challenge => {
+        delete challenge.blank;
+      });
+      content = reset;
+      // console.log(' ');
+      // console.log(reset, 'the reset blank');
+    }
     const randomIndex = Math.floor(Math.random() * content.length) + 0;
     const challenge = content[randomIndex];
-    console.log(challenge, 'before');
-    content.forEach(item => {
-      // console.log(item.id);
-    });
+
     content.forEach((item, index) => {
       if (item.id === challenge.id) {
-        // console.log(item.id, 'id to remove');
         content.splice(index, 1);
       }
     });
-    // console.log(content, 'after');
-    content.forEach(item => {
-      // console.log(item.id);
-    });
+    if (cardOrBlank === 'cards') {
+      // console.log(' ');
+      // console.log(content, 'content after splice blank');
+    }
     dispatch(cardsRequest(cardsCopy));
     return challenge;
   };
 
-  const cardAndBlank = () => {
+  const cardAndBlank = async () => {
     if (currentCard.cardColor === 'whiskeyScore') {
       if (gameVersion === 'CARD') {
         dispatch(currentCardRequest(whiskeyBlank()));
       } else {
-        const card = randomizer('cards', 'whiskeyScore');
-        card.blank = randomizer('blanks', 'whiskeyScore');
+        let card = await randomizer('cards', 'whiskeyScore');
+        // console.log(card, 'jsakjskajksja');
+        let blank = await blankRandomizer('blanks', 'whiskeyScore');
+        card.blank = blank;
         dispatch(currentCardRequest(card));
       }
     }
-    if (currentCard.cardColor === 'martiniScore') {
-      if (gameVersion === 'CARD') {
-        dispatch(currentCardRequest(martiniBlank()));
-      } else {
-        const card = randomizer('cards', 'martiniScore');
-        card.blank = randomizer('blanks', 'martiniScore');
-        dispatch(currentCardRequest(card));
-      }
-    }
-    if (currentCard.cardColor === 'mojitoScore') {
-      dispatch(currentCardRequest(randomizer('cards', 'mojitoScore')));
-    }
-    if (currentCard.cardColor === 'lemonadeScore') {
-      const card = randomizer('cards', 'lemonadeScore');
-      card.blank = randomizer('blanks', 'lemonadeScore');
-      dispatch(currentCardRequest(card));
-    }
+    // if (currentCard.cardColor === 'martiniScore') {
+    //   if (gameVersion === 'CARD') {
+    //     dispatch(currentCardRequest(martiniBlank()));
+    //   } else {
+    //     const card = randomizer('cards', 'martiniScore');
+    //     card.blank = randomizer('blanks', 'martiniScore');
+    //     dispatch(currentCardRequest(card));
+    //   }
+    // }
+    // if (currentCard.cardColor === 'mojitoScore') {
+    //   dispatch(currentCardRequest(randomizer('cards', 'mojitoScore')));
+    // }
+    // if (currentCard.cardColor === 'lemonadeScore') {
+    //   const card = randomizer('cards', 'lemonadeScore');
+    //   card.blank = randomizer('blanks', 'lemonadeScore');
+    //   dispatch(currentCardRequest(card));
+    // }
   };
   // dispatch(currentCardRequest(martiniCard(martiniBlank())));
   // dispatch(currentCardRequest(mojitoCard()));
 
   useEffect(() => {
-    if (!currentCard.content_line_one) {
+    if (shouldTrigger) {
       cardAndBlank();
+      setShouldTrigger(false);
     }
+    // if (!currentCard.content_line_one) {
+    //   cardAndBlank();
+    // }
   }, [currentCard, currentPlayer, players, gameVersion, cards]);
-  console.log(currentCard, 'jksajksja');
+  // console.log(currentCard, 'jksajksja');
 
   const nameMaker = () => {
     const playersLength = currentPlayer.length;
@@ -150,10 +267,10 @@ const ChallengeScreen = ({navigation}) => {
   const notLemonadeChallenge = () => {
     return (
       <ButtonBar>
-        <ButtonContainer onPress={() => complete(false)} style={buttonShadow}>
+        <ButtonContainer onPress={() => complete(false)}>
           <CompleteAndDrinkButton completeOrDrink={'DRINK'} />
         </ButtonContainer>
-        <ButtonContainer onPress={() => complete(true)} style={buttonShadow}>
+        <ButtonContainer onPress={() => complete(true)}>
           <CompleteAndDrinkButton completeOrDrink={'DONE'} />
         </ButtonContainer>
       </ButtonBar>
@@ -266,7 +383,7 @@ const CardTitle = styled.Text`
   text-align: center;
   width: 80%;
   margin-top: 20px;
-  padding: 2px;
+  padding: 4px;
   font-family: Morning Breeze;
 `;
 

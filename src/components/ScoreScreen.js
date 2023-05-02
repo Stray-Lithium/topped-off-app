@@ -24,6 +24,7 @@ const ScoreScreen = ({navigation}) => {
   const updateTurns = () => {
     let cardsCopy = {...cards};
     let newCards = [];
+    // console.log(cards, 'card');
     cards.turns.forEach(card => {
       if (card.name === currentCard.cardColor) {
         newCards.push({name: card.name, turns: (card.turns += 1)});

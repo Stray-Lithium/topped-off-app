@@ -39,7 +39,6 @@ const RulesScreen = ({navigation}) => {
             onScroll={({nativeEvent}) => {
               if (isCloseToBottom(nativeEvent)) {
                 setAtBottom(true);
-                console.log('near bottom');
               } else {
                 setAtBottom(false);
               }

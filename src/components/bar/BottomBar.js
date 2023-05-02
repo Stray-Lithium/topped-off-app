@@ -19,8 +19,12 @@ const BottomBar = ({navigation}) => {
     <BottomBarContainer>
       <AutoHeightImage
         width={baseValue}
-        source={require(`../../assets/question-button.png`)}
-      />
+        source={require(`../../assets/x-button.png`)}>
+        <Pressable
+          style={{flex: 1}}
+          onPress={() => navigation.navigate('Menu Screen')}
+        />
+      </AutoHeightImage>
       <AutoHeightImage
         width={baseValue}
         source={require(`../../assets/rules-button.png`)}>
