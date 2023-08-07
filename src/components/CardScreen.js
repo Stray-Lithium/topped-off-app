@@ -20,7 +20,7 @@ const CardScreen = ({navigation}) => {
   const ingredientRandomizer = () => {
     const cardNames = [
       // 'martiniScore',
-      // 'lemonadeScore',
+      'lemonadeScore',
       // 'whiskeyScore',
       // 'mojitoScore',
     ];

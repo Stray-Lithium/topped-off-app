@@ -130,7 +130,7 @@ const ChallengeScreen = ({navigation}) => {
       } else if (index === playersLength - 2) {
         names += `${name} and `;
       } else {
-        names += `${name},`;
+        names += `${name}, `;
       }
     });
     return names;
@@ -236,7 +236,7 @@ const ChallengeScreen = ({navigation}) => {
           <ChallengeCardBackground image={currentCard.cardColor} />
           <CardContentContainer>
             <CardTitle>{currentCard.title}</CardTitle>
-            <CardContent>{`${names} ${currentCard.content_line_one}${
+            <CardContent>{`${names}${currentCard.content_line_one}${
               currentCard.blank && currentCard.cardColor !== 'lemonadeScore'
                 ? currentCard.blank.content
                 : ''
