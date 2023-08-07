@@ -17,12 +17,11 @@ import CompleteAndDrinkButton from './button/CompleteAndDrinkButton';
 import {checkScoreRequest} from '../actions/check-score';
 import {cardsRequest} from '../actions/cards';
 import {lemonadeCardData} from '../cards/lemonade-data';
-import {lemonadeBlankData} from '../blanks/lemonade-data';
+import {mojitoCardData} from '../cards/mojito-data';
 import {martiniCardData} from '../cards/martini-data';
 import {martiniBlankData} from '../blanks/martini-data';
-import {whiskeyCardData, whiskeyCardDataCopy} from '../cards/whiskey-data';
+import {whiskeyCardData} from '../cards/whiskey-data';
 import {whiskeyBlankData} from '../blanks/whiskey-data';
-import {mojitoCardData} from '../cards/mojito-data';
 import {log} from 'react-native-reanimated';
 
 const ChallengeScreen = ({navigation}) => {
@@ -33,26 +32,21 @@ const ChallengeScreen = ({navigation}) => {
   const gameVersion = useSelector(state => state.GameVersion.gameVersion);
   const cards = useSelector(state => state.Cards.cards);
   const [shouldTrigger, setShouldTrigger] = useState(true);
-  // console.log('getting in challenge screen');
-
-  // console.log('');
-  // console.log(cards, 'raw data');
-  // console.log('');
 
   const cardReset = (cardOrBlank, category) => {
     if (cardOrBlank === 'cards') {
       if (category === 'whiskeyScore') {
         console.log('getting here mateeee');
-        return R.clone(whiskeyCardDataCopy);
+        return R.clone(whiskeyCardData);
       }
       if (category === 'martiniScore') {
-        return martiniCardData;
+        return R.clone(martiniCardData);
       }
       if (category === 'mojitoScore') {
-        return mojitoCardData;
+        return R.clone(mojitoCardData);
       }
       if (category === 'lemonadeScore') {
-        return lemonadeCardData;
+        return R.clone(lemonadeCardData);
       }
     }
     if (cardOrBlank === 'blanks') {
@@ -60,159 +54,83 @@ const ChallengeScreen = ({navigation}) => {
         return R.clone(whiskeyBlankData);
       }
       if (category === 'martiniScore') {
-        return martiniBlankData;
-      }
-      if (category === 'mojitoScore') {
-        return lemonadeBlankData;
+        return R.clone(martiniBlankData);
       }
     }
   };
 
   const randomizer = (cardOrBlank, category) => {
-    console.log(' ');
-    console.log(cards.cardData[category].cards, 'content before splice');
-
-    if (cards.cardData[category].cards.length === 0) {
-      const reset = cardReset('cards', category);
-      cards.cardData[category].cards = reset;
+    if (cardOrBlank === 'cards') {
       console.log(' ');
-      console.log(reset, 'the reset');
+      console.log(
+        cards.cardData[category][cardOrBlank],
+        'content before splice',
+        cards.cardData[category][cardOrBlank].length,
+      );
+    }
+
+    if (cards.cardData[category][cardOrBlank].length === 0) {
+      const reset = cardReset(cardOrBlank, category);
+      cards.cardData[category][cardOrBlank] = reset;
+      if (cardOrBlank === 'cards') {
+        console.log(' ');
+        console.log(reset, 'the reset');
+      }
     }
     const randomIndex =
-      Math.floor(Math.random() * cards.cardData[category].cards.length) + 0;
-    const challenge = cards.cardData[category].cards[randomIndex];
+      Math.floor(Math.random() * cards.cardData[category][cardOrBlank].length) +
+      0;
+    const challenge = cards.cardData[category][cardOrBlank][randomIndex];
 
-    cards.cardData[category].cards.forEach((item, index) => {
+    cards.cardData[category][cardOrBlank].forEach((item, index) => {
       if (item.id === challenge.id) {
-        console.log('spliced');
-        cards.cardData[category].cards.splice(index, 1);
+        if (cardOrBlank === 'cards') {
+          console.log('spliced');
+        }
+        cards.cardData[category][cardOrBlank].splice(index, 1);
       }
     });
-    console.log(' ');
-    console.log(cards.cardData[category].cards, 'content after splice');
-
+    if (cardOrBlank === 'cards') {
+      console.log(' ');
+      console.log(
+        cards.cardData[category][cardOrBlank],
+        'content after splice',
+        cards.cardData[category][cardOrBlank].length,
+      );
+    }
     dispatch(cardsRequest(cards));
     return challenge;
   };
 
-  // const randomizer = (cardOrBlank, category) => {
-  //   let cardsCopy = {...cards};
-  //   let content = cardsCopy.cardData[category][cardOrBlank];
-  //   // console.log(' ');
-  //   if (cardOrBlank === 'cards') {
-  //     // console.log(content, 'content before splice');
-  //   }
-  //   if (content.length === 0) {
-  //     const reset = cardReset(cardOrBlank, category);
-  //     reset.forEach(challenge => {
-  //       delete challenge.blank;
-  //     });
-  //     content = reset;
-  //     // console.log(' ');
-  //     // console.log(reset, 'the reset');
-  //   }
-  //   const randomIndex = Math.floor(Math.random() * content.length) + 0;
-  //   const challenge = content[randomIndex];
-
-  //   content.forEach((item, index) => {
-  //     if (item.id === challenge.id) {
-  //       content.splice(index, 1);
-  //     }
-  //   });
-  //   if (cardOrBlank === 'cards') {
-  //     // console.log(' ');
-  //     // console.log(content, 'content after splice');
-  //   }
-  //   dispatch(cardsRequest(cardsCopy));
-  //   return challenge;
-  // };
-
-  const blankRandomizer = (cardOrBlank, category) => {
-    let cardsCopy = {...cards};
-    let content = [...cardsCopy.cardData[category][cardOrBlank]];
-    // console.log(' gettign here atleast');
-    if (cardOrBlank === 'blanks') {
-      // console.log(content, 'content before splice blank');
-    }
-    if (content.length === 0) {
-      const reset = cardReset(cardOrBlank, category);
-      reset.forEach(challenge => {
-        delete challenge.blank;
-      });
-      content = reset;
-      // console.log(' ');
-      // console.log(reset, 'the reset blank');
-    }
-    const randomIndex = Math.floor(Math.random() * content.length) + 0;
-    const challenge = content[randomIndex];
-
-    content.forEach((item, index) => {
-      if (item.id === challenge.id) {
-        content.splice(index, 1);
-      }
-    });
-    if (cardOrBlank === 'cards') {
-      // console.log(' ');
-      // console.log(content, 'content after splice blank');
-    }
-    dispatch(cardsRequest(cardsCopy));
-    return challenge;
-  };
-
   const cardAndBlank = async () => {
-    if (currentCard.cardColor === 'whiskeyScore') {
-      if (gameVersion === 'CARD') {
-        dispatch(currentCardRequest(whiskeyBlank()));
-      } else {
-        let card = await randomizer('cards', 'whiskeyScore');
-        // console.log(card, 'jsakjskajksja');
-        let blank = await blankRandomizer('blanks', 'whiskeyScore');
-        card.blank = blank;
-        dispatch(currentCardRequest(card));
-      }
+    const color = currentCard.cardColor;
+    let card = await randomizer('cards', color);
+    if (color === 'martiniScore' || color === 'whiskeyScore') {
+      let blank = await randomizer('blanks', color);
+      card.blank = blank;
     }
-    // if (currentCard.cardColor === 'martiniScore') {
-    //   if (gameVersion === 'CARD') {
-    //     dispatch(currentCardRequest(martiniBlank()));
-    //   } else {
-    //     const card = randomizer('cards', 'martiniScore');
-    //     card.blank = randomizer('blanks', 'martiniScore');
-    //     dispatch(currentCardRequest(card));
-    //   }
-    // }
-    // if (currentCard.cardColor === 'mojitoScore') {
-    //   dispatch(currentCardRequest(randomizer('cards', 'mojitoScore')));
-    // }
-    // if (currentCard.cardColor === 'lemonadeScore') {
-    //   const card = randomizer('cards', 'lemonadeScore');
-    //   card.blank = randomizer('blanks', 'lemonadeScore');
-    //   dispatch(currentCardRequest(card));
-    // }
+    dispatch(currentCardRequest(card));
   };
-  // dispatch(currentCardRequest(martiniCard(martiniBlank())));
-  // dispatch(currentCardRequest(mojitoCard()));
 
   useEffect(() => {
     if (shouldTrigger) {
       cardAndBlank();
       setShouldTrigger(false);
     }
-    // if (!currentCard.content_line_one) {
-    //   cardAndBlank();
-    // }
   }, [currentCard, currentPlayer, players, gameVersion, cards]);
-  // console.log(currentCard, 'jksajksja');
 
   const nameMaker = () => {
     const playersLength = currentPlayer.length;
     let names = '';
     currentPlayer.forEach((name, index) => {
       if (playersLength === 1) {
-        names += `${name},`;
+        currentCard.cardColor === 'lemonadeScore'
+          ? (names += `EVERYBODY vs ${name}, everyone`)
+          : (names += `${name},`);
       } else if (index === playersLength - 2) {
         names += `${name} and `;
       } else {
-        names += `${name}, `;
+        names += `${name},`;
       }
     });
     return names;

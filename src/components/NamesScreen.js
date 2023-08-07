@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {Text, StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
+import {Text, KeyboardAvoidingView, Platform} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components';
 import * as R from 'ramda';
 import Background from './background/Background';
 import {useDispatch} from 'react-redux';
 import {playersRequest} from '../actions/players';
-import {buttonShadow} from './button/button-shadow';
 import ReadyButton from './button/ReadyButton';
 import PlusButton from './button/PlusButton';
 import XButton from './button/XButton';
@@ -65,11 +64,6 @@ const NamesScreen = ({navigation}) => {
     setPlayers(updatedPlayers);
   };
 
-  // console.log(whiskeyCardData, 'whisley card data');
-
-  const wCardTest = R.clone(whiskeyCardData);
-  const wBlankTest = R.clone(whiskeyBlankData);
-
   const ready = () => {
     dispatch(playersRequest(players));
     dispatch(
@@ -81,13 +75,19 @@ const NamesScreen = ({navigation}) => {
           {name: 'mojitoScore', turns: 0},
         ],
         cardData: {
-          lemonadeScore: {cards: lemonadeCardData, blanks: lemonadeBlankData},
-          martiniScore: {cards: martiniCardData, blanks: martiniBlankData},
-          whiskeyScore: {
-            cards: wCardTest,
-            blanks: wBlankTest,
+          lemonadeScore: {
+            cards: R.clone(lemonadeCardData),
+            blanks: R.clone(lemonadeBlankData),
           },
-          mojitoScore: {cards: mojitoCardData},
+          martiniScore: {
+            cards: R.clone(martiniCardData),
+            blanks: R.clone(martiniBlankData),
+          },
+          whiskeyScore: {
+            cards: R.clone(whiskeyCardData),
+            blanks: R.clone(whiskeyBlankData),
+          },
+          mojitoScore: {cards: R.clone(mojitoCardData)},
         },
       }),
     );

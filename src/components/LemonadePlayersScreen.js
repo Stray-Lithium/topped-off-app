@@ -2,33 +2,51 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, Pressable} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import AnimatedCheckbox from 'react-native-checkbox-reanimated';
+import * as R from 'ramda';
 import styled from 'styled-components';
 import Background from './background/Background';
-import Button from './button/Button';
-import {lemonadeBlankFill} from '../blanks/lemonade';
+import {lemonadeBlankData} from '../blanks/lemonade-data';
 import {currentPlayerRequest} from '../actions/current-player';
 import {useDispatch, useSelector} from 'react-redux';
-import LemonadeConfirmButton from './button/LemonadeConfirmButton';
-import RefreshButton from './button/RefreshButton';
 import AutoHeightImage from 'react-native-auto-height-image';
 import {Dimensions} from 'react-native';
 
 const LemonadePlayersScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const players = useSelector(state => state.Players.players);
+  const cards = useSelector(state => state.Cards.cards);
   const [lemonFill, setLemonFill] = useState(false);
   const [checkedNames, setCheckedNames] = useState([]);
-  const [displayRefresh, setDisplayRefresh] = useState(false);
 
   const windowWidth = Dimensions.get('window').width;
 
   const baseValue = windowWidth * 0.18;
 
+  const cardReset = () => {
+    return R.clone(lemonadeBlankData);
+  };
+
+  const changeAndDeleteBlank = () => {
+    const blankPath = cards.cardData.lemonadeScore.blanks;
+    if (blankPath.length === 0) {
+      const reset = cardReset();
+      cards.cardData.lemonadeScore.blanks = reset;
+    }
+    const randomIndex = Math.floor(Math.random() * blankPath.length) + 0;
+    const blank = blankPath[randomIndex];
+    blankPath.forEach((item, index) => {
+      if (item.id === blank.id) {
+        blankPath.splice(index, 1);
+      }
+    });
+    return blank;
+  };
+
   useEffect(() => {
     if (!lemonFill) {
-      setLemonFill(lemonadeBlankFill().toUpperCase());
+      setLemonFill(changeAndDeleteBlank());
     }
-  }, [lemonFill, players]);
+  }, [lemonFill, players, cards]);
 
   const checkboxClick = checkName => {
     if (!checkedNames.includes(checkName)) {
@@ -36,9 +54,6 @@ const LemonadePlayersScreen = ({navigation}) => {
     } else {
       let filter = checkedNames.filter(player => player !== checkName);
       setCheckedNames(filter);
-    }
-    if (checkedNames.length > 0) {
-      setDisplayRefresh(false);
     }
   };
 
@@ -68,12 +83,8 @@ const LemonadePlayersScreen = ({navigation}) => {
     if (checkedNames.length > 0) {
       dispatch(currentPlayerRequest(checkedNames));
       navigation.navigate('Challenge Screen');
-    } else {
-      setDisplayRefresh(true);
     }
   };
-
-  // console.log(players, 'hahaha');
 
   if (lemonFill && players) {
     return (
@@ -81,7 +92,7 @@ const LemonadePlayersScreen = ({navigation}) => {
         <Background background={'Lemonade Players Screen'} />
         <SafeAreaView style={{flex: 1}}>
           <ScreenContainer>
-            <Title>{lemonFill}?</Title>
+            <Title>{lemonFill.content}?</Title>
             <CheckBoxes
               data={players}
               renderItem={renderCheckBox}
@@ -94,7 +105,7 @@ const LemonadePlayersScreen = ({navigation}) => {
             </RefreshMessage>
             <ButtonBar>
               <ImageContainer>
-                <Pressable onPress={() => setLemonFill(false)}>
+                <Pressable onPress={() => setLemonFill(changeAndDeleteBlank())}>
                   <AutoHeightImage
                     width={baseValue}
                     source={require(`../assets/refresh-button.png`)}
@@ -111,9 +122,6 @@ const LemonadePlayersScreen = ({navigation}) => {
                 </Pressable>
               </ImageContainer>
             </ButtonBar>
-            {/* <ButtonContainer onPress={() => confirm()}>
-                <LemonadeConfirmButton />
-              </ButtonContainer> */}
           </ScreenContainer>
         </SafeAreaView>
       </>
@@ -148,7 +156,8 @@ const ScreenContainer = styled.View`
 const Title = styled.Text`
   font-size: 30px;
   margin-top: 48px;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
+  padding-bottom: 6px;
   text-align: center;
   width: 90%;
   font-family: Morning Breeze Bold;

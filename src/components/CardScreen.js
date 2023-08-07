@@ -21,7 +21,7 @@ const CardScreen = ({navigation}) => {
     const cardNames = [
       // 'martiniScore',
       // 'lemonadeScore',
-      'whiskeyScore',
+      // 'whiskeyScore',
       // 'mojitoScore',
     ];
     const isFirstTurn = () => {
