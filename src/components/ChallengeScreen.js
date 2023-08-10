@@ -125,8 +125,8 @@ const ChallengeScreen = ({navigation}) => {
     currentPlayer.forEach((name, index) => {
       if (playersLength === 1) {
         currentCard.cardColor === 'lemonadeScore'
-          ? (names += `EVERYBODY vs ${name}, everyone`)
-          : (names += `${name},`);
+          ? (names += `EVERYBODY vs ${name}, `)
+          : (names += `${name}, `);
       } else if (index === playersLength - 2) {
         names += `${name} and `;
       } else {

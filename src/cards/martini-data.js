@@ -32,14 +32,14 @@ export const martiniCardData = [
     comment: `Don't be shy.`,
     cardColor: 'martiniScore',
   },
-  {
-    id: 'mac5',
-    title: `Dead Arm`,
-    content_line_one: 'Arm-wrestle every player in the room and ',
-    content_line_two: ' for each defeat.',
-    comment: `Show them how it's done.`,
-    cardColor: 'martiniScore',
-  },
+  // {
+  //   id: 'mac5',
+  //   title: `Dead Arm`,
+  //   content_line_one: 'Arm-wrestle every player in the room and ',
+  //   content_line_two: ' for each defeat.',
+  //   comment: `Show them how it's done.`,
+  //   cardColor: 'martiniScore',
+  // },
   {
     id: 'mac6',
     title: `Wonky Ass`,
@@ -57,41 +57,41 @@ export const martiniCardData = [
     comment: `Drop the 5 second rule.`,
     cardColor: 'martiniScore',
   },
-  {
-    id: 'mac8',
-    title: `Rock-Paper-Scissors`,
-    content_line_one:
-      'play ‘Rock-Paper-Scissors’ with each one of your co-players and ',
-    content_line_two: ' every time you lose.',
-    comment: `Beat the odds.`,
-    cardColor: 'martiniScore',
-  },
+  // {
+  //   id: 'mac8',
+  //   title: `Rock-Paper-Scissors`,
+  //   content_line_one:
+  //     'play ‘Rock-Paper-Scissors’ with each one of your co-players and ',
+  //   content_line_two: ' every time you lose.',
+  //   comment: `Beat the odds.`,
+  //   cardColor: 'martiniScore',
+  // },
   {
     id: 'mac9',
     title: `Piggy-Back`,
-    content_line_one: 'give a quick piggy back-ride to one of the players and ',
+    content_line_one: 'give a quick piggy-back-ride to one of the players and ',
     content_line_two: ' as you carry them around.',
     comment: `Always carrying the team.`,
     cardColor: 'martiniScore',
   },
-  {
-    id: 'mac10',
-    title: `Heads & Tails`,
-    content_line_one: 'get a coin and toss it. If it lands on heads ',
-    content_line_two:
-      ' alone, if it lands on tails pick someone to do it with you.',
-    comment: `Feeling lucky today?`,
-    cardColor: 'martiniScore',
-  },
-  {
-    id: 'mac11',
-    title: `Free Kick`,
-    content_line_one:
-      'flick a small paper ball through a goalpost made by the player sitting across and ',
-    content_line_two: ' every time you miss.',
-    comment: `It’s football, not football.`,
-    cardColor: 'martiniScore',
-  },
+  // {
+  //   id: 'mac10',
+  //   title: `Heads & Tails`,
+  //   content_line_one: 'get a coin and toss it. If it lands on heads ',
+  //   content_line_two:
+  //     ' alone, if it lands on tails pick someone to do it with you.',
+  //   comment: `Feeling lucky today?`,
+  //   cardColor: 'martiniScore',
+  // },
+  // {
+  //   id: 'mac11',
+  //   title: `Free Kick`,
+  //   content_line_one:
+  //     'flick a small paper ball through a goalpost made by the player sitting across and ',
+  //   content_line_two: ' every time you miss.',
+  //   comment: `It’s football, not football.`,
+  //   cardColor: 'martiniScore',
+  // },
   {
     id: 'mac12',
     title: `Locked Out`,
@@ -100,19 +100,19 @@ export const martiniCardData = [
     comment: `Hope no one locks you out.`,
     cardColor: 'martiniScore',
   },
-  {
-    id: 'mac13',
-    title: `Tic-Tac-Toe`,
-    content_line_one: 'play Tic-Tac-Toe with a player to your right and ',
-    content_line_two: ' if you end up in a tie or get wrecked.',
-    comment: ``,
-    cardColor: 'martiniScore',
-  },
+  // {
+  //   id: 'mac13',
+  //   title: `Tic-Tac-Toe`,
+  //   content_line_one: 'play Tic-Tac-Toe with a player to your right and ',
+  //   content_line_two: ' if you end up in a tie or get wrecked.',
+  //   comment: ``,
+  //   cardColor: 'martiniScore',
+  // },
   {
     id: 'mac14',
     title: `Chinese Whispers`,
     content_line_one:
-      'chinese whisper a discription of your mum going clockwise and ',
+      'chinese whisper a description of your mum going clockwise and ',
     content_line_two: ' if the whisper is intact.',
     comment: `No hard feelings?`,
     cardColor: 'martiniScore',
@@ -130,7 +130,7 @@ export const martiniCardData = [
     title: `Moon Landing`,
     content_line_one: 'put a bowl over your head and ',
     content_line_two: ' as you act out the moon landing.',
-    comment: `It’s a small step for you and an even smaller one for humanity.`,
+    comment: `It’s one small step for you, and an even smaller one for mankind.`,
     cardColor: 'martiniScore',
   },
   {

@@ -19,10 +19,10 @@ const CardScreen = ({navigation}) => {
 
   const ingredientRandomizer = () => {
     const cardNames = [
-      // 'martiniScore',
+      'martiniScore',
       'lemonadeScore',
-      // 'whiskeyScore',
-      // 'mojitoScore',
+      'whiskeyScore',
+      'mojitoScore',
     ];
     const isFirstTurn = () => {
       let total = 0;
