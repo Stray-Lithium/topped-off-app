@@ -22,10 +22,16 @@ const NamesScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [players, setPlayers] = useState([]);
+  const [minPlayersError, setMinPlayersError] = useState(false);
+  const [duplicatePlayersError, setDulplicatePlayersError] = useState(false);
 
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0;
 
-  useEffect(() => {}, [players]);
+  useEffect(() => {
+    if (players.length >= 2) {
+      setMinPlayersError(false);
+    }
+  }, [players]);
 
   const onChangeText = input => {
     setName(input);
@@ -34,8 +40,9 @@ const NamesScreen = ({navigation}) => {
   const handleSubmit = () => {
     let addName = true;
     players.forEach(player => {
-      if (player.name === name) {
+      if (player.name === name.toUpperCase()) {
         addName = false;
+        setDulplicatePlayersError(true);
       }
     });
     if (name.length > 0 && addName) {
@@ -49,6 +56,7 @@ const NamesScreen = ({navigation}) => {
         pointsAwarded: 0,
         canSteal: true,
       };
+      setDulplicatePlayersError(false);
       setPlayers([...players, playerObject]);
     }
     setName('');
@@ -65,33 +73,37 @@ const NamesScreen = ({navigation}) => {
   };
 
   const ready = () => {
-    dispatch(playersRequest(players));
-    dispatch(
-      cardsRequest({
-        turns: [
-          {name: 'lemonadeScore', turns: 0},
-          {name: 'martiniScore', turns: 0},
-          {name: 'whiskeyScore', turns: 0},
-          {name: 'mojitoScore', turns: 0},
-        ],
-        cardData: {
-          lemonadeScore: {
-            cards: R.clone(lemonadeCardData),
-            blanks: R.clone(lemonadeBlankData),
+    if (players.length <= 1) {
+      setMinPlayersError(true);
+    } else {
+      dispatch(playersRequest(players));
+      dispatch(
+        cardsRequest({
+          turns: [
+            {name: 'lemonadeScore', turns: 0},
+            {name: 'martiniScore', turns: 0},
+            {name: 'whiskeyScore', turns: 0},
+            {name: 'mojitoScore', turns: 0},
+          ],
+          cardData: {
+            lemonadeScore: {
+              cards: R.clone(lemonadeCardData),
+              blanks: R.clone(lemonadeBlankData),
+            },
+            martiniScore: {
+              cards: R.clone(martiniCardData),
+              blanks: R.clone(martiniBlankData),
+            },
+            whiskeyScore: {
+              cards: R.clone(whiskeyCardData),
+              blanks: R.clone(whiskeyBlankData),
+            },
+            mojitoScore: {cards: R.clone(mojitoCardData)},
           },
-          martiniScore: {
-            cards: R.clone(martiniCardData),
-            blanks: R.clone(martiniBlankData),
-          },
-          whiskeyScore: {
-            cards: R.clone(whiskeyCardData),
-            blanks: R.clone(whiskeyBlankData),
-          },
-          mojitoScore: {cards: R.clone(mojitoCardData)},
-        },
-      }),
-    );
-    navigation.navigate('Card Screen');
+        }),
+      );
+      navigation.navigate('Card Screen');
+    }
   };
 
   const pageContent = () => {
@@ -120,6 +132,16 @@ const NamesScreen = ({navigation}) => {
               );
             })}
           </PlayersList>
+          {duplicatePlayersError ? (
+            <Message>Cannot use the same name twice.</Message>
+          ) : (
+            <></>
+          )}
+          {minPlayersError ? (
+            <Message>Please enter at least two players.</Message>
+          ) : (
+            <></>
+          )}
           <KeyboardAvoidingView
             style={{width: '100%'}}
             behavior="position"
@@ -159,7 +181,6 @@ const ScreenContainer = styled.View`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  // color: black;
   height: 100%;
   width: 100%;
 `;
@@ -208,6 +229,15 @@ const NameInputContainer = styled.View`
   justify-content: center;
   width: 100%;
   margin-bottom: 20px;
+`;
+
+const Message = styled.Text`
+  width: 80%;
+  padding: 0px 0 20px 0;
+  text-align: center;
+  color: #ffcf00;
+  font-size: 26px;
+  font-family: Morning Breeze;
 `;
 
 const ButtonContainer = styled.Pressable`

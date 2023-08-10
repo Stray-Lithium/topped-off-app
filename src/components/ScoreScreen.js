@@ -24,7 +24,6 @@ const ScoreScreen = ({navigation}) => {
   const updateTurns = () => {
     let cardsCopy = {...cards};
     let newCards = [];
-    // console.log(cards, 'card');
     cards.turns.forEach(card => {
       if (card.name === currentCard.cardColor) {
         newCards.push({name: card.name, turns: (card.turns += 1)});
@@ -54,7 +53,9 @@ const ScoreScreen = ({navigation}) => {
         <Background background={'Score Screen'} />
         <SafeAreaView style={{flex: 1}}>
           <ExitPressable
-            style={{top: insets.top}}
+            style={{
+              bottom: insets.bottom,
+            }}
             onPress={() => {
               exitButton();
             }}>
@@ -71,23 +72,26 @@ const ScoreScreen = ({navigation}) => {
         </SafeAreaView>
       </>
     );
-  } else return <Text style={{fontSize: 48}}>Hello</Text>;
+  }
 };
 
 const ExitPressable = styled.Pressable`
   position: absolute;
-  left: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  z-index: 2;
 `;
 
 const ScreenContainer = styled.View`
   flex: 1;
   display: flex;
-  color: black;
   flex-direction: column;
   align-items: center;
+  color: black;
   height: 100%;
   width: 100%;
-  margin-top: 50px;
 `;
 
 const TitleContainer = styled.View`

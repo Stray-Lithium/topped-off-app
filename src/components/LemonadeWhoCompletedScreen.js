@@ -18,12 +18,16 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
   const [checkedNames, setCheckedNames] = useState([]);
   const [yesOrNo, setYesOrNo] = useState([]);
   const [displayMessage, setDisplayMessage] = useState(false);
+  const [playerSelected, setPlayerSelected] = useState(false);
 
   useEffect(() => {
     if (yesOrNo.length > 0) {
       setDisplayMessage(false);
     }
-  }, [players, currentPlayer, yesOrNo]);
+    if (checkedNames.length > 0) {
+      setPlayerSelected(false);
+    }
+  }, [players, currentPlayer, yesOrNo, checkedNames]);
 
   const checkboxClick = checkName => {
     setCheckedNames([checkName]);
@@ -156,8 +160,11 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
   };
 
   const confirm = () => {
+    console.log(yesOrNo, currentPlayer, 'heree');
     if (yesOrNo.length === 0 && currentPlayer.length === 1) {
       setDisplayMessage(true);
+    } else if (checkedNames.length === 0 && currentPlayer.length > 1) {
+      setPlayerSelected(true);
     } else {
       setCompleted();
     }
@@ -194,14 +201,12 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
             ) : (
               <></>
             )}
+            {playerSelected ? <Message>Please select who won.</Message> : <></>}
             <ButtonBar>
               <ButtonContainer onPress={() => confirm()}>
                 <LemonadeConfirmButton refresh={false} />
               </ButtonContainer>
             </ButtonBar>
-            {/* <ButtonContainer onPress={() => confirm()}>
-              <CustomButton>CONFIRM</CustomButton>
-            </ButtonContainer> */}
           </ScreenContainer>
         </SafeAreaView>
       </>

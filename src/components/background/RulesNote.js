@@ -18,7 +18,7 @@ const RulesNote = () => {
 
 const Image = styled.Image`
   position: absolute;
-  height: 100%;
+  height: 98%;
   resize-mode: stretch;
 `;
 

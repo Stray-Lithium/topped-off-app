@@ -5,7 +5,6 @@ import {Dimensions} from 'react-native';
 
 const ScoreBoard = ({players}) => {
   const windowWidth = Dimensions.get('window').width * 0.9;
-  // console.log(players, 'players bitch');
   const sortPlayers = () => {
     const sortedPlayers = [];
     for (let i = 5; i >= 0; i--) {
@@ -91,6 +90,7 @@ const ScoreboardContainer = styled.View`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  padding-bottom: 50px;
 `;
 
 const ScoreList = styled.View`

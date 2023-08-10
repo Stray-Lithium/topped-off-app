@@ -3,10 +3,13 @@ import AutoHeightImage from 'react-native-auto-height-image';
 import {Dimensions} from 'react-native';
 
 const ScoreScreenClose = () => {
-  const windowWidth = Dimensions.get('window').width * 0.6;
+  const baseValue = Dimensions.get('window').width * 0.18;
 
   return (
-    <AutoHeightImage width={60} source={require(`../../assets/x-button.png`)} />
+    <AutoHeightImage
+      width={baseValue * 2}
+      source={require(`../../assets/x-button-two.png`)}
+    />
   );
 };
 
