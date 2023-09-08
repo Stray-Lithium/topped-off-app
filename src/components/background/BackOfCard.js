@@ -1,32 +1,27 @@
-import AutoHeightImage from 'react-native-auto-height-image';
-import {Dimensions} from 'react-native';
+import {
+  MartiniBackSvg,
+  OldFashionedBackSvg,
+  PinaColadaBackSvg,
+  SexOnTheBeachBackSvg,
+} from '../../assets/cards/card-backs';
 
-const BackOfCard = ({image}) => {
-  const windowWidth = Dimensions.get('window').width * 0.75;
-
-  const backgroundImage = () => {
-    if (image === 'whiskeyScore') {
-      return require(`../../assets/whiskey-card.png`);
+const BackOfCard = ({drink}) => {
+  const image = () => {
+    if (drink === 'whiskeyScore') {
+      return <OldFashionedBackSvg />;
     }
-    if (image === 'martiniScore') {
-      return require(`../../assets/martini-card.png`);
+    if (drink === 'martiniScore') {
+      return <MartiniBackSvg />;
     }
-    if (image === 'mojitoScore') {
-      return require(`../../assets/mojito-card.png`);
+    if (drink === 'mojitoScore') {
+      return <PinaColadaBackSvg />;
     }
-    if (image === 'lemonadeScore') {
-      return require(`../../assets/lemonade-card.png`);
+    if (drink === 'lemonadeScore') {
+      return <SexOnTheBeachBackSvg />;
     }
   };
-  const uri = backgroundImage();
 
-  return (
-    <AutoHeightImage
-      style={{marginBottom: 20}}
-      width={windowWidth}
-      source={uri}
-    />
-  );
+  return image();
 };
 
 export default BackOfCard;

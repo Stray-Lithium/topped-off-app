@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
-import {useSelector} from 'react-redux';
+import {Dimensions} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import * as R from 'ramda';
 import Background from './background/Background';
 import ChallengeCardBackground from './background/ChallengeCardBackground';
-import {whiskeyBlank} from '../blanks/whiskey';
-import {martiniBlank} from '../blanks/martini';
 import {playersRequest} from '../actions/players';
 import {drinkersRequest} from '../actions/drinkers';
 import {currentCardRequest} from '../actions/current-card';
@@ -14,7 +12,6 @@ import {storeWinners} from './storage/storage';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {buttonShadow} from './button/button-shadow';
 import CompleteAndDrinkButton from './button/CompleteAndDrinkButton';
-import {checkScoreRequest} from '../actions/check-score';
 import {cardsRequest} from '../actions/cards';
 import {lemonadeCardData} from '../cards/lemonade-data';
 import {mojitoCardData} from '../cards/mojito-data';
@@ -22,7 +19,9 @@ import {martiniCardData} from '../cards/martini-data';
 import {martiniBlankData} from '../blanks/martini-data';
 import {whiskeyCardData} from '../cards/whiskey-data';
 import {whiskeyBlankData} from '../blanks/whiskey-data';
-import {log} from 'react-native-reanimated';
+import RedButtonTwoSvg from '../assets/buttons/RedButtonTwoSvg';
+import MartiniFrontSvg from '../assets/cards/MartiniFrontSvg';
+import FrontOfCard from './background/FrontOfCard';
 
 const ChallengeScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -33,10 +32,12 @@ const ChallengeScreen = ({navigation}) => {
   const cards = useSelector(state => state.Cards.cards);
   const [shouldTrigger, setShouldTrigger] = useState(true);
 
+  const windowWidth = Dimensions.get('window').width;
+  const baseValue = windowWidth * 0.18;
+
   const cardReset = (cardOrBlank, category) => {
     if (cardOrBlank === 'cards') {
       if (category === 'whiskeyScore') {
-        console.log('getting here mateeee');
         return R.clone(whiskeyCardData);
       }
       if (category === 'martiniScore') {
@@ -60,22 +61,9 @@ const ChallengeScreen = ({navigation}) => {
   };
 
   const randomizer = (cardOrBlank, category) => {
-    if (cardOrBlank === 'cards') {
-      console.log(' ');
-      console.log(
-        cards.cardData[category][cardOrBlank],
-        'content before splice',
-        cards.cardData[category][cardOrBlank].length,
-      );
-    }
-
     if (cards.cardData[category][cardOrBlank].length === 0) {
       const reset = cardReset(cardOrBlank, category);
       cards.cardData[category][cardOrBlank] = reset;
-      if (cardOrBlank === 'cards') {
-        console.log(' ');
-        console.log(reset, 'the reset');
-      }
     }
     const randomIndex =
       Math.floor(Math.random() * cards.cardData[category][cardOrBlank].length) +
@@ -84,20 +72,9 @@ const ChallengeScreen = ({navigation}) => {
 
     cards.cardData[category][cardOrBlank].forEach((item, index) => {
       if (item.id === challenge.id) {
-        if (cardOrBlank === 'cards') {
-          console.log('spliced');
-        }
         cards.cardData[category][cardOrBlank].splice(index, 1);
       }
     });
-    if (cardOrBlank === 'cards') {
-      console.log(' ');
-      console.log(
-        cards.cardData[category][cardOrBlank],
-        'content after splice',
-        cards.cardData[category][cardOrBlank].length,
-      );
-    }
     dispatch(cardsRequest(cards));
     return challenge;
   };
@@ -184,13 +161,21 @@ const ChallengeScreen = ({navigation}) => {
 
   const notLemonadeChallenge = () => {
     return (
-      <ButtonBar>
-        <ButtonContainer onPress={() => complete(false)}>
-          <CompleteAndDrinkButton completeOrDrink={'DRINK'} />
-        </ButtonContainer>
-        <ButtonContainer onPress={() => complete(true)}>
-          <CompleteAndDrinkButton completeOrDrink={'DONE'} />
-        </ButtonContainer>
+      <ButtonBar style={{height: baseValue}}>
+        <WidthContainer
+          style={{
+            width: baseValue * 2,
+          }}
+          onPress={() => complete(false)}>
+          <ButtonText>DRINK</ButtonText>
+          <RedButtonTwoSvg />
+        </WidthContainer>
+        <WidthContainer
+          style={{width: baseValue * 2}}
+          onPress={() => complete(true)}>
+          <ButtonText>DONE</ButtonText>
+          <RedButtonTwoSvg />
+        </WidthContainer>
       </ButtonBar>
     );
   };
@@ -232,8 +217,8 @@ const ChallengeScreen = ({navigation}) => {
   const fullVersion = () => {
     return (
       <>
-        <CardContainer>
-          <ChallengeCardBackground image={currentCard.cardColor} />
+        <CardContainer style={{height: windowWidth * 1.117}}>
+          <FrontOfCard drink={currentCard.cardColor} />
           <CardContentContainer>
             <CardTitle>{currentCard.title}</CardTitle>
             <CardContent>{`${names}${currentCard.content_line_one}${
@@ -283,7 +268,9 @@ const CardContainer = styled.View`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 80%;
   margin-bottom: 20px;
+  background-color: pink;
 `;
 
 const CardContentContainer = styled.View`
@@ -351,13 +338,6 @@ const CVCardContent = styled.Text`
   padding-bottom: 2px;
 `;
 
-const PlayerName = styled.Text`
-  font-size: 22px;
-  text-align: center;
-  width: 70%;
-  font-family: Morning Breeze;
-`;
-
 const CVPlayerName = styled.Text`
   font-size: 22px;
   text-align: center;
@@ -374,10 +354,30 @@ const ButtonBar = styled.View`
   justify-content: center;
   width: 100%;
   bottom: 0px;
+  background-color: pink;
 `;
 
 const ButtonContainer = styled.Pressable`
   margin: 0 3px 0 3px;
+`;
+
+const WidthContainer = styled.Pressable`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-color: teal;
+  margin: 0 1% 0 1%;
+`;
+
+const ButtonText = styled.Text`
+  position: absolute;
+  text-align: center;
+  color: #262020;
+  font-size: 30px;
+  letter-spacing: 1px;
+  font-family: Morning Breeze;
+  z-index: 1;
 `;
 
 export default ChallengeScreen;

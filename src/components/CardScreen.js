@@ -8,7 +8,7 @@ import {currentPlayerRequest} from '../actions/current-player';
 import {turnRandomizer} from '../algorithms/card';
 import CardScreenBackground from './background/CardScreenBackgrounds';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import BottomBar from './bar/BottomBar';
+import CardBottomBar from './bar/CardBottomBar';
 
 const CardScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -19,10 +19,10 @@ const CardScreen = ({navigation}) => {
 
   const ingredientRandomizer = () => {
     const cardNames = [
-      'martiniScore',
+      // 'martiniScore',
       'lemonadeScore',
-      'whiskeyScore',
-      'mojitoScore',
+      // 'whiskeyScore',
+      // 'mojitoScore',
     ];
     const isFirstTurn = () => {
       let total = 0;
@@ -34,14 +34,14 @@ const CardScreen = ({navigation}) => {
       return total === 0;
     };
     const firstTurn = isFirstTurn();
-    // if (!firstTurn) {
-    //   const card = turnRandomizer(cards.turns);
-    //   dispatch(currentCardRequest({cardColor: `${card}`}));
-    // } else {
-    const randomWordIndex = Math.floor(Math.random() * cardNames.length) + 0;
-    const card = cardNames[randomWordIndex];
-    dispatch(currentCardRequest({cardColor: `${card}`}));
-    // }
+    if (!firstTurn) {
+      const card = turnRandomizer(cards.turns);
+      dispatch(currentCardRequest({cardColor: `${card}`}));
+    } else {
+      const randomWordIndex = Math.floor(Math.random() * cardNames.length) + 0;
+      const card = cardNames[randomWordIndex];
+      dispatch(currentCardRequest({cardColor: `${card}`}));
+    }
   };
 
   useEffect(() => {
@@ -77,7 +77,7 @@ const CardScreen = ({navigation}) => {
   const fullVersion = () => {
     return (
       <CardTouch onPress={() => storeCurrentPlayerAndCard()}>
-        <BackOfCard image={currentCard.cardColor} />
+        <BackOfCard drink={currentCard.cardColor} />
       </CardTouch>
     );
   };
@@ -113,7 +113,7 @@ const CardScreen = ({navigation}) => {
           <ScreenContainer>
             {gameVersion === 'FULL' ? fullVersion() : cardVersion()}
           </ScreenContainer>
-          <BottomBar navigation={navigation} />
+          <CardBottomBar navigation={navigation} />
         </SafeAreaView>
       </>
     );
@@ -136,6 +136,7 @@ const CardTouch = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   width: 80%;
+  background-color: pink;
 `;
 
 const Title = styled.Text`
@@ -153,16 +154,6 @@ const CardsContainer = styled.View`
   align-items: center;
 `;
 
-const Card = styled.View`
-  background-color: black;
-  height: 40px;
-  margin: 4px;
-  width: 45%;
-  height: 200px;
-`;
-
 const CardSelect = styled.Pressable``;
-
-const BottomBarContainer = styled.View``;
 
 export default CardScreen;

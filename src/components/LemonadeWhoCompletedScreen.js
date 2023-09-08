@@ -9,6 +9,8 @@ import {drinkersRequest} from '../actions/drinkers';
 import {useDispatch, useSelector} from 'react-redux';
 import {storeWinners} from './storage/storage';
 import LemonadeConfirmButton from './button/LemonadeConfirmButton';
+import Unchecked from '../assets/checkbox/Unchecked';
+import Checked from '../assets/checkbox/Checked';
 
 const LemonadeWhoCompletedScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -43,12 +45,7 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
           <Pressable
             onPress={() => checkboxClick(item)}
             style={styles.checkbox}>
-            <AnimatedCheckbox
-              checked={checkedNames.includes(item)}
-              highlightColor="#ee3347"
-              checkmarkColor="#ffffff"
-              boxOutlineColor="#000000"
-            />
+            {checkedNames.includes(item) ? <Checked /> : <Unchecked />}
           </Pressable>
         </CheckboxPosition>
       </CheckboxContainer>
@@ -223,8 +220,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   checkbox: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
   },
 });
 

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Pressable} from 'react-native';
+import {StyleSheet, Pressable, Dimensions} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import AnimatedCheckbox from 'react-native-checkbox-reanimated';
 import * as R from 'ramda';
@@ -9,7 +9,10 @@ import {lemonadeBlankData} from '../blanks/lemonade-data';
 import {currentPlayerRequest} from '../actions/current-player';
 import {useDispatch, useSelector} from 'react-redux';
 import AutoHeightImage from 'react-native-auto-height-image';
-import {Dimensions} from 'react-native';
+import RefreshButtonSvg from '../assets/buttons/RefreshButtonSvg.js';
+import RedButtonFourSvg from '../assets/buttons/RedButtonFourSvg';
+import Unchecked from '../assets/checkbox/Unchecked';
+import Checked from '../assets/checkbox/Checked';
 
 const LemonadePlayersScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -21,6 +24,7 @@ const LemonadePlayersScreen = ({navigation}) => {
   const windowWidth = Dimensions.get('window').width;
 
   const baseValue = windowWidth * 0.18;
+  console.log(baseValue);
 
   const cardReset = () => {
     return R.clone(lemonadeBlankData);
@@ -67,12 +71,7 @@ const LemonadePlayersScreen = ({navigation}) => {
           <Pressable
             onPress={() => checkboxClick(item.name)}
             style={styles.checkbox}>
-            <AnimatedCheckbox
-              checked={checkedNames.includes(item.name)}
-              highlightColor="#ee3347"
-              checkmarkColor="#ffffff"
-              boxOutlineColor="#000000"
-            />
+            {checkedNames.includes(item.name) ? <Checked /> : <Unchecked />}
           </Pressable>
         </CheckboxPosition>
       </CheckboxContainer>
@@ -103,22 +102,27 @@ const LemonadePlayersScreen = ({navigation}) => {
             <RefreshMessage>
               Please select a player or refresh the prompt if no one applies
             </RefreshMessage>
-            <ButtonBar>
+            <ButtonBar style={{height: baseValue}}>
               <ImageContainer>
                 <Pressable onPress={() => setLemonFill(changeAndDeleteBlank())}>
-                  <AutoHeightImage
-                    width={baseValue}
-                    source={require(`../assets/refresh-button.png`)}
-                  />
+                  <RefreshButtonSvg height={baseValue} width={baseValue} />
                 </Pressable>
-                <Pressable onPress={() => confirm()}>
-                  <AutoHeightImage
+                <Pressable
+                  style={{backgroundColor: 'orange'}}
+                  onPress={() => confirm()}>
+                  {/* <AutoHeightImage
                     width={baseValue * 4}
-                    source={require(`../assets/red-button-four.png`)}>
+                    source={require(`../assets/red-button-four.png`)}> */}
+                  <RedButtonFourSvg
+                    width={baseValue * 4 - windowWidth * 0.1}
+                    height={baseValue}
+                    // viewBox={`0 0 ${baseValue} ${baseValue * 4}`}
+                  >
                     <PlayContainer>
                       <PlayText>CONFIRM</PlayText>
                     </PlayContainer>
-                  </AutoHeightImage>
+                  </RedButtonFourSvg>
+                  {/* </AutoHeightImage> */}
                 </Pressable>
               </ImageContainer>
             </ButtonBar>
@@ -138,8 +142,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   checkbox: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
   },
 });
 
@@ -209,6 +213,7 @@ const ButtonBar = styled.View`
   justify-content: center;
   width: 100%;
   bottom: 0px;
+  background-color: pink;
 `;
 
 const RefreshMessage = styled.Text`

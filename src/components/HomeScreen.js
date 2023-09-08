@@ -1,15 +1,15 @@
 import * as React from 'react-native';
-
 import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components';
 import Background from './background/Background';
-import PlayButton from './button/play-button';
 import {gameVersionRequest} from '../actions/game-version';
 import {useDispatch} from 'react-redux';
+import RedButtonThreeSvg from '../assets/buttons/RedButtonThreeSvg';
 
 const HomeScreen = ({navigation}) => {
   const dispatch = useDispatch();
-
+  const windowWidth = React.Dimensions.get('window').width * 0.92;
+  const baseValue = windowWidth * 0.18;
   const confirm = () => {
     dispatch(gameVersionRequest('FULL'));
     navigation.navigate('Names Screen');
@@ -19,11 +19,20 @@ const HomeScreen = ({navigation}) => {
     <>
       <Background background={'Home Screen'} />
       <SafeAreaView style={{flex: 1}}>
-        <ScreenContainer>
-          <PlayButtonContainer onPress={() => confirm()}>
-            <PlayButton />
+        <ScreenContainer></ScreenContainer>
+        <BottomBarContainer
+          style={{
+            height: baseValue,
+          }}>
+          <PlayButtonContainer
+            style={{
+              width: baseValue * 3 + windowWidth * 0.04,
+            }}
+            onPress={() => confirm()}>
+            <PlayText>ENTER</PlayText>
+            <RedButtonThreeSvg />
           </PlayButtonContainer>
-        </ScreenContainer>
+        </BottomBarContainer>
       </SafeAreaView>
     </>
   );
@@ -40,10 +49,29 @@ const ScreenContainer = styled.View`
   width: 100%;
 `;
 
+const BottomBarContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 92%;
+  margin: 0 4% 0 4%;
+`;
+
 const PlayButtonContainer = styled.Pressable`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const PlayText = styled.Text`
+  position: absolute;
+  text-align: center;
+  color: #262020;
+  font-size: 30px;
+  letter-spacing: 1px;
+  font-family: Morning Breeze;
+  z-index: 1;
 `;
 
 export default HomeScreen;

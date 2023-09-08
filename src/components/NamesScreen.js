@@ -1,13 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {Text, KeyboardAvoidingView, Platform} from 'react-native';
+import {Text, KeyboardAvoidingView, Platform, Dimensions} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components';
 import * as R from 'ramda';
 import Background from './background/Background';
 import {useDispatch} from 'react-redux';
 import {playersRequest} from '../actions/players';
-import ReadyButton from './button/ReadyButton';
-import PlusButton from './button/PlusButton';
 import XButton from './button/XButton';
 import {cardsRequest} from '../actions/cards';
 import {lemonadeCardData} from '../cards/lemonade-data';
@@ -17,6 +15,9 @@ import {martiniBlankData} from '../blanks/martini-data';
 import {whiskeyCardData} from '../cards/whiskey-data';
 import {whiskeyBlankData} from '../blanks/whiskey-data';
 import {mojitoCardData} from '../cards/mojito-data';
+import RedButtonTwoSvg from '../assets/buttons/RedButtonTwoSvg';
+import YellowPlusButton from '../assets/buttons/YellowPlusButton';
+import Sound from 'react-native-sound';
 
 const NamesScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -24,8 +25,28 @@ const NamesScreen = ({navigation}) => {
   const [players, setPlayers] = useState([]);
   const [minPlayersError, setMinPlayersError] = useState(false);
   const [duplicatePlayersError, setDulplicatePlayersError] = useState(false);
-
+  const baseValue = Dimensions.get('window').width * 0.18;
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0;
+  const windowWidth = Dimensions.get('window').width * 0.92;
+  Sound.setCategory('Playback');
+
+  const buttonClickSound = new Sound(
+    'button-sound.wav',
+    Sound.MAIN_BUNDLE,
+    error => {
+      if (error) {
+        console.log('failed to load the sound', error);
+        return;
+      }
+      // when loaded successfully
+      console.log(
+        'duration in seconds: ' +
+          buttonClickSound.getDuration() +
+          'number of channels: ' +
+          buttonClickSound.getNumberOfChannels(),
+      );
+    },
+  );
 
   useEffect(() => {
     if (players.length >= 2) {
@@ -38,6 +59,13 @@ const NamesScreen = ({navigation}) => {
   };
 
   const handleSubmit = () => {
+    buttonClickSound.play(success => {
+      if (success) {
+        console.log('successfully finished playing');
+      } else {
+        console.log('playback failed due to audio decoding errors');
+      }
+    });
     let addName = true;
     players.forEach(player => {
       if (player.name === name.toUpperCase()) {
@@ -154,15 +182,27 @@ const NamesScreen = ({navigation}) => {
                 placeholderTextColor="#808080"
                 onSubmitEditing={() => handleSubmit()}
               />
-              <IconTouch onPress={() => handleSubmit()}>
-                <PlusButton />
+              <IconTouch
+                style={{width: 58, height: 58}}
+                onPress={() => handleSubmit()}>
+                <YellowPlusButton />
               </IconTouch>
             </NameInputContainer>
           </KeyboardAvoidingView>
-          <ButtonContainer onPress={() => ready()}>
-            <ReadyButton />
-          </ButtonContainer>
         </ScreenContainer>
+        <BottomBarContainer
+          style={{
+            height: baseValue,
+          }}>
+          <PlayButtonContainer
+            style={{
+              width: baseValue * 2 + windowWidth * 0.02,
+            }}
+            onPress={() => ready()}>
+            <PlayText>READY!</PlayText>
+            <RedButtonTwoSvg />
+          </PlayButtonContainer>
+        </BottomBarContainer>
       </SafeAreaView>
     );
   };
@@ -183,6 +223,11 @@ const ScreenContainer = styled.View`
   justify-content: center;
   height: 100%;
   width: 100%;
+`;
+
+const WidthContainer = styled.Pressable`
+  height: 100%;
+  background-color: teal;
 `;
 
 const TitleContainer = styled.View`
@@ -259,5 +304,30 @@ const NameInput = styled.TextInput`
 `;
 
 const IconTouch = styled.Pressable``;
+
+const BottomBarContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 92%;
+  margin: 0 4% 0 4%;
+`;
+
+const PlayButtonContainer = styled.Pressable`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const PlayText = styled.Text`
+  position: absolute;
+  text-align: center;
+  color: #262020;
+  font-size: 30px;
+  letter-spacing: 1px;
+  font-family: Morning Breeze;
+  z-index: 1;
+`;
 
 export default NamesScreen;

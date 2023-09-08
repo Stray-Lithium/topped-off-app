@@ -1,18 +1,15 @@
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import styled from 'styled-components';
 import Background from './background/Background';
-import RulesNote from './background/RulesNote';
-import ScoreScreenClose from './button/ScoreScreenClose';
-import {Dimensions, Pressable} from 'react-native';
+import {Dimensions} from 'react-native';
 import AutoHeightImage from 'react-native-auto-height-image';
 import {useState} from 'react';
+import RedButtonTwoSvg from '../assets/buttons/RedButtonTwoSvg';
+import AllDrinksFullSvg from '../assets/score/AllDrinksFullSvg';
 
 const RulesScreen = ({navigation}) => {
-  const [atBottom, setAtBottom] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
   const windowWidth = Dimensions.get('window').width;
   const widthMargin = windowWidth * 0.12;
-  const insets = useSafeAreaInsets();
 
   const baseValue = windowWidth * 0.18;
 
@@ -61,10 +58,9 @@ const RulesScreen = ({navigation}) => {
           {'\n'}Complete one challenge in each of the four categories to win.
           {'\n'}
         </RulesText>
-        <AutoHeightImage
-          width={baseValue * 5}
-          source={require('../assets/rules-all-drinks.png')}
-        />
+        <WidthContainer style={{width: baseValue * 5, height: baseValue * 2}}>
+          <AllDrinksFullSvg style={{backgroundColor: 'orange'}} />
+        </WidthContainer>
       </>
     );
   };
@@ -93,16 +89,16 @@ const RulesScreen = ({navigation}) => {
   const buttonSorter = prevOrNext => {
     if (prevOrNext === 'prev') {
       if (pageNumber === 1) {
-        return require('../assets/x-button-two.png');
+        return <RedButtonTwoSvg style={{backgroundColor: 'purple'}} />;
       } else {
-        return require('../assets/rules-left-arrow-two.png');
+        return <RedButtonTwoSvg style={{backgroundColor: 'orange'}} />;
       }
     }
     if (prevOrNext === 'next') {
       if (pageNumber === 3) {
-        return require('../assets/rules-last-button.png');
+        return <RedButtonTwoSvg style={{backgroundColor: 'teal'}} />;
       } else {
-        return require('../assets/rules-right-arrow-two.png');
+        return <RedButtonTwoSvg style={{backgroundColor: 'orange'}} />;
       }
     }
   };
@@ -112,7 +108,6 @@ const RulesScreen = ({navigation}) => {
       <Background background={'Rules Screen'} />
       <SafeContainer>
         <RulesContainer>
-          {/* <RulesNote /> */}
           <RulesTitle>HOW TO PLAY</RulesTitle>
           <TextScroll
             onScroll={({nativeEvent}) => {
@@ -130,32 +125,21 @@ const RulesScreen = ({navigation}) => {
             }}>
             {page()}
           </TextScroll>
-          {/* <ScrollImageContainer style={{transform: [{rotate: '-4deg'}]}}>
-            {!atBottom ? (
-              <AutoHeightImage
-                width={160}
-                source={require(`../assets/scroll.png`)}
-              />
-            ) : (
-              <></>
-            )}
-          </ScrollImageContainer> */}
         </RulesContainer>
-        <BottomBarContainer>
-          <AutoHeightImage width={baseValue * 2} source={buttonSorter('prev')}>
-            <Pressable
-              style={{flex: 1}}
-              onPress={() => prevNextOrClose('prev')}
-            />
-          </AutoHeightImage>
+        <BottomBarContainer style={{height: baseValue}}>
+          <WidthContainer
+            style={{width: baseValue * 2}}
+            onPress={() => prevNextOrClose('prev')}>
+            {buttonSorter('prev')}
+          </WidthContainer>
           <PageNumberContainer style={{width: baseValue}}>
             <PageNumber>{`${pageNumber}`}/3</PageNumber>
           </PageNumberContainer>
-          <AutoHeightImage width={baseValue * 2} source={buttonSorter('next')}>
-            <Pressable
-              style={{flex: 1}}
-              onPress={() => prevNextOrClose('next')}></Pressable>
-          </AutoHeightImage>
+          <WidthContainer
+            style={{width: baseValue * 2}}
+            onPress={() => prevNextOrClose('next')}>
+            {buttonSorter('next')}
+          </WidthContainer>
         </BottomBarContainer>
       </SafeContainer>
     </>
@@ -193,7 +177,6 @@ const RulesText = styled.Text`
   font-size: 22px;
   text-align: center;
   color: #ffcf00;
-  // letter-spacing: 1px;
   font-family: Morning Breeze;
 `;
 
@@ -202,9 +185,8 @@ const BottomBarContainer = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 92%;
-  margin-left: 4%;
-  margin-right: 4%;
+  width: 100%;
+  background-color: pink;
 `;
 
 const PageNumberContainer = styled.View`
@@ -224,62 +206,9 @@ const PageNumber = styled.Text`
   font-family: Morning Breeze;
 `;
 
-export default RulesScreen;
+const WidthContainer = styled.Pressable`
+  height: 100%;
+  background-color: teal;
+`;
 
-{
-  /* <RulesTitle>RULES</RulesTitle>
-            <RulesText
-              style={{marginRight: widthMargin, marginLeft: widthMargin}}>
-              In this game, you'll come across four different drinks. Your
-              mission is to top them off.{'\n'}
-            </RulesText>
-            <AutoHeightImage
-              width={200}
-              source={require('../assets/rules-all-drinks.png')}
-            />
-            <RulesText
-              style={{marginRight: widthMargin, marginLeft: widthMargin}}>
-              {'\n'}
-              You can always view the scoreboard by clicking this button.
-              {'\n'}
-            </RulesText>
-            <AutoHeightImage
-              width={160}
-              source={require('../assets/score-button.png')}
-            />
-            <RulesText
-              style={{marginRight: widthMargin, marginLeft: widthMargin}}>
-              {'\n'}
-              To top off a drink, you'll need to complete a cheeky challenge.
-              {'\n'}
-            </RulesText>
-            <RulesText
-              style={{marginRight: widthMargin, marginLeft: widthMargin}}>
-              You can choose to skip the challenges you don't like and drink
-              instead. However, every skip will chuck away the drink you so well
-              topped off.
-              {'\n'}
-            </RulesText>
-            <RulesText
-              style={{marginRight: widthMargin, marginLeft: widthMargin}}>
-              Drink if you failed a challenge. Stay hydrated for the next one.
-              {'\n'}
-            </RulesText>
-            <RulesText
-              style={{marginRight: widthMargin, marginLeft: widthMargin}}>
-              If a player decides to skip a challenge and you're waiting to top
-              off the drink behind it, you will be offered a chance to steal it.
-              {'\n'}
-            </RulesText>
-            <RulesText
-              style={{marginRight: widthMargin, marginLeft: widthMargin}}>
-              Stealing can be a good way to top off some of the drinks you need
-              for to win "Topped Off".
-              {'\n'}
-            </RulesText>
-            <RulesText
-              style={{marginRight: widthMargin, marginLeft: widthMargin}}>
-              Now, fill up your cups and have fun. Cheers!
-              {'\n'}
-            </RulesText> */
-}
+export default RulesScreen;
