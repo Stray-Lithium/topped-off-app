@@ -7,9 +7,11 @@ import {currentCardRequest} from '../actions/current-card';
 import ScoreBoard from './scoreboard/scoreboard';
 import {currentPlayerRequest} from '../actions/current-player';
 import {drinkersRequest} from '../actions/drinkers';
-import ScoreScreenClose from './button/ScoreScreenClose';
 import {checkScoreRequest} from '../actions/check-score';
 import {cardsRequest} from '../actions/cards';
+import RedCrossButtonTwoSvg from '../assets/buttons/RedCrossButtonTwoSvg';
+import {Dimensions} from 'react-native';
+import YellowArrowRightTwoSvg from '../assets/buttons/YellowArrowRightTwoSvg';
 
 const ScoreScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -18,6 +20,10 @@ const ScoreScreen = ({navigation}) => {
   const currentCard = useSelector(state => state.CurrentCard.currentCard);
   const checkScore = useSelector(state => state.CheckScore.checkScore);
   const insets = useSafeAreaInsets();
+  const windowWidth = Dimensions.get('window').width * 0.92;
+  const baseValue = windowWidth * 0.18;
+
+  console.log('getting to score screen');
 
   useEffect(() => {}, [players, currentCard, checkScore]);
 
@@ -38,10 +44,10 @@ const ScoreScreen = ({navigation}) => {
   const exitButton = () => {
     if (!checkScore) {
       const updatedTurns = updateTurns();
-      dispatch(cardsRequest(updatedTurns));
       dispatch(drinkersRequest(false));
       dispatch(currentPlayerRequest(false));
       dispatch(currentCardRequest(false));
+      dispatch(cardsRequest(updatedTurns));
     }
     dispatch(checkScoreRequest(false));
     navigation.navigate('Card Screen');
@@ -59,7 +65,12 @@ const ScoreScreen = ({navigation}) => {
             onPress={() => {
               exitButton();
             }}>
-            <ScoreScreenClose />
+            <YellowArrowRightTwoSvg
+              style={{
+                height: baseValue,
+                width: baseValue * 2 + windowWidth * 0.02,
+              }}
+            />
           </ExitPressable>
           <ScreenContainer>
             <TitleContainer>

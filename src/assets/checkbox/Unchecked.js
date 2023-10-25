@@ -25,9 +25,9 @@ function Unchecked(props) {
           rx={14.71}
           ry={14.71}
           fill="none"
-          stroke="#000000"
+          stroke="#000"
           strokeMiterlimit={10}
-          strokeWidth="9.61px"
+          strokeWidth="12px"
         />
       </G>
     </Svg>

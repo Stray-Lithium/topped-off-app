@@ -7,6 +7,7 @@ import DrinkersReducer from './drinkers';
 import CompletedReducer from './completed';
 import CheckScoreReducer from './check-score';
 import CardsReducer from './cards';
+import HintsReducer from './hints';
 
 export default combineReducers({
   CurrentCard: CurrentCardReducer,
@@ -17,4 +18,5 @@ export default combineReducers({
   Completed: CompletedReducer,
   CheckScore: CheckScoreReducer,
   Cards: CardsReducer,
+  Hints: HintsReducer,
 });

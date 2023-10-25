@@ -1,11 +1,11 @@
 export const mojitoCardData = [
-  // {
-  //   id: 'moc1',
-  //   title: `No Vain No Gain`,
-  //   content_line_one: `do 20 squats and compliment yourself.`,
-  //   comment: `Ain't got squat to say?`,
-  //   cardColor: 'mojitoScore',
-  // },
+  {
+    id: 'moc1',
+    title: `No Vain No Gain`,
+    content_line_one: `do 20 squats and compliment how your form is.`,
+    comment: `Ain't got squat to say?`,
+    cardColor: 'mojitoScore',
+  },
   {
     id: 'moc2',
     title: `Top Swap`,
@@ -38,7 +38,7 @@ export const mojitoCardData = [
     id: 'moc6',
     title: `Flat Back`,
     content_line_one: `Do 10 push-ups and balance an item on your back. Let your co-players decide what that item is`,
-    comment: ``,
+    comment: `Chest day`,
     cardColor: 'mojitoScore',
   },
   {
@@ -50,9 +50,9 @@ export const mojitoCardData = [
   },
   {
     id: 'moc8',
-    title: `MC Woozy`,
+    title: `Rhyme Time`,
     content_line_one: `rhyme 10 words in a row without pausing.`,
-    comment: ``,
+    comment: `10/10`,
     cardColor: 'mojitoScore',
   },
   {

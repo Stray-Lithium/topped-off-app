@@ -6,7 +6,6 @@ import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import createSagaMiddleware from '@redux-saga/core';
 import HomeScreen from './src/components/HomeScreen';
-import GameVersionScreen from './src/components/GameVersion';
 import NamesScreen from './src/components/NamesScreen';
 import CardScreen from './src/components/CardScreen';
 import ChallengeScreen from './src/components/ChallengeScreen';
@@ -19,6 +18,8 @@ import ScoreScreen from './src/components/ScoreScreen';
 import EndScreen from './src/components/EndScreen';
 import RulesScreen from './src/components/RulesScreen';
 import MenuScreen from './src/components/MenuScreen';
+import HintsScreen from './src/components/HintScreen';
+import DisclaimerScreen from './src/components/storage/DisclaimerScreen';
 const Stack = createNativeStackNavigator();
 
 const sagaMiddleware = createSagaMiddleware();
@@ -33,14 +34,14 @@ const App = () => {
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen
+              name="Disclaimer Screen"
+              component={DisclaimerScreen}
+              options={{title: 'Disclaimer Screen', headerShown: false}}
+            />
+            <Stack.Screen
               name="Home Screen"
               component={HomeScreen}
               options={{title: 'Home Screen', headerShown: false}}
-            />
-            <Stack.Screen
-              name="Version Screen"
-              component={GameVersionScreen}
-              options={{title: 'Version Screen', headerShown: false}}
             />
             <Stack.Screen
               name="Names Screen"
@@ -99,6 +100,14 @@ const App = () => {
               component={RulesScreen}
               options={{
                 title: 'Rules Screen',
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Hints Screen"
+              component={HintsScreen}
+              options={{
+                title: 'Hints Screen',
                 headerShown: false,
               }}
             />

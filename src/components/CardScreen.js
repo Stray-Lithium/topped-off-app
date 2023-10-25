@@ -17,6 +17,7 @@ const CardScreen = ({navigation}) => {
   const currentCard = useSelector(state => state.CurrentCard.currentCard);
   const gameVersion = useSelector(state => state.GameVersion.gameVersion);
 
+  console.log('kajslijahlsdkjhlakjhdpiuahp');
   const ingredientRandomizer = () => {
     const cardNames = [
       // 'martiniScore',
@@ -55,6 +56,7 @@ const CardScreen = ({navigation}) => {
 
   const storeCurrentPlayerAndCard = pressedCard => {
     const playerTurn = turnRandomizer(players);
+    console.log('getting to here');
     dispatch(currentPlayerRequest([playerTurn]));
 
     if (gameVersion === 'CARD') {
@@ -136,7 +138,6 @@ const CardTouch = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   width: 80%;
-  background-color: pink;
 `;
 
 const Title = styled.Text`

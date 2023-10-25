@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 import Background from './background/Background';
-import CompleteAndDrinkButton from './button/CompleteAndDrinkButton';
+import RedButtonTwoSvg from '../assets/buttons/RedButtonTwoSvg';
+import {Dimensions} from 'react-native';
 
 const MenuScreen = ({navigation}) => {
+  const windowWidth = Dimensions.get('window').width * 0.92;
+  const baseValue = windowWidth * 0.18;
+
   return (
     <>
       <Background background={'End Screen'} />
@@ -10,10 +14,22 @@ const MenuScreen = ({navigation}) => {
         <Title>Are you sure you want to quit?</Title>
         <ButtonBar>
           <ButtonContainer onPress={() => navigation.goBack()}>
-            <CompleteAndDrinkButton completeOrDrink={'NO'} />
+            <PlayText>NO</PlayText>
+            <RedButtonTwoSvg
+              style={{
+                height: baseValue,
+                width: baseValue * 2 + windowWidth * 0.02,
+              }}
+            />
           </ButtonContainer>
           <ButtonContainer onPress={() => navigation.navigate('Home Screen')}>
-            <CompleteAndDrinkButton completeOrDrink={'YES'} />
+            <RedButtonTwoSvg
+              style={{
+                height: baseValue,
+                width: baseValue * 2 + windowWidth * 0.02,
+              }}
+            />
+            <PlayText>YES</PlayText>
           </ButtonContainer>
         </ButtonBar>
       </ScreenContainer>
@@ -42,12 +58,23 @@ const ButtonBar = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 100%;
   margin-top: 40px;
 `;
 
 const ButtonContainer = styled.Pressable`
-  margin: 0 3px 0 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const PlayText = styled.Text`
+  position: absolute;
+  text-align: center;
+  color: #262020;
+  font-size: 30px;
+  letter-spacing: 1px;
+  font-family: Morning Breeze;
+  z-index: 1;
 `;
 
 export default MenuScreen;

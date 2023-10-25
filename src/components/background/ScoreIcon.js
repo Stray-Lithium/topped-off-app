@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import AutoHeightImage from 'react-native-auto-height-image';
 import {Dimensions} from 'react-native';
 
@@ -18,7 +17,7 @@ const ScoreIcon = ({image}) => {
       return require(`../../assets/full-pina.png`);
     }
     if (image === 'lemonadeScore') {
-      return require(`../../assets/full-lemonade.png`);
+      return require(`../../assets/full-mojito.png`);
     }
     if (image === 'whiskeyScoreEmpty') {
       return require(`../../assets/empty-whiskey.png`);
@@ -30,7 +29,7 @@ const ScoreIcon = ({image}) => {
       return require(`../../assets/empty-pina.png`);
     }
     if (image === 'lemonadeScoreEmpty') {
-      return require(`../../assets/empty-lemonade.png`);
+      return require(`../../assets/empty-mojito.png`);
     }
   };
   const uri = backgroundImage();

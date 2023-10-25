@@ -6,7 +6,6 @@ import * as R from 'ramda';
 import Background from './background/Background';
 import {useDispatch} from 'react-redux';
 import {playersRequest} from '../actions/players';
-import XButton from './button/XButton';
 import {cardsRequest} from '../actions/cards';
 import {lemonadeCardData} from '../cards/lemonade-data';
 import {lemonadeBlankData} from '../blanks/lemonade-data';
@@ -18,6 +17,8 @@ import {mojitoCardData} from '../cards/mojito-data';
 import RedButtonTwoSvg from '../assets/buttons/RedButtonTwoSvg';
 import YellowPlusButton from '../assets/buttons/YellowPlusButton';
 import Sound from 'react-native-sound';
+import RedCrossButtonSvg from '../assets/buttons/RedCrossButtonSvg';
+import {hintsRequest} from '../actions/hints';
 
 const NamesScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -25,28 +26,28 @@ const NamesScreen = ({navigation}) => {
   const [players, setPlayers] = useState([]);
   const [minPlayersError, setMinPlayersError] = useState(false);
   const [duplicatePlayersError, setDulplicatePlayersError] = useState(false);
-  const baseValue = Dimensions.get('window').width * 0.18;
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0;
   const windowWidth = Dimensions.get('window').width * 0.92;
-  Sound.setCategory('Playback');
+  const baseValue = windowWidth * 0.18;
+  // Sound.setCategory('Playback');
 
-  const buttonClickSound = new Sound(
-    'button-sound.wav',
-    Sound.MAIN_BUNDLE,
-    error => {
-      if (error) {
-        console.log('failed to load the sound', error);
-        return;
-      }
-      // when loaded successfully
-      console.log(
-        'duration in seconds: ' +
-          buttonClickSound.getDuration() +
-          'number of channels: ' +
-          buttonClickSound.getNumberOfChannels(),
-      );
-    },
-  );
+  // const buttonClickSound = new Sound(
+  //   'button-sound.wav',
+  //   Sound.MAIN_BUNDLE,
+  //   error => {
+  //     if (error) {
+  //       console.log('failed to load the sound', error);
+  //       return;
+  //     }
+  //     // when loaded successfully
+  //     console.log(
+  //       'duration in seconds: ' +
+  //         buttonClickSound.getDuration() +
+  //         'number of channels: ' +
+  //         buttonClickSound.getNumberOfChannels(),
+  //     );
+  //   },
+  // );
 
   useEffect(() => {
     if (players.length >= 2) {
@@ -59,13 +60,13 @@ const NamesScreen = ({navigation}) => {
   };
 
   const handleSubmit = () => {
-    buttonClickSound.play(success => {
-      if (success) {
-        console.log('successfully finished playing');
-      } else {
-        console.log('playback failed due to audio decoding errors');
-      }
-    });
+    // buttonClickSound.play(success => {
+    //   if (success) {
+    //     console.log('successfully finished playing');
+    //   } else {
+    //     console.log('playback failed due to audio decoding errors');
+    //   }
+    // });
     let addName = true;
     players.forEach(player => {
       if (player.name === name.toUpperCase()) {
@@ -128,9 +129,11 @@ const NamesScreen = ({navigation}) => {
             },
             mojitoScore: {cards: R.clone(mojitoCardData)},
           },
+          hints: {headToHead: true},
         }),
       );
-      navigation.navigate('Card Screen');
+      dispatch(hintsRequest({headToHead: true}));
+      navigation.navigate('Rules Screen', {hint: 'rules'});
     }
   };
 
@@ -154,7 +157,7 @@ const NamesScreen = ({navigation}) => {
                 <NameContainer key={player.name}>
                   <PlayerName key={player.name}>{player.name}</PlayerName>
                   <ButtonContainer onPress={() => deleteName(player.name)}>
-                    <XButton />
+                    <RedCrossButtonSvg width={44} height={44} />
                   </ButtonContainer>
                 </NameContainer>
               );
@@ -225,11 +228,6 @@ const ScreenContainer = styled.View`
   width: 100%;
 `;
 
-const WidthContainer = styled.Pressable`
-  height: 100%;
-  background-color: teal;
-`;
-
 const TitleContainer = styled.View`
   display: flex;
   align-items: center;
@@ -262,7 +260,7 @@ const PlayerName = styled.Text`
   padding: 6px;
   letter-spacing: 1px;
   background-color: #ccc;
-  border: solid 3px black;
+  border: solid 3px #272121;
   overflow: hidden;
   font-family: Morning Breeze;
 `;

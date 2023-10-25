@@ -4,14 +4,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import * as R from 'ramda';
 import Background from './background/Background';
-import ChallengeCardBackground from './background/ChallengeCardBackground';
 import {playersRequest} from '../actions/players';
 import {drinkersRequest} from '../actions/drinkers';
 import {currentCardRequest} from '../actions/current-card';
 import {storeWinners} from './storage/storage';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {buttonShadow} from './button/button-shadow';
-import CompleteAndDrinkButton from './button/CompleteAndDrinkButton';
 import {cardsRequest} from '../actions/cards';
 import {lemonadeCardData} from '../cards/lemonade-data';
 import {mojitoCardData} from '../cards/mojito-data';
@@ -20,8 +17,8 @@ import {martiniBlankData} from '../blanks/martini-data';
 import {whiskeyCardData} from '../cards/whiskey-data';
 import {whiskeyBlankData} from '../blanks/whiskey-data';
 import RedButtonTwoSvg from '../assets/buttons/RedButtonTwoSvg';
-import MartiniFrontSvg from '../assets/cards/MartiniFrontSvg';
 import FrontOfCard from './background/FrontOfCard';
+import YellowArrowRightTwoSvg from '../assets/buttons/YellowArrowRightTwoSvg';
 
 const ChallengeScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -31,9 +28,11 @@ const ChallengeScreen = ({navigation}) => {
   const gameVersion = useSelector(state => state.GameVersion.gameVersion);
   const cards = useSelector(state => state.Cards.cards);
   const [shouldTrigger, setShouldTrigger] = useState(true);
+  const [names, setNames] = useState(false);
 
   const windowWidth = Dimensions.get('window').width;
-  const baseValue = windowWidth * 0.18;
+  const barWidth = windowWidth * 0.92;
+  const baseValue = barWidth * 0.18;
 
   const cardReset = (cardOrBlank, category) => {
     if (cardOrBlank === 'cards') {
@@ -89,16 +88,10 @@ const ChallengeScreen = ({navigation}) => {
     dispatch(currentCardRequest(card));
   };
 
-  useEffect(() => {
-    if (shouldTrigger) {
-      cardAndBlank();
-      setShouldTrigger(false);
-    }
-  }, [currentCard, currentPlayer, players, gameVersion, cards]);
-
   const nameMaker = () => {
     const playersLength = currentPlayer.length;
     let names = '';
+    console.log(currentPlayer, 'current player');
     currentPlayer.forEach((name, index) => {
       if (playersLength === 1) {
         currentCard.cardColor === 'lemonadeScore'
@@ -110,9 +103,18 @@ const ChallengeScreen = ({navigation}) => {
         names += `${name}, `;
       }
     });
-    return names;
+    return setNames(names);
   };
-  const names = nameMaker();
+
+  useEffect(() => {
+    if (shouldTrigger) {
+      cardAndBlank();
+      setShouldTrigger(false);
+    }
+    if (!names) {
+      nameMaker();
+    }
+  }, [currentCard, currentPlayer, players, gameVersion, cards]);
 
   const winnersCheck = updatedPlayers => {
     let winningPlayers = [];
@@ -161,20 +163,28 @@ const ChallengeScreen = ({navigation}) => {
 
   const notLemonadeChallenge = () => {
     return (
-      <ButtonBar style={{height: baseValue}}>
-        <WidthContainer
-          style={{
-            width: baseValue * 2,
-          }}
-          onPress={() => complete(false)}>
+      <ButtonBar
+        style={{
+          height: baseValue,
+          width: windowWidth * 0.74,
+        }}>
+        <WidthContainer onPress={() => complete(false)}>
           <ButtonText>DRINK</ButtonText>
-          <RedButtonTwoSvg />
+          <RedButtonTwoSvg
+            style={{
+              width: baseValue * 2 + windowWidth * 0.02,
+              height: baseValue,
+            }}
+          />
         </WidthContainer>
-        <WidthContainer
-          style={{width: baseValue * 2}}
-          onPress={() => complete(true)}>
+        <WidthContainer onPress={() => complete(true)}>
           <ButtonText>DONE</ButtonText>
-          <RedButtonTwoSvg />
+          <RedButtonTwoSvg
+            style={{
+              width: baseValue * 2 + windowWidth * 0.02,
+              height: baseValue,
+            }}
+          />
         </WidthContainer>
       </ButtonBar>
     );
@@ -185,34 +195,37 @@ const ChallengeScreen = ({navigation}) => {
       <ButtonBar>
         <ButtonContainer
           onPress={() => navigation.navigate('Lemonade Who Completed Screen')}
-          style={buttonShadow}>
-          <CompleteAndDrinkButton completeOrDrink={'DONE'} />
+          style={{height: baseValue}}>
+          <YellowArrowRightTwoSvg
+            width={baseValue * 2 + windowWidth * 0.02}
+            height={baseValue}
+          />
         </ButtonContainer>
       </ButtonBar>
     );
   };
 
-  const cardVersion = () => {
-    return (
-      <>
-        <CardContainer>
-          <ChallengeCardBackground image={currentCard.cardColor} />
-          <CVCardContentContainer>
-            <CVPlayerName>{`${names}`}</CVPlayerName>
-            {currentCard.cardColor !== 'mojitoScore' ? (
-              <CVBlankPrompt>Your blank is:</CVBlankPrompt>
-            ) : null}
-            {currentCard.cardColor !== 'mojitoScore' ? (
-              <CVCardContent>{`${currentCard.content}`}</CVCardContent>
-            ) : null}
-          </CVCardContentContainer>
-        </CardContainer>
-        {currentCard.cardColor !== 'lemonadeScore'
-          ? notLemonadeChallenge()
-          : lemonadeChallenge()}
-      </>
-    );
-  };
+  // const cardVersion = () => {
+  //   return (
+  //     <>
+  //       <CardContainer>
+  //         <ChallengeCardBackground image={currentCard.cardColor} />
+  //         <CVCardContentContainer>
+  //           <CVPlayerName>{`${names}`}</CVPlayerName>
+  //           {currentCard.cardColor !== 'mojitoScore' ? (
+  //             <CVBlankPrompt>Your blank is:</CVBlankPrompt>
+  //           ) : null}
+  //           {currentCard.cardColor !== 'mojitoScore' ? (
+  //             <CVCardContent>{`${currentCard.content}`}</CVCardContent>
+  //           ) : null}
+  //         </CVCardContentContainer>
+  //       </CardContainer>
+  //       {currentCard.cardColor !== 'lemonadeScore'
+  //         ? notLemonadeChallenge()
+  //         : lemonadeChallenge()}
+  //     </>
+  //   );
+  // };
 
   const fullVersion = () => {
     return (
@@ -238,7 +251,7 @@ const ChallengeScreen = ({navigation}) => {
     );
   };
 
-  if (currentPlayer && currentCard && gameVersion) {
+  if (currentPlayer && currentCard && gameVersion && names) {
     return (
       <>
         <Background />
@@ -270,7 +283,6 @@ const CardContainer = styled.View`
   justify-content: center;
   width: 80%;
   margin-bottom: 20px;
-  background-color: pink;
 `;
 
 const CardContentContainer = styled.View`
@@ -351,10 +363,9 @@ const ButtonBar = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   width: 100%;
   bottom: 0px;
-  background-color: pink;
 `;
 
 const ButtonContainer = styled.Pressable`
@@ -366,8 +377,6 @@ const WidthContainer = styled.Pressable`
   align-items: center;
   justify-content: center;
   height: 100%;
-  background-color: teal;
-  margin: 0 1% 0 1%;
 `;
 
 const ButtonText = styled.Text`

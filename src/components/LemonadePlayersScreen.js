@@ -1,30 +1,29 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Pressable, Dimensions} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import AnimatedCheckbox from 'react-native-checkbox-reanimated';
 import * as R from 'ramda';
 import styled from 'styled-components';
 import Background from './background/Background';
 import {lemonadeBlankData} from '../blanks/lemonade-data';
 import {currentPlayerRequest} from '../actions/current-player';
 import {useDispatch, useSelector} from 'react-redux';
-import AutoHeightImage from 'react-native-auto-height-image';
 import RefreshButtonSvg from '../assets/buttons/RefreshButtonSvg.js';
-import RedButtonFourSvg from '../assets/buttons/RedButtonFourSvg';
 import Unchecked from '../assets/checkbox/Unchecked';
 import Checked from '../assets/checkbox/Checked';
+import YellowArrowRightTwoSvg from '../assets/buttons/YellowArrowRightTwoSvg';
 
 const LemonadePlayersScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const players = useSelector(state => state.Players.players);
   const cards = useSelector(state => state.Cards.cards);
+  const hints = useSelector(state => state.Hints.hints);
   const [lemonFill, setLemonFill] = useState(false);
   const [checkedNames, setCheckedNames] = useState([]);
 
-  const windowWidth = Dimensions.get('window').width;
+  console.log(hints, 'hintsssss');
 
+  const windowWidth = Dimensions.get('window').width * 0.92;
   const baseValue = windowWidth * 0.18;
-  console.log(baseValue);
 
   const cardReset = () => {
     return R.clone(lemonadeBlankData);
@@ -50,7 +49,7 @@ const LemonadePlayersScreen = ({navigation}) => {
     if (!lemonFill) {
       setLemonFill(changeAndDeleteBlank());
     }
-  }, [lemonFill, players, cards]);
+  }, [lemonFill, players, cards, hints]);
 
   const checkboxClick = checkName => {
     if (!checkedNames.includes(checkName)) {
@@ -81,11 +80,13 @@ const LemonadePlayersScreen = ({navigation}) => {
   const confirm = () => {
     if (checkedNames.length > 0) {
       dispatch(currentPlayerRequest(checkedNames));
-      navigation.navigate('Challenge Screen');
+      hints.headToHead && checkedNames.length === 1
+        ? navigation.navigate('Hints Screen')
+        : navigation.navigate('Challenge Screen');
     }
   };
 
-  if (lemonFill && players) {
+  if (lemonFill && players && cards && hints) {
     return (
       <>
         <Background background={'Lemonade Players Screen'} />
@@ -102,29 +103,20 @@ const LemonadePlayersScreen = ({navigation}) => {
             <RefreshMessage>
               Please select a player or refresh the prompt if no one applies
             </RefreshMessage>
-            <ButtonBar style={{height: baseValue}}>
-              <ImageContainer>
-                <Pressable onPress={() => setLemonFill(changeAndDeleteBlank())}>
-                  <RefreshButtonSvg height={baseValue} width={baseValue} />
-                </Pressable>
-                <Pressable
-                  style={{backgroundColor: 'orange'}}
-                  onPress={() => confirm()}>
-                  {/* <AutoHeightImage
-                    width={baseValue * 4}
-                    source={require(`../assets/red-button-four.png`)}> */}
-                  <RedButtonFourSvg
-                    width={baseValue * 4 - windowWidth * 0.1}
-                    height={baseValue}
-                    // viewBox={`0 0 ${baseValue} ${baseValue * 4}`}
-                  >
-                    <PlayContainer>
-                      <PlayText>CONFIRM</PlayText>
-                    </PlayContainer>
-                  </RedButtonFourSvg>
-                  {/* </AutoHeightImage> */}
-                </Pressable>
-              </ImageContainer>
+            <ButtonBar
+              style={{
+                height: baseValue,
+                width: windowWidth * 0.6,
+              }}>
+              <Pressable onPress={() => setLemonFill(changeAndDeleteBlank())}>
+                <RefreshButtonSvg height={baseValue} width={baseValue} />
+              </Pressable>
+              <Pressable onPress={() => confirm()}>
+                <YellowArrowRightTwoSvg
+                  width={baseValue * 2 + windowWidth * 0.02}
+                  height={baseValue}
+                />
+              </Pressable>
             </ButtonBar>
           </ScreenContainer>
         </SafeAreaView>
@@ -210,10 +202,8 @@ const ButtonBar = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  width: 100%;
+  justify-content: space-around;
   bottom: 0px;
-  background-color: pink;
 `;
 
 const RefreshMessage = styled.Text`
@@ -223,29 +213,6 @@ const RefreshMessage = styled.Text`
   text-align: center;
   color: #ffcf00;
   font-size: 26px;
-  font-family: Morning Breeze;
-`;
-
-const ImageContainer = styled.View`
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-`;
-
-const PlayContainer = styled.View`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const PlayText = styled.Text`
-  text-align: center;
-  color: #262020;
-  font-size: 30px;
-  letter-spacing: 1px;
   font-family: Morning Breeze;
 `;
 

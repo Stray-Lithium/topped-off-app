@@ -6,9 +6,9 @@ import Background from './background/Background';
 import {useDispatch, useSelector} from 'react-redux';
 import {currentPlayerRequest} from '../actions/current-player';
 import {playersRequest} from '../actions/players';
-import ChallengeCardBackground from './background/ChallengeCardBackground';
-import DrinkBottomBar from './bar/DrinkBottomBar';
 import FlipCard from 'react-native-flip-card';
+import RedButtonTwoSvg from '../assets/buttons/RedButtonTwoSvg';
+import FrontOfCard from './background/FrontOfCard';
 
 const DrinkScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -19,6 +19,8 @@ const DrinkScreen = ({navigation}) => {
   const [stealer, setStealer] = useState([]);
 
   const windowWidth = Dimensions.get('window').width;
+  const barWidth = windowWidth * 0.92;
+  const baseValue = barWidth * 0.18;
   const ninetyPercent = windowWidth * 0.9;
 
   const stealChecker = () => {
@@ -52,7 +54,7 @@ const DrinkScreen = ({navigation}) => {
   };
 
   useEffect(() => {
-    if (stealer.length === 0) {
+    if (stealer.length > 0) {
       stealChecker();
     }
   }, [players, currentPlayer, drinkers, currentCard]);
@@ -89,11 +91,14 @@ const DrinkScreen = ({navigation}) => {
   if (players && currentPlayer && drinkers && currentCard) {
     const isSteal =
       stealer.length > 0 && currentCard.cardColor !== 'lemonadeScore';
+    const layout = isSteal
+      ? {justifyContent: 'flex-end'}
+      : {justifyContent: 'center'};
     return (
       <>
         <Background background={'Drinks Screen'} />
         <SafeAreaView style={{flex: 1}}>
-          <ScreenContainer>
+          <ScreenContainer style={layout}>
             <View style={{height: ninetyPercent * 1.24}}>
               <FlipCard
                 friction={6}
@@ -107,7 +112,7 @@ const DrinkScreen = ({navigation}) => {
                 }}>
                 {/* Face Side */}
                 <CardContainer>
-                  <ChallengeCardBackground image={'drinkCard'} />
+                  <FrontOfCard drink={'drink'} />
                   <CardContentContainer>
                     <CardTitle>
                       {`${drinkTitle()}`}
@@ -120,7 +125,7 @@ const DrinkScreen = ({navigation}) => {
                 </CardContainer>
                 {/* Back Side */}
                 <CardContainer>
-                  <ChallengeCardBackground image={currentCard.cardColor} />
+                  <FrontOfCard drink={currentCard.cardColor} />
                   <CurrentCardContentContainer>
                     <CurrentCardTitle>{currentCard.title}</CurrentCardTitle>
                     <CurrentCardContent>{`${currentPlayer[0]} ${
@@ -142,8 +147,8 @@ const DrinkScreen = ({navigation}) => {
                 </CardContainer>
               </FlipCard>
             </View>
-            {stealer.length > 0 && currentCard.cardColor !== 'lemonadeScore' ? (
-              <>
+            {isSteal ? (
+              <StealContainer>
                 <RefreshMessage>
                   {`${stealer[0]}`}, fancy stealing {`${drinkers[0]}`}'s
                   challenge for a point?{' '}
@@ -151,14 +156,39 @@ const DrinkScreen = ({navigation}) => {
                 <FlipText>
                   (Click on the card to preview {`${drinkers[0]}`}'s challenge)
                 </FlipText>
-                <BarContainer onPress={() => steal()}>
-                  <DrinkBottomBar isSteal={isSteal} />
-                </BarContainer>
-              </>
+                <WidthContainer>
+                  <PlayContainer onPress={() => confirm()}>
+                    <RedButtonTwoSvg
+                      style={{
+                        width: baseValue * 2 + barWidth * 0.02,
+                        height: baseValue,
+                      }}
+                    />
+                    <PlayText>NO</PlayText>
+                  </PlayContainer>
+                  <PlayContainer onPress={() => steal()}>
+                    <RedButtonTwoSvg
+                      style={{
+                        width: baseValue * 2 + barWidth * 0.02,
+                        height: baseValue,
+                      }}
+                    />
+                    <PlayText>YES</PlayText>
+                  </PlayContainer>
+                </WidthContainer>
+              </StealContainer>
             ) : (
-              <BarContainer onPress={() => confirm()}>
-                <DrinkBottomBar isSeal={isSteal} />
-              </BarContainer>
+              <PlayContainer
+                style={{position: 'absolute', bottom: 0}}
+                onPress={() => confirm()}>
+                <RedButtonTwoSvg
+                  style={{
+                    width: baseValue * 2 + barWidth * 0.02,
+                    height: baseValue,
+                  }}
+                />
+                <PlayText>OK</PlayText>
+              </PlayContainer>
             )}
           </ScreenContainer>
         </SafeAreaView>
@@ -169,90 +199,20 @@ const DrinkScreen = ({navigation}) => {
   }
 };
 
-{
-  /* <ButtonContainer onPress={() => confirm()}>
-                <CustomButton>NEXT ROUND</CustomButton>
-              </ButtonContainer> */
-}
-
 const ScreenContainer = styled.View`
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   height: 100%;
   width: 100%;
-`;
-
-const Title = styled.Text`
-  font-size: 30px;
-  margin-bottom: 20px;
-  text-align: center;
-  width: 90%;
-  font-family: Morning Breeze;
-`;
-
-const CheckboxesContainer = styled.ScrollView`
-  display: flex;
-  max-height: 50%;
-  margin-bottom: 20px;
-`;
-
-const CheckboxContainer = styled.View`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-`;
-
-const NamePosition = styled.View`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-  width: 50%;
-`;
-
-const PlayerName = styled.Text`
-  font-size: 20px;
-  font-family: Morning Breeze;
-  margin-right: 10px;
-`;
-
-const CheckboxPosition = styled.View`
-  display: flex;
-  align-items: center;
-  align-items: flex-start;
-  width: 50%;
-`;
-
-const ButtonContainer = styled.Pressable`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50%;
-  background-color: #ee3347;
-  border-radius: 10px;
-  border: solid 3px black;
-  margin-bottom: 20px;
-`;
-
-const CustomButton = styled.Text`
-  text-align: center;
-  color: black;
-  font-size: 26px;
-  padding: 12px 12px 12px 12px;
-  letter-spacing: 5px;
-  font-family: Morning Breeze;
-  overflow: hidden;
 `;
 
 const CardContainer = styled.View`
   display: flex;
   align-items: center;
   justify-content: center;
-  // margin-bottom: 20px;
+  margin-bottom: 10%;
 `;
 
 const CardContentContainer = styled.View`
@@ -336,13 +296,8 @@ const CurrentCardComment = styled.Text`
   font-style: italic;
 `;
 
-const BarContainer = styled.Pressable`
-  position: absolute;
-  bottom: 0;
-`;
-
 const RefreshMessage = styled.Text`
-  padding: 20px 20px 20px 20px;
+  padding: 20px 20px 10px 20px;
   margin-top: 20px;
   text-align: center;
   color: #ffcf00;
@@ -352,10 +307,41 @@ const RefreshMessage = styled.Text`
 
 const FlipText = styled.Text`
   padding: 0px 20px 20px 20px;
-  margin-top: 20px;
+  margin-top: 10px;
   text-align: center;
   color: #ffcf00;
   font-size: 20px;
+  font-family: Morning Breeze;
+`;
+
+const StealContainer = styled.View`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const WidthContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 92%;
+`;
+
+const PlayContainer = styled.Pressable`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1%;
+  margin-right: 1%;
+`;
+
+const PlayText = styled.Text`
+  position: absolute;
+  text-align: center;
+  color: #262020;
+  font-size: 30px;
+  letter-spacing: 1px;
   font-family: Morning Breeze;
 `;
 

@@ -18,7 +18,7 @@ export const lemonadeCardData = [
   {
     id: 'lec3',
     title: `Poked & Soaked`,
-    content_line_one: `hold a mouthful of water and poke eachother, last one to have water in their mouth wins.`,
+    content_line_one: `hold a mouthful of your drink and poke eachother, last one to hold it in wins.`,
     comment: `Just like a balloon`,
     timer: false,
     cardColor: 'lemonadeScore',
@@ -71,14 +71,14 @@ export const lemonadeCardData = [
     timer: false,
     cardColor: 'lemonadeScore',
   },
-  // {
-  //   id: 'lec10',
-  //   title: `Tea Toe-el`,
-  //   content_line_one: `stand in a circle and use your toes to pass a kitchen towel around without letting it touch the ground.`,
-  //   comment: `Drop it and you're out!`,
-  //   timer: false,
-  //   cardColor: 'lemonadeScore',
-  // },
+  {
+    id: 'lec10',
+    title: `Twinkle Toes`,
+    content_line_one: `stand in a circle and use your toes to pass a random item around without letting it touch the ground. Last player standing wins`,
+    comment: `Drop it and you're done!`,
+    timer: false,
+    cardColor: 'lemonadeScore',
+  },
   {
     id: 'lec11',
     title: 'Wipe out',
@@ -98,7 +98,7 @@ export const lemonadeCardData = [
   {
     id: 'lec13',
     title: `Last Breath`,
-    content_line_one: `hold your breath for as long as you can.`,
+    content_line_one: `take a deep breath, last one to hold it in wins.`,
     comment: `Plug that nose!`,
     timer: false,
     cardColor: 'lemonadeScore',

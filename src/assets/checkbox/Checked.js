@@ -25,7 +25,7 @@ function Checked(props) {
           rx={14.71}
           ry={14.71}
           stroke="#000000"
-          strokeWidth="9.61px"
+          strokeWidth="12px"
           fill="none"
           strokeMiterlimit={10}
         />

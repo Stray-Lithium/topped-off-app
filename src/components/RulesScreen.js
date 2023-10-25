@@ -1,25 +1,29 @@
+import {useEffect} from 'react';
+import {useSelector} from 'react-redux';
 import styled from 'styled-components';
 import Background from './background/Background';
-import {Dimensions} from 'react-native';
+import {Dimensions, View} from 'react-native';
 import AutoHeightImage from 'react-native-auto-height-image';
 import {useState} from 'react';
-import RedButtonTwoSvg from '../assets/buttons/RedButtonTwoSvg';
 import AllDrinksFullSvg from '../assets/score/AllDrinksFullSvg';
+import MartiniBackSvg from '../assets/cards/MartiniBackSvg';
+import OldFationedBackSvg from '../assets/cards/OldFashionedBackSvg';
+import PinaColadaBackSvg from '../assets/cards/PinaColadaBackSvg';
+import MojitoBackSvg from '../assets/cards/MojitoCardBack';
+import RedCrossButtonTwoSvg from '../assets/buttons/RedCrossButtonTwoSvg';
+import RedArrowRightTwoSvg from '../assets/buttons/RedArrowRightTwoSvg';
+import RedArrowLeftTwoSvg from '../assets/buttons/RedArrowLeftTwoSvg';
+import YellowArrowRightTwoSvg from '../assets/buttons/YellowArrowRightTwoSvg';
 
 const RulesScreen = ({navigation}) => {
   const [pageNumber, setPageNumber] = useState(1);
+  const hints = useSelector(state => state.Hints.hints);
   const windowWidth = Dimensions.get('window').width;
+  const bottomBarWidth = Dimensions.get('window').width * 0.92;
   const widthMargin = windowWidth * 0.12;
+  const baseValue = bottomBarWidth * 0.18;
 
-  const baseValue = windowWidth * 0.18;
-
-  const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
-    const paddingToBottom = 20;
-    return (
-      layoutMeasurement.height + contentOffset.y >=
-      contentSize.height - paddingToBottom
-    );
-  };
+  useEffect(() => {}, [hints]);
 
   const firstPage = () => {
     return (
@@ -27,10 +31,46 @@ const RulesScreen = ({navigation}) => {
         <RulesText style={{marginRight: widthMargin, marginLeft: widthMargin}}>
           {'\n'}Click on the cocktail card to reveal a challenge.{'\n'}
         </RulesText>
-        <AutoHeightImage
-          width={baseValue * 4}
-          source={require('../assets/all-cards.png')}
-        />
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+          <MartiniBackSvg
+            style={{
+              width: windowWidth * 0.35,
+              height: windowWidth * 0.35 * 1.4,
+              margin: 5,
+            }}
+          />
+          <OldFationedBackSvg
+            style={{
+              width: windowWidth * 0.35,
+              height: windowWidth * 0.35 * 1.4,
+              margin: 5,
+            }}
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+          <PinaColadaBackSvg
+            style={{
+              width: windowWidth * 0.35,
+              height: windowWidth * 0.35 * 1.4,
+              margin: 5,
+            }}
+          />
+          <MojitoBackSvg
+            style={{
+              width: windowWidth * 0.35,
+              height: windowWidth * 0.35 * 1.4,
+              margin: 5,
+            }}
+          />
+        </View>
       </>
     );
   };
@@ -61,6 +101,15 @@ const RulesScreen = ({navigation}) => {
         <WidthContainer style={{width: baseValue * 5, height: baseValue * 2}}>
           <AllDrinksFullSvg style={{backgroundColor: 'orange'}} />
         </WidthContainer>
+        <RulesText style={{marginRight: widthMargin, marginLeft: widthMargin}}>
+          {'\n'}
+          {'\n'}Lastly, if you choose to 'drink' in a category you already have
+          a point in, you will then lose that point.
+          {'\n'}
+          {'\n'}
+          So, have fun with your challenges and keep your cocktails topped off.
+          {'\n'}
+        </RulesText>
       </>
     );
   };
@@ -77,48 +126,43 @@ const RulesScreen = ({navigation}) => {
     }
   };
 
+  const exitScreen = () => {
+    setPageNumber(1);
+    navigation.navigate('Card Screen');
+  };
+
   const prevNextOrClose = prevOrNext => {
     if (prevOrNext === 'prev') {
-      pageNumber === 1 ? navigation.goBack() : setPageNumber(pageNumber - 1);
+      pageNumber === 1 ? exitScreen() : setPageNumber(pageNumber - 1);
     }
     if (prevOrNext === 'next') {
-      pageNumber === 3 ? navigation.goBack() : setPageNumber(pageNumber + 1);
+      pageNumber === 3 ? exitScreen() : setPageNumber(pageNumber + 1);
     }
   };
 
   const buttonSorter = prevOrNext => {
     if (prevOrNext === 'prev') {
       if (pageNumber === 1) {
-        return <RedButtonTwoSvg style={{backgroundColor: 'purple'}} />;
+        return <RedCrossButtonTwoSvg />;
       } else {
-        return <RedButtonTwoSvg style={{backgroundColor: 'orange'}} />;
+        return <RedArrowLeftTwoSvg />;
       }
     }
     if (prevOrNext === 'next') {
       if (pageNumber === 3) {
-        return <RedButtonTwoSvg style={{backgroundColor: 'teal'}} />;
+        return <YellowArrowRightTwoSvg />;
       } else {
-        return <RedButtonTwoSvg style={{backgroundColor: 'orange'}} />;
+        return <RedArrowRightTwoSvg />;
       }
     }
   };
-
   return (
     <>
-      <Background background={'Rules Screen'} />
+      <Background background={'Score Screen'} />
       <SafeContainer>
         <RulesContainer>
           <RulesTitle>HOW TO PLAY</RulesTitle>
           <TextScroll
-            onScroll={({nativeEvent}) => {
-              if (isCloseToBottom(nativeEvent)) {
-                setAtBottom(true);
-              } else {
-                setAtBottom(false);
-              }
-            }}
-            scrollEventThrottle={400}
-            showsVerticalScrollIndicator={false}
             contentContainerStyle={{
               flexGrow: 1,
               alignItems: 'center',
@@ -128,7 +172,7 @@ const RulesScreen = ({navigation}) => {
         </RulesContainer>
         <BottomBarContainer style={{height: baseValue}}>
           <WidthContainer
-            style={{width: baseValue * 2}}
+            style={{width: baseValue * 2 + windowWidth * 0.02}}
             onPress={() => prevNextOrClose('prev')}>
             {buttonSorter('prev')}
           </WidthContainer>
@@ -136,7 +180,7 @@ const RulesScreen = ({navigation}) => {
             <PageNumber>{`${pageNumber}`}/3</PageNumber>
           </PageNumberContainer>
           <WidthContainer
-            style={{width: baseValue * 2}}
+            style={{width: baseValue * 2 + windowWidth * 0.02}}
             onPress={() => prevNextOrClose('next')}>
             {buttonSorter('next')}
           </WidthContainer>
@@ -148,15 +192,12 @@ const RulesScreen = ({navigation}) => {
 
 const SafeContainer = styled.SafeAreaView`
   flex: 1;
-  display: flex;
-  align-items: center;
 `;
 
 const RulesContainer = styled.View`
+  flex: 1;
   display: flex;
   align-items: center;
-  width: 100%;
-  height: 90%;
 `;
 
 const RulesTitle = styled.Text`
@@ -184,9 +225,9 @@ const BottomBarContainer = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  background-color: pink;
+  justify-content: space-evenly;
+  width: 92%;
+  margin: 0 4% 0 4%;
 `;
 
 const PageNumberContainer = styled.View`
@@ -207,8 +248,10 @@ const PageNumber = styled.Text`
 `;
 
 const WidthContainer = styled.Pressable`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100%;
-  background-color: teal;
 `;
 
 export default RulesScreen;

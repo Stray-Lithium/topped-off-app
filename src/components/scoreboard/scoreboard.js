@@ -145,7 +145,6 @@ const ScoreName = styled.Text`
   width: 100%;
   margin: 10px;
   color: #ffcf00;
-
   font-family: Morning Breeze;
 `;
 

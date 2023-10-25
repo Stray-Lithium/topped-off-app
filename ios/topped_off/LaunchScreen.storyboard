@@ -27,6 +27,10 @@
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="Spash-Screen" translatesAutoresizingMaskIntoConstraints="NO" id="5bo-hh-SAD">
+                                <rect key="frame" x="-7" y="-15" width="407" height="883"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -42,10 +46,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="51.145038167938928" y="374.64788732394368"/>
+            <point key="canvasLocation" x="229.7709923664122" y="63.380281690140848"/>
         </scene>
     </scenes>
     <resources>
+        <image name="Spash-Screen" width="1125" height="2436"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

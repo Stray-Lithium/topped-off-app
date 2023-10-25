@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Pressable} from 'react-native';
+import {StyleSheet, Pressable, Dimensions} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import AnimatedCheckbox from 'react-native-checkbox-reanimated';
 import styled from 'styled-components';
 import Background from './background/Background';
 import {playersRequest} from '../actions/players';
 import {drinkersRequest} from '../actions/drinkers';
 import {useDispatch, useSelector} from 'react-redux';
 import {storeWinners} from './storage/storage';
-import LemonadeConfirmButton from './button/LemonadeConfirmButton';
 import Unchecked from '../assets/checkbox/Unchecked';
 import Checked from '../assets/checkbox/Checked';
+import YellowArrowRightTwoSvg from '../assets/buttons/YellowArrowRightTwoSvg';
 
 const LemonadeWhoCompletedScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -21,6 +20,9 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
   const [yesOrNo, setYesOrNo] = useState([]);
   const [displayMessage, setDisplayMessage] = useState(false);
   const [playerSelected, setPlayerSelected] = useState(false);
+
+  const windowWidth = Dimensions.get('window').width * 0.92;
+  const baseValue = windowWidth * 0.18;
 
   useEffect(() => {
     if (yesOrNo.length > 0) {
@@ -76,12 +78,7 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
                 <Pressable
                   onPress={() => yesOrNoClick(current)}
                   style={styles.checkbox}>
-                  <AnimatedCheckbox
-                    checked={yesOrNo.includes(current)}
-                    highlightColor="#ee3347"
-                    checkmarkColor="#ffffff"
-                    boxOutlineColor="#000000"
-                  />
+                  {yesOrNo.includes(current) ? <Checked /> : <Unchecked />}
                 </Pressable>
               </CheckboxPosition>
             </CheckboxContainer>
@@ -157,7 +154,6 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
   };
 
   const confirm = () => {
-    console.log(yesOrNo, currentPlayer, 'heree');
     if (yesOrNo.length === 0 && currentPlayer.length === 1) {
       setDisplayMessage(true);
     } else if (checkedNames.length === 0 && currentPlayer.length > 1) {
@@ -201,7 +197,10 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
             {playerSelected ? <Message>Please select who won.</Message> : <></>}
             <ButtonBar>
               <ButtonContainer onPress={() => confirm()}>
-                <LemonadeConfirmButton refresh={false} />
+                <YellowArrowRightTwoSvg
+                  width={baseValue * 2 + windowWidth * 0.02}
+                  height={baseValue}
+                />
               </ButtonContainer>
             </ButtonBar>
           </ScreenContainer>

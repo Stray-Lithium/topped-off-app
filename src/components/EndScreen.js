@@ -1,15 +1,13 @@
 import styled from 'styled-components';
-import {Pressable} from 'react-native';
 import {useSelector} from 'react-redux';
 import {Dimensions} from 'react-native';
-import AutoHeightImage from 'react-native-auto-height-image';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Background from './background/Background';
 import {useEffect, useState} from 'react';
 import ScoreBoard from './scoreboard/scoreboard';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {ScrollView} from 'react-native-gesture-handler';
-import EndScreenBar from './bar/EndScreenBar';
+import RedButtonThreeSvg from '../assets/buttons/RedButtonThreeSvg';
 
 const EndScreen = ({navigation}) => {
   const players = useSelector(state => state.Players.players);
@@ -17,7 +15,7 @@ const EndScreen = ({navigation}) => {
   const [winnerObject, setWinnerObject] = useState(false);
 
   const insets = useSafeAreaInsets();
-  const windowWidth = Dimensions.get('window').width;
+  const windowWidth = Dimensions.get('window').width * 0.92;
 
   const baseValue = windowWidth * 0.18;
 
@@ -48,38 +46,33 @@ const EndScreen = ({navigation}) => {
     return (
       <>
         <Background background={'End Screen'} />
-        {/* <SafeAreaView
+        <SafeAreaView
           style={{
             flex: 1,
-            backgroundColor: 'pink',
-          }}> */}
-        <ScrollView>
-          <ScreenContainer>
-            <WinnersTextContainer>
-              <WinnersTitle>
-                CONGRATS,{'\n'} {winners[0]}
-                <WinnersTitle style={{color: '#ee3347'}}>!!!</WinnersTitle>
-              </WinnersTitle>
-              <WinnersText>
-                You topped off all of your drinks and won the game. Cheers to
-                that!
-              </WinnersText>
-            </WinnersTextContainer>
-            <ScoreBoard players={winnerObject} />
-          </ScreenContainer>
-        </ScrollView>
-        <BarContainer
-          style={{bottom: insets.bottom}}
-          onPress={() => navigation.navigate('Menu Screen')}>
-          <AutoHeightImage
-            width={baseValue * 4}
-            source={require(`../assets/red-button-four.png`)}>
-            <PlayContainer>
-              <PlayText>FINNISH</PlayText>
-            </PlayContainer>
-          </AutoHeightImage>
-        </BarContainer>
-        {/* </SafeAreaView> */}
+          }}>
+          <ScrollView>
+            <ScreenContainer style={{paddingBottom: 40}}>
+              <WinnersTextContainer>
+                <WinnersTitle>
+                  CONGRATS,{'\n'} {winners[0]}
+                  <WinnersTitle style={{color: '#ee3347'}}>!!!</WinnersTitle>
+                </WinnersTitle>
+                <WinnersText>
+                  You topped off all of your drinks and won the game. Cheers to
+                  that!
+                </WinnersText>
+              </WinnersTextContainer>
+              <ScoreBoard players={winnerObject} />
+            </ScreenContainer>
+          </ScrollView>
+          <PlayContainer onPress={() => navigation.navigate('Menu Screen')}>
+            <PlayText>FINISH</PlayText>
+            <RedButtonThreeSvg
+              height={baseValue}
+              width={baseValue * 3 + windowWidth * 0.04}
+            />
+          </PlayContainer>
+        </SafeAreaView>
       </>
     );
   }
@@ -92,7 +85,7 @@ const ScreenContainer = styled.View`
   align-items: center;
   height: 100%;
   width: 100%;
-  margin-top: 140px;
+  margin-top: 100px;
 `;
 
 const WinnersTextContainer = styled.View`
@@ -123,36 +116,20 @@ const WinnersText = styled.Text`
   font-family: Morning Breeze;
 `;
 
-const ScoreText = styled.Text`
-  font-size: 30px;
-  width: 90%;
-  margin-bottom: 20px;
-  padding: 2px;
-  color: #ee3347;
-  font-family: Morning Breeze;
-`;
-
-const BarContainer = styled.Pressable`
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-`;
-
-const PlayContainer = styled.View`
-  flex: 1;
+const PlayContainer = styled.Pressable`
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
 const PlayText = styled.Text`
+  position: absolute;
   text-align: center;
   color: #262020;
   font-size: 30px;
   letter-spacing: 1px;
   font-family: Morning Breeze;
+  z-index: 1;
 `;
 
 export default EndScreen;

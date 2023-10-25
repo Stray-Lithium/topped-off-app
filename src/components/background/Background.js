@@ -46,6 +46,9 @@ const Background = ({background}) => {
     if (background === 'Card Screen') {
       return require(`../../assets/card-screen-background.png`);
     }
+    if (background === 'Disclaimer Screen') {
+      return require(`../../assets/disclaimer-screen.png`);
+    }
   };
   const uri = backgroundImage();
 

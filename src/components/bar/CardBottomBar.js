@@ -21,17 +21,17 @@ const CardBottomBar = ({navigation}) => {
       <WidthContainer
         style={{width: baseValue}}
         onPress={() => navigation.navigate('Menu Screen')}>
-        <RedCrossButtonSvg style={{backgroundColor: 'orange'}} />
+        <RedCrossButtonSvg />
       </WidthContainer>
       <WidthContainer
         style={{width: baseValue}}
-        onPress={() => navigation.navigate('Rules Screen')}>
-        <RulesButtonSvg style={{backgroundColor: 'orange'}} />
+        onPress={() => navigation.navigate('Rules Screen', {hint: 'rules'})}>
+        <RulesButtonSvg />
       </WidthContainer>
       <WidthContainer
         style={{width: baseValue * 3 + windowWidth * 0.04}}
         onPress={() => scoreNavigation()}>
-        <ScoreboardButtonThree style={{backgroundColor: 'orange'}} />
+        <ScoreboardButtonThree />
       </WidthContainer>
     </BottomBarContainer>
   );
@@ -44,12 +44,10 @@ const BottomBarContainer = styled.View`
   justify-content: space-evenly;
   width: 92%;
   margin: 0 4% 0 4%;
-  background-color: pink;
 `;
 
 const WidthContainer = styled.Pressable`
   height: 100%;
-  background-color: teal;
 `;
 
 export default CardBottomBar;
