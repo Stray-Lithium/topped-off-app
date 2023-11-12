@@ -5,6 +5,8 @@ import Background from './background/Background';
 import {Dimensions} from 'react-native';
 import YellowButtonThreeSvg from '../assets/buttons/YellowButtonThreeSvg';
 import {hintsRequest} from '../actions/hints';
+import {buttonClickSound} from './sound/sounds';
+import {isInset} from './inset/insets';
 
 const HintsScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -37,6 +39,7 @@ const HintsScreen = ({navigation}) => {
   };
 
   const exitScreen = () => {
+    buttonClickSound.play();
     dispatch(hintsRequest({headToHead: false}));
     navigation.navigate('Challenge Screen');
   };
@@ -44,7 +47,7 @@ const HintsScreen = ({navigation}) => {
   if (hints) {
     return (
       <>
-        <Background background={'Rules Screen'} />
+        <Background background={'Disclaimer Screen'} />
         <SafeContainer>
           <RulesContainer>
             <RulesTitle>HINT</RulesTitle>
@@ -56,7 +59,8 @@ const HintsScreen = ({navigation}) => {
               {hintPage()}
             </TextScroll>
           </RulesContainer>
-          <BottomBarContainer style={{height: baseValue}}>
+          <BottomBarContainer
+            style={{height: baseValue, marginBottom: isInset()}}>
             <WidthContainer
               style={{width: baseValue * 3 + windowWidth * 0.04}}
               onPress={() => exitScreen()}>
@@ -81,9 +85,9 @@ const RulesContainer = styled.View`
 `;
 
 const RulesTitle = styled.Text`
-  margin: 40px 0 0 0;
+  margin: 10px 0 0 0;
   width: 80%;
-  font-size: 50px;
+  font-size: 40px;
   text-align: center;
   color: #ffcf00;
   font-family: Morning Breeze;

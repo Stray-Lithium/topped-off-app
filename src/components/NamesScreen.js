@@ -16,9 +16,10 @@ import {whiskeyBlankData} from '../blanks/whiskey-data';
 import {mojitoCardData} from '../cards/mojito-data';
 import RedButtonTwoSvg from '../assets/buttons/RedButtonTwoSvg';
 import YellowPlusButton from '../assets/buttons/YellowPlusButton';
-import Sound from 'react-native-sound';
 import RedCrossButtonSvg from '../assets/buttons/RedCrossButtonSvg';
 import {hintsRequest} from '../actions/hints';
+import {buttonClickSound, quitSound} from './sound/sounds';
+import {isInset} from './inset/insets';
 
 const NamesScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -29,25 +30,6 @@ const NamesScreen = ({navigation}) => {
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0;
   const windowWidth = Dimensions.get('window').width * 0.92;
   const baseValue = windowWidth * 0.18;
-  // Sound.setCategory('Playback');
-
-  // const buttonClickSound = new Sound(
-  //   'button-sound.wav',
-  //   Sound.MAIN_BUNDLE,
-  //   error => {
-  //     if (error) {
-  //       console.log('failed to load the sound', error);
-  //       return;
-  //     }
-  //     // when loaded successfully
-  //     console.log(
-  //       'duration in seconds: ' +
-  //         buttonClickSound.getDuration() +
-  //         'number of channels: ' +
-  //         buttonClickSound.getNumberOfChannels(),
-  //     );
-  //   },
-  // );
 
   useEffect(() => {
     if (players.length >= 2) {
@@ -60,13 +42,7 @@ const NamesScreen = ({navigation}) => {
   };
 
   const handleSubmit = () => {
-    // buttonClickSound.play(success => {
-    //   if (success) {
-    //     console.log('successfully finished playing');
-    //   } else {
-    //     console.log('playback failed due to audio decoding errors');
-    //   }
-    // });
+    buttonClickSound.play();
     let addName = true;
     players.forEach(player => {
       if (player.name === name.toUpperCase()) {
@@ -92,6 +68,7 @@ const NamesScreen = ({navigation}) => {
   };
 
   const deleteName = currentDelete => {
+    quitSound.play();
     let updatedPlayers = [];
     players.forEach(player => {
       if (player.name !== currentDelete) {
@@ -105,6 +82,7 @@ const NamesScreen = ({navigation}) => {
     if (players.length <= 1) {
       setMinPlayersError(true);
     } else {
+      buttonClickSound.play();
       dispatch(playersRequest(players));
       dispatch(
         cardsRequest({
@@ -133,6 +111,7 @@ const NamesScreen = ({navigation}) => {
         }),
       );
       dispatch(hintsRequest({headToHead: true}));
+      setPlayers([]);
       navigation.navigate('Rules Screen', {hint: 'rules'});
     }
   };
@@ -144,7 +123,7 @@ const NamesScreen = ({navigation}) => {
           <TitleContainer>
             <Text
               style={{
-                fontSize: 38,
+                fontSize: 40,
                 color: '#ffcf00',
                 fontFamily: 'Morning Breeze Bold',
               }}>
@@ -196,6 +175,7 @@ const NamesScreen = ({navigation}) => {
         <BottomBarContainer
           style={{
             height: baseValue,
+            marginBottom: isInset(),
           }}>
           <PlayButtonContainer
             style={{
@@ -233,7 +213,6 @@ const TitleContainer = styled.View`
   align-items: center;
   justify-content: center;
   width: 90%;
-  height: 50px;
   margin-top: 10px;
   margin-bottom: 20px;
 `;

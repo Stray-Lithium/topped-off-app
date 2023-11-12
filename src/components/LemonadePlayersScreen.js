@@ -11,6 +11,8 @@ import RefreshButtonSvg from '../assets/buttons/RefreshButtonSvg.js';
 import Unchecked from '../assets/checkbox/Unchecked';
 import Checked from '../assets/checkbox/Checked';
 import YellowArrowRightTwoSvg from '../assets/buttons/YellowArrowRightTwoSvg';
+import {buttonClickSound, menuSound, quitSound} from './sound/sounds';
+import {isInset} from './inset/insets';
 
 const LemonadePlayersScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -19,8 +21,6 @@ const LemonadePlayersScreen = ({navigation}) => {
   const hints = useSelector(state => state.Hints.hints);
   const [lemonFill, setLemonFill] = useState(false);
   const [checkedNames, setCheckedNames] = useState([]);
-
-  console.log(hints, 'hintsssss');
 
   const windowWidth = Dimensions.get('window').width * 0.92;
   const baseValue = windowWidth * 0.18;
@@ -53,8 +53,10 @@ const LemonadePlayersScreen = ({navigation}) => {
 
   const checkboxClick = checkName => {
     if (!checkedNames.includes(checkName)) {
+      buttonClickSound.play();
       setCheckedNames([...checkedNames, checkName]);
     } else {
+      quitSound.play();
       let filter = checkedNames.filter(player => player !== checkName);
       setCheckedNames(filter);
     }
@@ -77,7 +79,13 @@ const LemonadePlayersScreen = ({navigation}) => {
     );
   };
 
+  const refreshClick = () => {
+    menuSound.play();
+    setLemonFill(changeAndDeleteBlank());
+  };
+
   const confirm = () => {
+    buttonClickSound.play();
     if (checkedNames.length > 0) {
       dispatch(currentPlayerRequest(checkedNames));
       hints.headToHead && checkedNames.length === 1
@@ -107,8 +115,9 @@ const LemonadePlayersScreen = ({navigation}) => {
               style={{
                 height: baseValue,
                 width: windowWidth * 0.6,
+                marginBottom: isInset(),
               }}>
-              <Pressable onPress={() => setLemonFill(changeAndDeleteBlank())}>
+              <Pressable onPress={() => refreshClick()}>
                 <RefreshButtonSvg height={baseValue} width={baseValue} />
               </Pressable>
               <Pressable onPress={() => confirm()}>

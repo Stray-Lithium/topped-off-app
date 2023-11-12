@@ -23,7 +23,7 @@ export const mojitoCardData = [
   {
     id: 'moc4',
     title: `Screen Protector`,
-    content_line_one: `Spin around 10 times and throw your phone to a player you trust to catch it.`,
+    content_line_one: `spin around 10 times and throw your phone to a player you trust to catch it.`,
     comment: `Time for a new contract.`,
     cardColor: 'mojitoScore',
   },
@@ -37,7 +37,7 @@ export const mojitoCardData = [
   {
     id: 'moc6',
     title: `Flat Back`,
-    content_line_one: `Do 10 push-ups and balance an item on your back. Let your co-players decide what that item is`,
+    content_line_one: `do 10 push-ups and balance an item on your back. Let your co-players decide what that item is.`,
     comment: `Chest day`,
     cardColor: 'mojitoScore',
   },
@@ -86,14 +86,14 @@ export const mojitoCardData = [
   {
     id: 'moc13',
     title: `Influencer/Top Model`,
-    content_line_one: `pretend to pose for a photograph, strike 10 different poses`,
+    content_line_one: `pretend to pose for a photograph, strike 10 different poses.`,
     comment: `Insta worthy.`,
     cardColor: 'mojitoScore',
   },
   {
     id: 'moc14',
     title: `Rewind`,
-    content_line_one: `say your full name backwards without pausing`,
+    content_line_one: `say your full name backwards without pausing.`,
     comment: ``,
     cardColor: 'mojitoScore',
   },

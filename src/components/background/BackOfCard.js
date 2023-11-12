@@ -9,6 +9,7 @@ import {
 const BackOfCard = ({drink}) => {
   const windowWidth = Dimensions.get('window').width;
   const size = {width: windowWidth * 0.8, height: windowWidth * 1.117};
+  console.log(drink, 'yooo');
   const image = () => {
     if (drink === 'whiskeyScore') {
       return <OldFashionedBackSvg style={size} />;

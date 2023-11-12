@@ -10,6 +10,13 @@ import {storeWinners} from './storage/storage';
 import Unchecked from '../assets/checkbox/Unchecked';
 import Checked from '../assets/checkbox/Checked';
 import YellowArrowRightTwoSvg from '../assets/buttons/YellowArrowRightTwoSvg';
+import {
+  bottlePopSound,
+  buttonClickSound,
+  pointSound,
+  quitSound,
+} from './sound/sounds';
+import {isInset} from './inset/insets';
 
 const LemonadeWhoCompletedScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -34,6 +41,7 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
   }, [players, currentPlayer, yesOrNo, checkedNames]);
 
   const checkboxClick = checkName => {
+    buttonClickSound.play();
     setCheckedNames([checkName]);
   };
 
@@ -57,6 +65,7 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
   const yesAndNoMap = ['Yes', 'No'];
 
   const yesOrNoClick = current => {
+    buttonClickSound.play();
     if (current === 'Yes') {
       setCheckedNames([currentPlayer[0]]);
     } else {
@@ -99,7 +108,7 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
       if (drinkers.length > 0) {
         dispatch(drinkersRequest(drinkers));
       }
-      return drinkers.length > 0 ? drinkers : false;
+      return drinkers.length > 0;
     };
     const isDrinkers = setDrinkers();
 
@@ -117,13 +126,12 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
     if (winningPlayers.length > 0) {
       storeWinners(winningPlayers);
       navigation.navigate('End Screen');
-    } else if (currentPlayer.length === 1) {
-      if (isDrinkers) {
-        navigation.navigate('Drink Screen');
-      } else {
-        navigation.navigate('Score Screen');
-      }
+    }
+    if (isDrinkers) {
+      bottlePopSound.play();
+      navigation.navigate('Drink Screen');
     } else {
+      pointSound.play();
       navigation.navigate('Score Screen');
     }
   };
@@ -155,6 +163,7 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
 
   const confirm = () => {
     if (yesOrNo.length === 0 && currentPlayer.length === 1) {
+      quitSound.play();
       setDisplayMessage(true);
     } else if (checkedNames.length === 0 && currentPlayer.length > 1) {
       setPlayerSelected(true);
@@ -195,7 +204,7 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
               <></>
             )}
             {playerSelected ? <Message>Please select who won.</Message> : <></>}
-            <ButtonBar>
+            <ButtonBar style={{marginBottom: isInset()}}>
               <ButtonContainer onPress={() => confirm()}>
                 <YellowArrowRightTwoSvg
                   width={baseValue * 2 + windowWidth * 0.02}

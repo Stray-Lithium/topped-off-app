@@ -1,34 +1,67 @@
 import styled from 'styled-components';
+import {useDispatch} from 'react-redux';
 import Background from './background/Background';
 import RedButtonTwoSvg from '../assets/buttons/RedButtonTwoSvg';
 import {Dimensions} from 'react-native';
+import {buttonClickSound, quitSound} from './sound/sounds';
+import {currentCardRequest} from '../actions/current-card';
+import {currentPlayerRequest} from '../actions/current-player';
+import {cardsRequest} from '../actions/cards';
+import {checkScoreRequest} from '../actions/check-score';
+import {completedRequest} from '../actions/completed';
+import {drinkersRequest} from '../actions/drinkers';
+import {gameVersionRequest} from '../actions/game-version';
+import {hintsRequest} from '../actions/hints';
+import {playersRequest} from '../actions/players';
 
 const MenuScreen = ({navigation}) => {
+  const dispatch = useDispatch();
   const windowWidth = Dimensions.get('window').width * 0.92;
   const baseValue = windowWidth * 0.18;
+
+  const noNavigation = () => {
+    buttonClickSound.play();
+    navigation.goBack();
+  };
+
+  const yesNavigation = () => {
+    quitSound.play();
+    dispatch(currentCardRequest(false));
+    dispatch(currentPlayerRequest(false));
+    dispatch(cardsRequest(false));
+    dispatch(checkScoreRequest(false));
+    dispatch(completedRequest(false));
+    dispatch(drinkersRequest(false));
+    dispatch(gameVersionRequest(false));
+    dispatch(hintsRequest(false));
+    dispatch(playersRequest(false));
+    navigation.navigate('Home Screen');
+  };
 
   return (
     <>
       <Background background={'End Screen'} />
       <ScreenContainer>
         <Title>Are you sure you want to quit?</Title>
-        <ButtonBar>
-          <ButtonContainer onPress={() => navigation.goBack()}>
+        <ButtonBar style={{height: baseValue}}>
+          <ButtonContainer
+            style={{
+              width: baseValue * 2 + windowWidth * 0.02,
+              marginLeft: windowWidth * 0.01,
+              marginRight: windowWidth * 0.01,
+            }}
+            onPress={() => noNavigation()}>
             <PlayText>NO</PlayText>
-            <RedButtonTwoSvg
-              style={{
-                height: baseValue,
-                width: baseValue * 2 + windowWidth * 0.02,
-              }}
-            />
+            <RedButtonTwoSvg />
           </ButtonContainer>
-          <ButtonContainer onPress={() => navigation.navigate('Home Screen')}>
-            <RedButtonTwoSvg
-              style={{
-                height: baseValue,
-                width: baseValue * 2 + windowWidth * 0.02,
-              }}
-            />
+          <ButtonContainer
+            style={{
+              width: baseValue * 2 + windowWidth * 0.02,
+              marginLeft: windowWidth * 0.01,
+              marginRight: windowWidth * 0.01,
+            }}
+            onPress={() => yesNavigation()}>
+            <RedButtonTwoSvg />
             <PlayText>YES</PlayText>
           </ButtonContainer>
         </ButtonBar>
@@ -58,6 +91,8 @@ const ButtonBar = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  width: 92%;
+  margin: 0 4% 0 4%;
   margin-top: 40px;
 `;
 

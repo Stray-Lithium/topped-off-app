@@ -9,9 +9,10 @@ import {currentPlayerRequest} from '../actions/current-player';
 import {drinkersRequest} from '../actions/drinkers';
 import {checkScoreRequest} from '../actions/check-score';
 import {cardsRequest} from '../actions/cards';
-import RedCrossButtonTwoSvg from '../assets/buttons/RedCrossButtonTwoSvg';
 import {Dimensions} from 'react-native';
 import YellowArrowRightTwoSvg from '../assets/buttons/YellowArrowRightTwoSvg';
+import {buttonClickSound} from './sound/sounds';
+import {isInset} from './inset/insets';
 
 const ScoreScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -22,8 +23,6 @@ const ScoreScreen = ({navigation}) => {
   const insets = useSafeAreaInsets();
   const windowWidth = Dimensions.get('window').width * 0.92;
   const baseValue = windowWidth * 0.18;
-
-  console.log('getting to score screen');
 
   useEffect(() => {}, [players, currentCard, checkScore]);
 
@@ -42,6 +41,7 @@ const ScoreScreen = ({navigation}) => {
   };
 
   const exitButton = () => {
+    buttonClickSound.play();
     if (!checkScore) {
       const updatedTurns = updateTurns();
       dispatch(drinkersRequest(false));
@@ -69,6 +69,7 @@ const ScoreScreen = ({navigation}) => {
               style={{
                 height: baseValue,
                 width: baseValue * 2 + windowWidth * 0.02,
+                marginBottom: isInset(),
               }}
             />
           </ExitPressable>
@@ -109,14 +110,12 @@ const TitleContainer = styled.View`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 90%;
-  height: 60px;
-  margin-top: 10px;
+  margin-top: 20px;
   margin-bottom: 20px;
 `;
 
 const Title = styled.Text`
-  font-size: 70px;
+  font-size: 50px;
   color: #ffcf00;
   font-family: Morning Breeze Bold;
 `;

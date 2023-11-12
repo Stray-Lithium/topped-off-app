@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* topped_offTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* topped_offTests.m */; };
-		0C80B921A6F3F58F76C31292 /* libPods-topped_off.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-topped_off.a */; };
+		0AA1FE5DFAF1788043E44782 /* libPods-topped_off.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C105351328E0907127347A00 /* libPods-topped_off.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -17,13 +17,14 @@
 		1427CF6B2AA7E0F100AA9B78 /* menu-sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1427CF662AA7E0F100AA9B78 /* menu-sound.wav */; };
 		1427CF6C2AA7E0F100AA9B78 /* button-sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1427CF672AA7E0F100AA9B78 /* button-sound.wav */; };
 		1427CF6D2AA7E0F100AA9B78 /* bottle-pop-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1427CF682AA7E0F100AA9B78 /* bottle-pop-sound.mp3 */; };
+		14A935462AE9DA7B005B415E /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 14A935452AE9DA7B005B415E /* main.jsbundle */; };
 		43061CA72921EC8000058B52 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43985E7F29204E6E002291B3 /* Feather.ttf */; };
 		43917C2B295B850F00EE3DBC /* MorningBreezeLight-d9BPX.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43917C27295B850F00EE3DBC /* MorningBreezeLight-d9BPX.ttf */; };
 		43917C2C295B850F00EE3DBC /* MorningBreezeItalic-mL7aG.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43917C28295B850F00EE3DBC /* MorningBreezeItalic-mL7aG.ttf */; };
 		43917C2D295B850F00EE3DBC /* MorningBreeze-w19VZ.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43917C29295B850F00EE3DBC /* MorningBreeze-w19VZ.ttf */; };
 		43917C2E295B850F00EE3DBC /* MorningBreezeBold-7BGeA.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43917C2A295B850F00EE3DBC /* MorningBreezeBold-7BGeA.ttf */; };
-		7699B88040F8A987B510C191 /* libPods-topped_off-topped_offTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-topped_off-topped_offTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		BB39E279CBC7822B905E59DA /* libPods-topped_off-topped_offTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F34BA059F61FAEB410B3B3 /* libPods-topped_off-topped_offTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		00E356EE1AD99517003FC87E /* topped_offTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = topped_offTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* topped_offTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = topped_offTests.m; sourceTree = "<group>"; };
+		12F34BA059F61FAEB410B3B3 /* libPods-topped_off-topped_offTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-topped_off-topped_offTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* Topped Off.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Topped Off.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = topped_off/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = topped_off/AppDelegate.mm; sourceTree = "<group>"; };
@@ -51,7 +53,8 @@
 		1427CF662AA7E0F100AA9B78 /* menu-sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "menu-sound.wav"; path = "../../Downloads/Topped Off SFX/menu-sound.wav"; sourceTree = "<group>"; };
 		1427CF672AA7E0F100AA9B78 /* button-sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "button-sound.wav"; path = "../../Downloads/Topped Off SFX/button-sound.wav"; sourceTree = "<group>"; };
 		1427CF682AA7E0F100AA9B78 /* bottle-pop-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "bottle-pop-sound.mp3"; path = "../../Downloads/Topped Off SFX/bottle-pop-sound.mp3"; sourceTree = "<group>"; };
-		19F6CBCC0A4E27FBF8BF4A61 /* libPods-topped_off-topped_offTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-topped_off-topped_offTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		14A935452AE9DA7B005B415E /* main.jsbundle */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		2D1F341881DC1F1E8D2819D2 /* Pods-topped_offTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-topped_offTests.release.xcconfig"; path = "Target Support Files/Pods-topped_offTests/Pods-topped_offTests.release.xcconfig"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-topped_off.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-topped_off.debug.xcconfig"; path = "Target Support Files/Pods-topped_off/Pods-topped_off.debug.xcconfig"; sourceTree = "<group>"; };
 		43917C27295B850F00EE3DBC /* MorningBreezeLight-d9BPX.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MorningBreezeLight-d9BPX.ttf"; sourceTree = "<group>"; };
 		43917C28295B850F00EE3DBC /* MorningBreezeItalic-mL7aG.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MorningBreezeItalic-mL7aG.ttf"; sourceTree = "<group>"; };
@@ -60,10 +63,11 @@
 		43985E7F29204E6E002291B3 /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-topped_off.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-topped_off.release.xcconfig"; path = "Target Support Files/Pods-topped_off/Pods-topped_off.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-topped_off-topped_offTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-topped_off-topped_offTests.debug.xcconfig"; path = "Target Support Files/Pods-topped_off-topped_offTests/Pods-topped_off-topped_offTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5DCACB8F33CDC322A6C60F78 /* libPods-topped_off.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-topped_off.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = topped_off/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-topped_off-topped_offTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-topped_off-topped_offTests.release.xcconfig"; path = "Target Support Files/Pods-topped_off-topped_offTests/Pods-topped_off-topped_offTests.release.xcconfig"; sourceTree = "<group>"; };
+		C105351328E0907127347A00 /* libPods-topped_off.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-topped_off.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F43DA0CBF313BF139A86B6B4 /* Pods-topped_offTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-topped_offTests.debug.xcconfig"; path = "Target Support Files/Pods-topped_offTests/Pods-topped_offTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7699B88040F8A987B510C191 /* libPods-topped_off-topped_offTests.a in Frameworks */,
+				BB39E279CBC7822B905E59DA /* libPods-topped_off-topped_offTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,7 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C80B921A6F3F58F76C31292 /* libPods-topped_off.a in Frameworks */,
+				0AA1FE5DFAF1788043E44782 /* libPods-topped_off.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,8 +124,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				5DCACB8F33CDC322A6C60F78 /* libPods-topped_off.a */,
-				19F6CBCC0A4E27FBF8BF4A61 /* libPods-topped_off-topped_offTests.a */,
+				C105351328E0907127347A00 /* libPods-topped_off.a */,
+				12F34BA059F61FAEB410B3B3 /* libPods-topped_off-topped_offTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -148,6 +152,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				14A935452AE9DA7B005B415E /* main.jsbundle */,
 				1427CF682AA7E0F100AA9B78 /* bottle-pop-sound.mp3 */,
 				1427CF672AA7E0F100AA9B78 /* button-sound.wav */,
 				1427CF662AA7E0F100AA9B78 /* menu-sound.wav */,
@@ -190,6 +195,8 @@
 				5709B34CF0A7D63546082F79 /* Pods-topped_off.release.xcconfig */,
 				5B7EB9410499542E8C5724F5 /* Pods-topped_off-topped_offTests.debug.xcconfig */,
 				89C6BE57DB24E9ADA2F236DE /* Pods-topped_off-topped_offTests.release.xcconfig */,
+				F43DA0CBF313BF139A86B6B4 /* Pods-topped_offTests.debug.xcconfig */,
+				2D1F341881DC1F1E8D2819D2 /* Pods-topped_offTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -205,8 +212,8 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */,
-				F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */,
+				2FD24BF06C34AC7EA79A25F0 /* [CP] Embed Pods Frameworks */,
+				E92B635DB5FB6E3B06ABC28B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -228,8 +235,8 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
-				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
+				36D70992AFF623E80E4A450E /* [CP] Embed Pods Frameworks */,
+				F370D7AC48976642945725E2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -288,6 +295,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14A935462AE9DA7B005B415E /* main.jsbundle in Resources */,
 				43917C2B295B850F00EE3DBC /* MorningBreezeLight-d9BPX.ttf in Resources */,
 				1427CF6B2AA7E0F100AA9B78 /* menu-sound.wav in Resources */,
 				1427CF6D2AA7E0F100AA9B78 /* bottle-pop-sound.mp3 in Resources */,
@@ -322,7 +330,24 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */ = {
+		2FD24BF06C34AC7EA79A25F0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-topped_off-topped_offTests/Pods-topped_off-topped_offTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-topped_off-topped_offTests/Pods-topped_off-topped_offTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-topped_off-topped_offTests/Pods-topped_off-topped_offTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		36D70992AFF623E80E4A450E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -383,41 +408,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-topped_off-topped_offTests/Pods-topped_off-topped_offTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-topped_off-topped_offTests/Pods-topped_off-topped_offTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-topped_off-topped_offTests/Pods-topped_off-topped_offTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-topped_off/Pods-topped_off-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-topped_off/Pods-topped_off-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-topped_off/Pods-topped_off-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */ = {
+		E92B635DB5FB6E3B06ABC28B /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -432,6 +423,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-topped_off-topped_offTests/Pods-topped_off-topped_offTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F370D7AC48976642945725E2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-topped_off/Pods-topped_off-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-topped_off/Pods-topped_off-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-topped_off/Pods-topped_off-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -541,8 +549,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = X276XFPD4D;
+				DEVELOPMENT_TEAM = 66X7KXA7S4;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = topped_off/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Topped Off";
@@ -550,14 +560,15 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.topped-off";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.69420-party-game-topped-off";
 				PRODUCT_NAME = "Topped Off";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -570,22 +581,25 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = X276XFPD4D;
+				DEVELOPMENT_TEAM = 66X7KXA7S4;
 				INFOPLIST_FILE = topped_off/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Topped Off";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.topped-off";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.69420-party-game-topped-off";
 				PRODUCT_NAME = "Topped Off";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

@@ -8,6 +8,8 @@ import ScoreBoard from './scoreboard/scoreboard';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {ScrollView} from 'react-native-gesture-handler';
 import RedButtonThreeSvg from '../assets/buttons/RedButtonThreeSvg';
+import {buttonClickSound} from './sound/sounds';
+import {isInset} from './inset/insets';
 
 const EndScreen = ({navigation}) => {
   const players = useSelector(state => state.Players.players);
@@ -40,7 +42,10 @@ const EndScreen = ({navigation}) => {
     }
   }, [winners, players, winnerObject]);
 
-  // console.log(winners, players, 'comonnn');
+  const gameReset = () => {
+    buttonClickSound.play();
+    navigation.navigate('Menu Screen');
+  };
 
   if ((winners, winnerObject)) {
     return (
@@ -65,7 +70,9 @@ const EndScreen = ({navigation}) => {
               <ScoreBoard players={winnerObject} />
             </ScreenContainer>
           </ScrollView>
-          <PlayContainer onPress={() => navigation.navigate('Menu Screen')}>
+          <PlayContainer
+            style={{marginBottom: isInset()}}
+            onPress={() => gameReset()}>
             <PlayText>FINISH</PlayText>
             <RedButtonThreeSvg
               height={baseValue}

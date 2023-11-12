@@ -5,12 +5,14 @@ import Background from './background/Background';
 import {gameVersionRequest} from '../actions/game-version';
 import {useDispatch} from 'react-redux';
 import RedButtonThreeSvg from '../assets/buttons/RedButtonThreeSvg';
+import {buttonClickSound} from './sound/sounds';
 
 const HomeScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const windowWidth = React.Dimensions.get('window').width * 0.92;
   const baseValue = windowWidth * 0.18;
   const confirm = () => {
+    buttonClickSound.play();
     dispatch(gameVersionRequest('FULL'));
     navigation.navigate('Names Screen');
   };

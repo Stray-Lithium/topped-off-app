@@ -19,13 +19,12 @@ import EndScreen from './src/components/EndScreen';
 import RulesScreen from './src/components/RulesScreen';
 import MenuScreen from './src/components/MenuScreen';
 import HintsScreen from './src/components/HintScreen';
-import DisclaimerScreen from './src/components/storage/DisclaimerScreen';
+import DisclaimerScreen from './src/components/DisclaimerScreen';
 const Stack = createNativeStackNavigator();
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(reducers, applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(routeSaga);
-
 const App = () => {
   return (
     <Provider store={store}>

@@ -74,7 +74,7 @@ export const lemonadeCardData = [
   {
     id: 'lec10',
     title: `Twinkle Toes`,
-    content_line_one: `stand in a circle and use your toes to pass a random item around without letting it touch the ground. Last player standing wins`,
+    content_line_one: `stand in a circle and use your toes to pass a random item around without letting it touch the ground. Last player standing wins.`,
     comment: `Drop it and you're done!`,
     timer: false,
     cardColor: 'lemonadeScore',

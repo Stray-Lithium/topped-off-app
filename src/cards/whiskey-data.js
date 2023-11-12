@@ -92,7 +92,7 @@ export const whiskeyCardData = [
     id: 'whc12',
     title: 'Elevator Pitch',
     content_line_one: 'describe your love for marmite and ',
-    content_line_two: ' as you do so',
+    content_line_two: ' as you do so.',
     comment: 'make a demo they cannot forget',
     cardColor: 'whiskeyScore',
   },

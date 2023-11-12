@@ -19,8 +19,10 @@ import {whiskeyBlankData} from '../blanks/whiskey-data';
 import RedButtonTwoSvg from '../assets/buttons/RedButtonTwoSvg';
 import FrontOfCard from './background/FrontOfCard';
 import YellowArrowRightTwoSvg from '../assets/buttons/YellowArrowRightTwoSvg';
+import {bottlePopSound, buttonClickSound, pointSound} from './sound/sounds';
+import {isInset} from './inset/insets';
 
-const ChallengeScreen = ({navigation}) => {
+const ChallengeScreen = ({navigation, route}) => {
   const dispatch = useDispatch();
   const players = useSelector(state => state.Players.players);
   const currentCard = useSelector(state => state.CurrentCard.currentCard);
@@ -91,7 +93,6 @@ const ChallengeScreen = ({navigation}) => {
   const nameMaker = () => {
     const playersLength = currentPlayer.length;
     let names = '';
-    console.log(currentPlayer, 'current player');
     currentPlayer.forEach((name, index) => {
       if (playersLength === 1) {
         currentCard.cardColor === 'lemonadeScore'
@@ -110,6 +111,9 @@ const ChallengeScreen = ({navigation}) => {
     if (shouldTrigger) {
       cardAndBlank();
       setShouldTrigger(false);
+    }
+    if (route.params) {
+      setNames(`${route.params.stealer}, `);
     }
     if (!names) {
       nameMaker();
@@ -154,8 +158,10 @@ const ChallengeScreen = ({navigation}) => {
     });
     dispatch(playersRequest(updatedPlayers));
     if (completed) {
+      pointSound.play();
       winnersCheck(updatedPlayers);
     } else {
+      bottlePopSound.play();
       dispatch(drinkersRequest(currentPlayer));
       navigation.navigate('Drink Screen');
     }
@@ -167,6 +173,7 @@ const ChallengeScreen = ({navigation}) => {
         style={{
           height: baseValue,
           width: windowWidth * 0.74,
+          marginBottom: isInset(),
         }}>
         <WidthContainer onPress={() => complete(false)}>
           <ButtonText>DRINK</ButtonText>
@@ -190,11 +197,16 @@ const ChallengeScreen = ({navigation}) => {
     );
   };
 
+  const whoCompletedNavigate = () => {
+    buttonClickSound.play();
+    navigation.navigate('Lemonade Who Completed Screen');
+  };
+
   const lemonadeChallenge = () => {
     return (
-      <ButtonBar>
+      <ButtonBar style={{marginBottom: isInset()}}>
         <ButtonContainer
-          onPress={() => navigation.navigate('Lemonade Who Completed Screen')}
+          onPress={() => whoCompletedNavigate()}
           style={{height: baseValue}}>
           <YellowArrowRightTwoSvg
             width={baseValue * 2 + windowWidth * 0.02}
@@ -251,14 +263,12 @@ const ChallengeScreen = ({navigation}) => {
     );
   };
 
-  if (currentPlayer && currentCard && gameVersion && names) {
+  if (currentPlayer && currentCard && names) {
     return (
       <>
         <Background />
         <SafeAreaView style={{flex: 1}}>
-          <ChallengeScreenContainer>
-            {gameVersion === 'FULL' ? fullVersion() : cardVersion()}
-          </ChallengeScreenContainer>
+          <ChallengeScreenContainer>{fullVersion()}</ChallengeScreenContainer>
         </SafeAreaView>
       </>
     );

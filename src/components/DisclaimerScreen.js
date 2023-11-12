@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import Background from '../background/Background';
+import Background from './background/Background';
 import {Dimensions} from 'react-native';
-import RedButtonThreeSvg from '../../assets/buttons/RedButtonThreeSvg';
+import RedButtonThreeSvg from '../assets/buttons/RedButtonThreeSvg';
+import {isInset} from './inset/insets';
 
 const DisclaimerScreen = ({navigation}) => {
   const windowWidth = Dimensions.get('window').width;
@@ -37,7 +38,8 @@ const DisclaimerScreen = ({navigation}) => {
             </HintContainer>
           </TextScroll>
         </RulesContainer>
-        <BottomBarContainer style={{height: baseValue}}>
+        <BottomBarContainer
+          style={{height: baseValue, marginBottom: isInset()}}>
           <WidthContainer
             style={{width: baseValue * 3 + windowWidth * 0.04}}
             onPress={() => navigation.navigate('Names Screen')}>

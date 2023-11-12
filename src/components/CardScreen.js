@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import Background from './background/Background';
 import BackOfCard from './background/BackOfCard';
@@ -6,9 +6,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {currentCardRequest} from '../actions/current-card';
 import {currentPlayerRequest} from '../actions/current-player';
 import {turnRandomizer} from '../algorithms/card';
-import CardScreenBackground from './background/CardScreenBackgrounds';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import CardBottomBar from './bar/CardBottomBar';
+import {buttonClickSound} from './sound/sounds';
 
 const CardScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -17,14 +17,24 @@ const CardScreen = ({navigation}) => {
   const currentCard = useSelector(state => state.CurrentCard.currentCard);
   const gameVersion = useSelector(state => state.GameVersion.gameVersion);
 
-  console.log('kajslijahlsdkjhlakjhdpiuahp');
+  const displayHint = () => {
+    let total = 0;
+    cards.turns.forEach(turn => {
+      console.log(turn);
+      total += turn.turns;
+    });
+    return total === 0;
+  };
+  const isDisplayHint = displayHint();
+
   const ingredientRandomizer = () => {
     const cardNames = [
-      // 'martiniScore',
+      'martiniScore',
       'lemonadeScore',
-      // 'whiskeyScore',
-      // 'mojitoScore',
+      'whiskeyScore',
+      'mojitoScore',
     ];
+    // dispatch(currentCardRequest({cardColor: `lemonadeScore`}));
     const isFirstTurn = () => {
       let total = 0;
       players.forEach(player => {
@@ -46,19 +56,21 @@ const CardScreen = ({navigation}) => {
   };
 
   useEffect(() => {
-    if (!currentCard && gameVersion === 'FULL' && players) {
+    if (!currentCard && players) {
       ingredientRandomizer();
     }
+    // if (!currentCard && gameVersion === 'FULL' && players) {
+    //   ingredientRandomizer();
+    // }
     if (!currentCard && gameVersion === 'CARD') {
       dispatch(currentCardRequest({cardColor: 'gray'}));
     }
   }, [players, currentCard, gameVersion, cards]);
 
   const storeCurrentPlayerAndCard = pressedCard => {
+    buttonClickSound.play();
     const playerTurn = turnRandomizer(players);
-    console.log('getting to here');
     dispatch(currentPlayerRequest([playerTurn]));
-
     if (gameVersion === 'CARD') {
       dispatch(currentCardRequest({cardColor: pressedCard}));
       console.log(pressedCard, 'navigating to');
@@ -87,7 +99,7 @@ const CardScreen = ({navigation}) => {
   const cardVersion = () => {
     return (
       <>
-        <Title>Pick a card</Title>
+        {/* <Title>Pick a card</Title>
         <CardsContainer>
           <CardSelect onPress={() => storeCurrentPlayerAndCard('whiskeyScore')}>
             <CardScreenBackground image={'whiskeyScore'} />
@@ -102,19 +114,20 @@ const CardScreen = ({navigation}) => {
             onPress={() => storeCurrentPlayerAndCard('lemonadeScore')}>
             <CardScreenBackground image={'lemonadeScore'} />
           </CardSelect>
-        </CardsContainer>
+        </CardsContainer> */}
       </>
     );
   };
 
-  if (currentCard && players && gameVersion && cards) {
+  if (currentCard && players && cards) {
     return (
       <>
         <Background background={'Card Screen'} />
         <SafeAreaView style={{flex: 1}}>
-          <ScreenContainer>
-            {gameVersion === 'FULL' ? fullVersion() : cardVersion()}
-          </ScreenContainer>
+          <RulesText>
+            {isDisplayHint ? 'Click on the below card to start.' : ''}
+          </RulesText>
+          <ScreenContainer>{fullVersion()}</ScreenContainer>
           <CardBottomBar navigation={navigation} />
         </SafeAreaView>
       </>
@@ -156,5 +169,13 @@ const CardsContainer = styled.View`
 `;
 
 const CardSelect = styled.Pressable``;
+
+const RulesText = styled.Text`
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #ffcf00;
+  font-family: Morning Breeze;
+`;
 
 export default CardScreen;

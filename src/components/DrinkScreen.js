@@ -9,6 +9,8 @@ import {playersRequest} from '../actions/players';
 import FlipCard from 'react-native-flip-card';
 import RedButtonTwoSvg from '../assets/buttons/RedButtonTwoSvg';
 import FrontOfCard from './background/FrontOfCard';
+import {buttonClickSound, menuSound} from './sound/sounds';
+import {isInset} from './inset/insets';
 
 const DrinkScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -54,7 +56,7 @@ const DrinkScreen = ({navigation}) => {
   };
 
   useEffect(() => {
-    if (stealer.length > 0) {
+    if (stealer.length === 0) {
       stealChecker();
     }
   }, [players, currentPlayer, drinkers, currentCard]);
@@ -72,10 +74,12 @@ const DrinkScreen = ({navigation}) => {
   };
 
   const confirm = () => {
+    buttonClickSound.play();
     navigation.navigate('Score Screen');
   };
 
   const steal = () => {
+    buttonClickSound.play();
     let updatedPlayers = [];
     players.forEach(player => {
       if (player.name === stealer[0]) {
@@ -85,7 +89,7 @@ const DrinkScreen = ({navigation}) => {
     });
     dispatch(playersRequest(updatedPlayers));
     dispatch(currentPlayerRequest(stealer));
-    navigation.navigate('Challenge Screen');
+    navigation.navigate('Challenge Screen', {stealer: stealer});
   };
 
   if (players && currentPlayer && drinkers && currentCard) {
@@ -107,6 +111,7 @@ const DrinkScreen = ({navigation}) => {
                 flipVertical={false}
                 flip={false}
                 clickable={stealer.length > 0}
+                onFlipStart={() => menuSound.play()}
                 onFlipEnd={isFlipEnd => {
                   console.log('isFlipEnd', isFlipEnd);
                 }}>
@@ -156,7 +161,7 @@ const DrinkScreen = ({navigation}) => {
                 <FlipText>
                   (Click on the card to preview {`${drinkers[0]}`}'s challenge)
                 </FlipText>
-                <WidthContainer>
+                <WidthContainer style={{marginBottom: isInset()}}>
                   <PlayContainer onPress={() => confirm()}>
                     <RedButtonTwoSvg
                       style={{
@@ -179,7 +184,7 @@ const DrinkScreen = ({navigation}) => {
               </StealContainer>
             ) : (
               <PlayContainer
-                style={{position: 'absolute', bottom: 0}}
+                style={{position: 'absolute', bottom: isInset()}}
                 onPress={() => confirm()}>
                 <RedButtonTwoSvg
                   style={{

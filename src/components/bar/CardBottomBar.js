@@ -5,27 +5,40 @@ import {checkScoreRequest} from '../../actions/check-score';
 import RedCrossButtonSvg from '../../assets/buttons/RedCrossButtonSvg';
 import RulesButtonSvg from '../../assets/buttons/RulesButtonSvg';
 import ScoreboardButtonThree from '../../assets/buttons/ScoreboardButtonThree';
+import {buttonClickSound, menuSound, quitSound} from '../sound/sounds';
+import {isInset} from '../inset/insets';
 
 const CardBottomBar = ({navigation}) => {
   const dispatch = useDispatch();
   const windowWidth = Dimensions.get('window').width * 0.92;
   const baseValue = windowWidth * 0.18;
 
+  const menuNavigation = () => {
+    quitSound.play();
+    navigation.navigate('Menu Screen');
+  };
+
+  const rulesNavigation = () => {
+    buttonClickSound.play();
+    navigation.navigate('Rules Screen', {hint: 'rules'});
+  };
+
   const scoreNavigation = () => {
+    menuSound.play();
     dispatch(checkScoreRequest(true));
     navigation.navigate('Score Screen');
   };
 
   return (
-    <BottomBarContainer style={{height: baseValue}}>
+    <BottomBarContainer style={{height: baseValue, marginBottom: isInset()}}>
       <WidthContainer
         style={{width: baseValue}}
-        onPress={() => navigation.navigate('Menu Screen')}>
+        onPress={() => menuNavigation()}>
         <RedCrossButtonSvg />
       </WidthContainer>
       <WidthContainer
         style={{width: baseValue}}
-        onPress={() => navigation.navigate('Rules Screen', {hint: 'rules'})}>
+        onPress={() => rulesNavigation()}>
         <RulesButtonSvg />
       </WidthContainer>
       <WidthContainer
