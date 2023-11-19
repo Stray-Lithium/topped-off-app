@@ -233,7 +233,7 @@ export const lemonadeBlankData = [
   {
     id: 'leb95',
     cardColor: 'lemonadeScore',
-    content: 'Who Has a drink that is 15% ALC or stronger',
+    content: 'Who has a drink that is 15% ALC or stronger',
   },
   {
     id: 'leb96',

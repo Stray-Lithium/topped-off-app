@@ -28,7 +28,11 @@ sagaMiddleware.run(routeSaga);
 const App = () => {
   return (
     <Provider store={store}>
-      <StatusBar barStyle="light-content" translucent={true} />
+      <StatusBar
+        barStyle="light-content"
+        translucent={true}
+        backgroundColor="transparent"
+      />
       <SafeAreaProvider>
         <NavigationContainer>
           <Stack.Navigator>

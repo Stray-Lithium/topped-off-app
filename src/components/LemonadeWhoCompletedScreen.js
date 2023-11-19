@@ -126,8 +126,7 @@ const LemonadeWhoCompletedScreen = ({navigation}) => {
     if (winningPlayers.length > 0) {
       storeWinners(winningPlayers);
       navigation.navigate('End Screen');
-    }
-    if (isDrinkers) {
+    } else if (isDrinkers) {
       bottlePopSound.play();
       navigation.navigate('Drink Screen');
     } else {

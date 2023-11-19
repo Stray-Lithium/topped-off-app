@@ -28,7 +28,18 @@ const MenuScreen = ({navigation}) => {
     quitSound.play();
     dispatch(currentCardRequest(false));
     dispatch(currentPlayerRequest(false));
-    dispatch(cardsRequest(false));
+    dispatch(
+      cardsRequest({
+        turns: [],
+        cardData: {
+          lemonadeScore: {},
+          martiniScore: {},
+          whiskeyScore: {},
+          mojitoScore: {},
+        },
+        hints: {headToHead: true},
+      }),
+    );
     dispatch(checkScoreRequest(false));
     dispatch(completedRequest(false));
     dispatch(drinkersRequest(false));

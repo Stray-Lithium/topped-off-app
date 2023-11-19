@@ -48,7 +48,7 @@ function RedCrossButtonSvg(props) {
           <Path
             d="M60.09 56.5s42.76 36.4 63.47 70.64M64.2 123.8s26-34.67 54.61-68.29"
             fill="none"
-            stroke="#27231f"
+            stroke="#262020"
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="11.02px"
