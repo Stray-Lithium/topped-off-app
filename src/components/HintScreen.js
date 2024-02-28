@@ -2,7 +2,7 @@ import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import Background from './background/Background';
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform, StatusBar} from 'react-native';
 import YellowButtonThreeSvg from '../assets/buttons/YellowButtonThreeSvg';
 import {hintsRequest} from '../actions/hints';
 import {buttonClickSound} from './sound/sounds';
@@ -48,7 +48,10 @@ const HintsScreen = ({navigation}) => {
     return (
       <>
         <Background background={'Disclaimer Screen'} />
-        <SafeContainer>
+        <SafeContainer
+          style={{
+            paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+          }}>
           <RulesContainer>
             <RulesTitle>HINT</RulesTitle>
             <TextScroll

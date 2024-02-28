@@ -6,6 +6,7 @@ import {gameVersionRequest} from '../actions/game-version';
 import {useDispatch} from 'react-redux';
 import RedButtonThreeSvg from '../assets/buttons/RedButtonThreeSvg';
 import {buttonClickSound} from './sound/sounds';
+import {isInset} from './inset/insets';
 
 const HomeScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const HomeScreen = ({navigation}) => {
   return (
     <>
       <Background background={'Home Screen'} />
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView style={{flex: 1, marginBottom: isInset()}}>
         <ScreenContainer></ScreenContainer>
         <BottomBarContainer
           style={{

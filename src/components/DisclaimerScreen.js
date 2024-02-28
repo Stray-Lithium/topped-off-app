@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import Background from './background/Background';
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform, StatusBar} from 'react-native';
 import RedButtonThreeSvg from '../assets/buttons/RedButtonThreeSvg';
 import {isInset} from './inset/insets';
+import {buttonClickSound} from './sound/sounds';
 
 const DisclaimerScreen = ({navigation}) => {
   const windowWidth = Dimensions.get('window').width;
@@ -10,10 +11,18 @@ const DisclaimerScreen = ({navigation}) => {
   const widthMargin = windowWidth * 0.12;
   const baseValue = bottomBarWidth * 0.18;
 
+  const navigateButton = () => {
+    buttonClickSound.play();
+    navigation.navigate('Names Screen');
+  };
+
   return (
     <>
       <Background background={'Disclaimer Screen'} />
-      <SafeContainer>
+      <SafeContainer
+        style={{
+          paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+        }}>
         <RulesContainer>
           <RulesTitle>Disclaimer</RulesTitle>
           <TextScroll
@@ -42,7 +51,7 @@ const DisclaimerScreen = ({navigation}) => {
           style={{height: baseValue, marginBottom: isInset()}}>
           <WidthContainer
             style={{width: baseValue * 3 + windowWidth * 0.04}}
-            onPress={() => navigation.navigate('Names Screen')}>
+            onPress={() => navigateButton()}>
             <ButtonText>ENTER</ButtonText>
             <RedButtonThreeSvg />
           </WidthContainer>

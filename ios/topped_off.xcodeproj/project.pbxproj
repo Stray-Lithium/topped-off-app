@@ -8,23 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* topped_offTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* topped_offTests.m */; };
-		0AA1FE5DFAF1788043E44782 /* libPods-topped_off.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C105351328E0907127347A00 /* libPods-topped_off.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		1427CF692AA7E0F100AA9B78 /* point-sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1427CF642AA7E0F100AA9B78 /* point-sound.wav */; };
-		1427CF6A2AA7E0F100AA9B78 /* quit-sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1427CF652AA7E0F100AA9B78 /* quit-sound.wav */; };
-		1427CF6B2AA7E0F100AA9B78 /* menu-sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1427CF662AA7E0F100AA9B78 /* menu-sound.wav */; };
-		1427CF6C2AA7E0F100AA9B78 /* button-sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1427CF672AA7E0F100AA9B78 /* button-sound.wav */; };
-		1427CF6D2AA7E0F100AA9B78 /* bottle-pop-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1427CF682AA7E0F100AA9B78 /* bottle-pop-sound.mp3 */; };
+		1427CF692AA7E0F100AA9B78 /* point_sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1427CF642AA7E0F100AA9B78 /* point_sound.wav */; };
+		1427CF6A2AA7E0F100AA9B78 /* quit_sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1427CF652AA7E0F100AA9B78 /* quit_sound.wav */; };
+		1427CF6B2AA7E0F100AA9B78 /* menu_sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1427CF662AA7E0F100AA9B78 /* menu_sound.wav */; };
+		1427CF6C2AA7E0F100AA9B78 /* button_sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1427CF672AA7E0F100AA9B78 /* button_sound.wav */; };
+		1427CF6D2AA7E0F100AA9B78 /* bottle_pop_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1427CF682AA7E0F100AA9B78 /* bottle_pop_sound.mp3 */; };
 		14A935462AE9DA7B005B415E /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 14A935452AE9DA7B005B415E /* main.jsbundle */; };
 		43061CA72921EC8000058B52 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43985E7F29204E6E002291B3 /* Feather.ttf */; };
 		43917C2B295B850F00EE3DBC /* MorningBreezeLight-d9BPX.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43917C27295B850F00EE3DBC /* MorningBreezeLight-d9BPX.ttf */; };
 		43917C2C295B850F00EE3DBC /* MorningBreezeItalic-mL7aG.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43917C28295B850F00EE3DBC /* MorningBreezeItalic-mL7aG.ttf */; };
 		43917C2D295B850F00EE3DBC /* MorningBreeze-w19VZ.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43917C29295B850F00EE3DBC /* MorningBreeze-w19VZ.ttf */; };
 		43917C2E295B850F00EE3DBC /* MorningBreezeBold-7BGeA.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43917C2A295B850F00EE3DBC /* MorningBreezeBold-7BGeA.ttf */; };
+		5502CDFAE03DD9726296DE1C /* Pods_topped_offTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71E1BE4DEC8C4D30961EA2DD /* Pods_topped_offTests.framework */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		BB39E279CBC7822B905E59DA /* libPods-topped_off-topped_offTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F34BA059F61FAEB410B3B3 /* libPods-topped_off-topped_offTests.a */; };
+		870F7DBC5A82D2A0DEDD54E1 /* Pods_topped_off.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A70C2654EB40E0A4B50E287B /* Pods_topped_off.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,18 +41,17 @@
 		00E356EE1AD99517003FC87E /* topped_offTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = topped_offTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* topped_offTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = topped_offTests.m; sourceTree = "<group>"; };
-		12F34BA059F61FAEB410B3B3 /* libPods-topped_off-topped_offTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-topped_off-topped_offTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* Topped Off.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Topped Off.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = topped_off/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = topped_off/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = topped_off/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = topped_off/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = topped_off/main.m; sourceTree = "<group>"; };
-		1427CF642AA7E0F100AA9B78 /* point-sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "point-sound.wav"; path = "../../Downloads/Topped Off SFX/point-sound.wav"; sourceTree = "<group>"; };
-		1427CF652AA7E0F100AA9B78 /* quit-sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "quit-sound.wav"; path = "../../Downloads/Topped Off SFX/quit-sound.wav"; sourceTree = "<group>"; };
-		1427CF662AA7E0F100AA9B78 /* menu-sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "menu-sound.wav"; path = "../../Downloads/Topped Off SFX/menu-sound.wav"; sourceTree = "<group>"; };
-		1427CF672AA7E0F100AA9B78 /* button-sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "button-sound.wav"; path = "../../Downloads/Topped Off SFX/button-sound.wav"; sourceTree = "<group>"; };
-		1427CF682AA7E0F100AA9B78 /* bottle-pop-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "bottle-pop-sound.mp3"; path = "../../Downloads/Topped Off SFX/bottle-pop-sound.mp3"; sourceTree = "<group>"; };
+		1427CF642AA7E0F100AA9B78 /* point_sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = point_sound.wav; path = "../../Downloads/Topped Off SFX/point_sound.wav"; sourceTree = "<group>"; };
+		1427CF652AA7E0F100AA9B78 /* quit_sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = quit_sound.wav; path = "../../Downloads/Topped Off SFX/quit_sound.wav"; sourceTree = "<group>"; };
+		1427CF662AA7E0F100AA9B78 /* menu_sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = menu_sound.wav; path = "../../Downloads/Topped Off SFX/menu_sound.wav"; sourceTree = "<group>"; };
+		1427CF672AA7E0F100AA9B78 /* button_sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = button_sound.wav; path = "../../Downloads/Topped Off SFX/button_sound.wav"; sourceTree = "<group>"; };
+		1427CF682AA7E0F100AA9B78 /* bottle_pop_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bottle_pop_sound.mp3; path = "../../Downloads/Topped Off SFX/bottle_pop_sound.mp3"; sourceTree = "<group>"; };
 		14A935452AE9DA7B005B415E /* main.jsbundle */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		2D1F341881DC1F1E8D2819D2 /* Pods-topped_offTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-topped_offTests.release.xcconfig"; path = "Target Support Files/Pods-topped_offTests/Pods-topped_offTests.release.xcconfig"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-topped_off.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-topped_off.debug.xcconfig"; path = "Target Support Files/Pods-topped_off/Pods-topped_off.debug.xcconfig"; sourceTree = "<group>"; };
@@ -63,9 +62,10 @@
 		43985E7F29204E6E002291B3 /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-topped_off.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-topped_off.release.xcconfig"; path = "Target Support Files/Pods-topped_off/Pods-topped_off.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-topped_off-topped_offTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-topped_off-topped_offTests.debug.xcconfig"; path = "Target Support Files/Pods-topped_off-topped_offTests/Pods-topped_off-topped_offTests.debug.xcconfig"; sourceTree = "<group>"; };
+		71E1BE4DEC8C4D30961EA2DD /* Pods_topped_offTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_topped_offTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = topped_off/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-topped_off-topped_offTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-topped_off-topped_offTests.release.xcconfig"; path = "Target Support Files/Pods-topped_off-topped_offTests/Pods-topped_off-topped_offTests.release.xcconfig"; sourceTree = "<group>"; };
-		C105351328E0907127347A00 /* libPods-topped_off.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-topped_off.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A70C2654EB40E0A4B50E287B /* Pods_topped_off.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_topped_off.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F43DA0CBF313BF139A86B6B4 /* Pods-topped_offTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-topped_offTests.debug.xcconfig"; path = "Target Support Files/Pods-topped_offTests/Pods-topped_offTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -75,7 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB39E279CBC7822B905E59DA /* libPods-topped_off-topped_offTests.a in Frameworks */,
+				5502CDFAE03DD9726296DE1C /* Pods_topped_offTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,7 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0AA1FE5DFAF1788043E44782 /* libPods-topped_off.a in Frameworks */,
+				870F7DBC5A82D2A0DEDD54E1 /* Pods_topped_off.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,8 +124,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				C105351328E0907127347A00 /* libPods-topped_off.a */,
-				12F34BA059F61FAEB410B3B3 /* libPods-topped_off-topped_offTests.a */,
+				A70C2654EB40E0A4B50E287B /* Pods_topped_off.framework */,
+				71E1BE4DEC8C4D30961EA2DD /* Pods_topped_offTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -153,11 +153,11 @@
 			isa = PBXGroup;
 			children = (
 				14A935452AE9DA7B005B415E /* main.jsbundle */,
-				1427CF682AA7E0F100AA9B78 /* bottle-pop-sound.mp3 */,
-				1427CF672AA7E0F100AA9B78 /* button-sound.wav */,
-				1427CF662AA7E0F100AA9B78 /* menu-sound.wav */,
-				1427CF642AA7E0F100AA9B78 /* point-sound.wav */,
-				1427CF652AA7E0F100AA9B78 /* quit-sound.wav */,
+				1427CF682AA7E0F100AA9B78 /* bottle_pop_sound.mp3 */,
+				1427CF672AA7E0F100AA9B78 /* button_sound.wav */,
+				1427CF662AA7E0F100AA9B78 /* menu_sound.wav */,
+				1427CF642AA7E0F100AA9B78 /* point_sound.wav */,
+				1427CF652AA7E0F100AA9B78 /* quit_sound.wav */,
 				43985E7C29204CA4002291B3 /* Fonts */,
 				13B07FAE1A68108700A75B9A /* topped_off */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -212,8 +212,6 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				2FD24BF06C34AC7EA79A25F0 /* [CP] Embed Pods Frameworks */,
-				E92B635DB5FB6E3B06ABC28B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -235,8 +233,6 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				36D70992AFF623E80E4A450E /* [CP] Embed Pods Frameworks */,
-				F370D7AC48976642945725E2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -297,17 +293,17 @@
 			files = (
 				14A935462AE9DA7B005B415E /* main.jsbundle in Resources */,
 				43917C2B295B850F00EE3DBC /* MorningBreezeLight-d9BPX.ttf in Resources */,
-				1427CF6B2AA7E0F100AA9B78 /* menu-sound.wav in Resources */,
-				1427CF6D2AA7E0F100AA9B78 /* bottle-pop-sound.mp3 in Resources */,
-				1427CF6C2AA7E0F100AA9B78 /* button-sound.wav in Resources */,
+				1427CF6B2AA7E0F100AA9B78 /* menu_sound.wav in Resources */,
+				1427CF6D2AA7E0F100AA9B78 /* bottle_pop_sound.mp3 in Resources */,
+				1427CF6C2AA7E0F100AA9B78 /* button_sound.wav in Resources */,
 				43917C2C295B850F00EE3DBC /* MorningBreezeItalic-mL7aG.ttf in Resources */,
 				43917C2D295B850F00EE3DBC /* MorningBreeze-w19VZ.ttf in Resources */,
-				1427CF692AA7E0F100AA9B78 /* point-sound.wav in Resources */,
+				1427CF692AA7E0F100AA9B78 /* point_sound.wav in Resources */,
 				43917C2E295B850F00EE3DBC /* MorningBreezeBold-7BGeA.ttf in Resources */,
 				43061CA72921EC8000058B52 /* Feather.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				1427CF6A2AA7E0F100AA9B78 /* quit-sound.wav in Resources */,
+				1427CF6A2AA7E0F100AA9B78 /* quit_sound.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,40 +326,6 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		2FD24BF06C34AC7EA79A25F0 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-topped_off-topped_offTests/Pods-topped_off-topped_offTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-topped_off-topped_offTests/Pods-topped_off-topped_offTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-topped_off-topped_offTests/Pods-topped_off-topped_offTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		36D70992AFF623E80E4A450E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-topped_off/Pods-topped_off-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-topped_off/Pods-topped_off-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-topped_off/Pods-topped_off-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -379,7 +341,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-topped_off-topped_offTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-topped_offTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -406,40 +368,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E92B635DB5FB6E3B06ABC28B /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-topped_off-topped_offTests/Pods-topped_off-topped_offTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-topped_off-topped_offTests/Pods-topped_off-topped_offTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-topped_off-topped_offTests/Pods-topped_off-topped_offTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F370D7AC48976642945725E2 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-topped_off/Pods-topped_off-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-topped_off/Pods-topped_off-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-topped_off/Pods-topped_off-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -494,7 +422,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-topped_off-topped_offTests.debug.xcconfig */;
+			baseConfigurationReference = F43DA0CBF313BF139A86B6B4 /* Pods-topped_offTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -521,7 +449,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-topped_off-topped_offTests.release.xcconfig */;
+			baseConfigurationReference = 2D1F341881DC1F1E8D2819D2 /* Pods-topped_offTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;

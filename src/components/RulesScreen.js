@@ -2,7 +2,7 @@ import {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components';
 import Background from './background/Background';
-import {Dimensions, View} from 'react-native';
+import {Dimensions, Platform, StatusBar, View} from 'react-native';
 import AutoHeightImage from 'react-native-auto-height-image';
 import {useState} from 'react';
 import MartiniFrontSvg from '../assets/cards/MartiniFrontSvg';
@@ -22,6 +22,7 @@ import YellowArrowRightTwoSvg from '../assets/buttons/YellowArrowRightTwoSvg';
 import FlipCard from 'react-native-flip-card';
 import {buttonClickSound, quitSound, menuSound} from './sound/sounds';
 import {isInset} from './inset/insets';
+import {safeAreaAndroid} from './safeArea';
 
 const RulesScreen = ({navigation, route}) => {
   const [pageNumber, setPageNumber] = useState(1);
@@ -244,7 +245,10 @@ const RulesScreen = ({navigation, route}) => {
     return (
       <>
         <Background background={'Score Screen'} />
-        <SafeContainer>
+        <SafeContainer
+          style={{
+            paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+          }}>
           <RulesContainer>
             <RulesTitle>HOW TO PLAY</RulesTitle>
             <TextScroll

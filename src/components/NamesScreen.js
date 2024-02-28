@@ -1,5 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {Text, KeyboardAvoidingView, Platform, Dimensions} from 'react-native';
+import {
+  Text,
+  KeyboardAvoidingView,
+  Platform,
+  Dimensions,
+  Keyboard,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components';
 import * as R from 'ramda';
@@ -27,6 +33,7 @@ const NamesScreen = ({navigation}) => {
   const [players, setPlayers] = useState([]);
   const [minPlayersError, setMinPlayersError] = useState(false);
   const [duplicatePlayersError, setDulplicatePlayersError] = useState(false);
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0;
   const windowWidth = Dimensions.get('window').width * 0.92;
   const baseValue = windowWidth * 0.18;
@@ -35,7 +42,26 @@ const NamesScreen = ({navigation}) => {
     if (players.length >= 2) {
       setMinPlayersError(false);
     }
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true); // or some other action
+      },
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false); // or some other action
+      },
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
   }, [players]);
+
+  console.log(isKeyboardVisible);
 
   const onChangeText = input => {
     setName(input);
@@ -134,7 +160,9 @@ const NamesScreen = ({navigation}) => {
             {players.map(player => {
               return (
                 <NameContainer key={player.name}>
-                  <PlayerName key={player.name}>{player.name}</PlayerName>
+                  <PlayerNameContainer>
+                    <PlayerName key={player.name}>{player.name}</PlayerName>
+                  </PlayerNameContainer>
                   <ButtonContainer onPress={() => deleteName(player.name)}>
                     <RedCrossButtonSvg width={44} height={44} />
                   </ButtonContainer>
@@ -154,7 +182,7 @@ const NamesScreen = ({navigation}) => {
           )}
           <KeyboardAvoidingView
             style={{width: '100%'}}
-            behavior="position"
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             keyboardVerticalOffset={keyboardVerticalOffset}>
             <NameInputContainer>
               <NameInput
@@ -172,20 +200,24 @@ const NamesScreen = ({navigation}) => {
             </NameInputContainer>
           </KeyboardAvoidingView>
         </ScreenContainer>
-        <BottomBarContainer
-          style={{
-            height: baseValue,
-            marginBottom: isInset(),
-          }}>
-          <PlayButtonContainer
+        {isKeyboardVisible && Platform.OS === 'android' ? (
+          <></>
+        ) : (
+          <BottomBarContainer
             style={{
-              width: baseValue * 2 + windowWidth * 0.02,
-            }}
-            onPress={() => ready()}>
-            <PlayText>READY!</PlayText>
-            <RedButtonTwoSvg />
-          </PlayButtonContainer>
-        </BottomBarContainer>
+              height: baseValue,
+              marginBottom: isInset(),
+            }}>
+            <PlayButtonContainer
+              style={{
+                width: baseValue * 2 + windowWidth * 0.02,
+              }}
+              onPress={() => ready()}>
+              <PlayText>READY!</PlayText>
+              <RedButtonTwoSvg />
+            </PlayButtonContainer>
+          </BottomBarContainer>
+        )}
       </SafeAreaView>
     );
   };
@@ -230,18 +262,27 @@ const NameContainer = styled.View`
   width: 100%;
 `;
 
-const PlayerName = styled.Text`
-  font-size: 22px;
+const PlayerNameContainer = styled.View`
   margin: 6px 6px 6px 6px;
   border-radius: 10px;
-  text-align: center;
   min-width: 40%;
-  padding: 6px;
-  letter-spacing: 1px;
   background-color: #ccc;
   border: solid 3px #272121;
   overflow: hidden;
+`;
+
+const PlayerName = styled.Text`
+  font-size: 22px;
+
+  text-align: center;
+  // min-width: 40%;
+  padding: 6px;
+  letter-spacing: 1px;
+  // background-color: #ccc;
+  // border: solid 3px #272121;
+  overflow: hidden;
   font-family: Morning Breeze;
+  color: #262020;
 `;
 
 const NameInputContainer = styled.View`

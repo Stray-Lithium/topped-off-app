@@ -33,7 +33,6 @@ const DrinkScreen = ({navigation}) => {
       if (player.name === currentPlayer[0]) {
         player.pointsAwarded >= 2 ? (doSteal = true) : null;
       }
-
       if (
         player.name !== currentPlayer[0] &&
         player[`${currentCard.cardColor}`] < 1 &&
@@ -64,10 +63,10 @@ const DrinkScreen = ({navigation}) => {
   const drinkTitle = () => {
     let title = '';
     drinkers.forEach((player, index) => {
-      if (drinkers.length === 1 || index !== drinkers.length - 1) {
-        title += `${player}, `;
+      if (index === drinkers.length - 2) {
+        title += `${player} and `;
       } else {
-        title += `and ${player}, `;
+        title += `${player}, `;
       }
     });
     return title;
@@ -258,8 +257,7 @@ const CardComment = styled.Text`
   padding: 2px;
   margin-top: 40px;
   color: #f2415b;
-  font-family: Morning Breeze;
-  font-style: italic;
+  font-family: Morning Breeze Italic;
 `;
 
 const CurrentCardContentContainer = styled.View`
@@ -278,6 +276,7 @@ const CurrentCardTitle = styled.Text`
   width: 80%;
   margin-top: 20px;
   padding: 2px;
+  color: #262020;
   font-family: Morning Breeze;
 `;
 
@@ -287,6 +286,7 @@ const CurrentCardContent = styled.Text`
   width: 86%;
   line-height: 30px;
   padding: 2px;
+  color: #262020;
   font-family: Morning Breeze;
 `;
 
@@ -297,8 +297,8 @@ const CurrentCardComment = styled.Text`
   margin-bottom: 20px;
   padding: 2px;
   margin-top: 40px;
-  font-family: Morning Breeze;
-  font-style: italic;
+  color: #262020;
+  font-family: Morning Breeze Italic;
 `;
 
 const RefreshMessage = styled.Text`

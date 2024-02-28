@@ -311,6 +311,8 @@ const CardTitle = styled.Text`
   width: 80%;
   margin-top: 20px;
   padding: 4px;
+  color: #262020;
+
   font-family: Morning Breeze;
 `;
 
@@ -320,6 +322,7 @@ const CardContent = styled.Text`
   width: 86%;
   line-height: 30px;
   padding: 2px;
+  color: #262020;
   font-family: Morning Breeze;
 `;
 
@@ -330,8 +333,8 @@ const CardComment = styled.Text`
   margin-bottom: 20px;
   padding: 2px;
   margin-top: 40px;
-  font-family: Morning Breeze;
-  font-style: italic;
+  color: #262020;
+  font-family: Morning Breeze Italic;
 `;
 
 const CVCardContentContainer = styled.View`

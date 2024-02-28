@@ -160,7 +160,7 @@ const ScreenContainer = styled.View`
 
 const Title = styled.Text`
   font-size: 30px;
-  margin-top: 48px;
+  margin-top: 40px;
   margin-bottom: 14px;
   padding-bottom: 6px;
   text-align: center;

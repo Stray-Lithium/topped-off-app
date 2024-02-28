@@ -244,12 +244,11 @@ const ScreenContainer = styled.View`
 
 const Title = styled.Text`
   font-size: 30px;
-  margin-top: 48px;
+  margin-top: 40px;
   margin-bottom: 20px;
   text-align: center;
   width: 90%;
-  font-family: Morning Breeze;
-  font-weight: bold;
+  font-family: Morning Breeze Bold;
   color: #ffcf00;
 `;
 

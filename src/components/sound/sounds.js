@@ -2,7 +2,7 @@ import Sound from 'react-native-sound';
 Sound.setCategory('Playback');
 
 export const buttonClickSound = new Sound(
-  'button-sound.wav',
+  'button_sound.wav',
   Sound.MAIN_BUNDLE,
   error => {
     if (error) {
@@ -20,7 +20,7 @@ export const buttonClickSound = new Sound(
 );
 
 export const bottlePopSound = new Sound(
-  'bottle-pop-sound.mp3',
+  'bottle_pop_sound.mp3',
   Sound.MAIN_BUNDLE,
   error => {
     if (error) {
@@ -38,7 +38,7 @@ export const bottlePopSound = new Sound(
 );
 
 export const menuSound = new Sound(
-  'menu-sound.wav',
+  'menu_sound.wav',
   Sound.MAIN_BUNDLE,
   error => {
     if (error) {
@@ -56,7 +56,7 @@ export const menuSound = new Sound(
 );
 
 export const pointSound = new Sound(
-  'point-sound.wav',
+  'point_sound.wav',
   Sound.MAIN_BUNDLE,
   error => {
     if (error) {
@@ -74,7 +74,7 @@ export const pointSound = new Sound(
 );
 
 export const quitSound = new Sound(
-  'quit-sound.wav',
+  'quit_sound.wav',
   Sound.MAIN_BUNDLE,
   error => {
     if (error) {

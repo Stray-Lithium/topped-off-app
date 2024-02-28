@@ -125,7 +125,7 @@ const CardScreen = ({navigation}) => {
         <Background background={'Card Screen'} />
         <SafeAreaView style={{flex: 1}}>
           <RulesText>
-            {isDisplayHint ? 'Click on the below card to start.' : ''}
+            {isDisplayHint ? 'Click on the card below to start.' : ''}
           </RulesText>
           <ScreenContainer>{fullVersion()}</ScreenContainer>
           <CardBottomBar navigation={navigation} />
