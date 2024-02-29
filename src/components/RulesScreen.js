@@ -174,14 +174,13 @@ const RulesScreen = ({navigation, route}) => {
           <AllDrinksFullSvg style={{backgroundColor: 'orange'}} />
         </WidthContainer>
         <RulesText style={{marginRight: widthMargin, marginLeft: widthMargin}}>
-          {'\n'}You will always have the option to skip challenges and drink
-          instead.
+          {'\n'}You will always have the option to skip challenges.
           {'\n'}
-          {'\n'}However, if you choose to 'drink' in a category you already have
-          a point in, you will then lose that point.
+          {'\n'}However, if you choose to 'skip' a challenge in the category you
+          already have a point in, you will then lose that point.
           {'\n'}
           {'\n'}
-          Now, have fun with your challenges and keep your cocktails topped off.
+          Now, have fun with your challenges and stay topped off.
           {'\n'}
         </RulesText>
       </>

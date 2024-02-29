@@ -33,16 +33,16 @@ const DisclaimerScreen = ({navigation}) => {
               <RulesText
                 style={{marginRight: widthMargin, marginLeft: widthMargin}}>
                 By clicking 'ENTER', all participants acknowledge and agree that
-                they are voluntarily participating in this mobile drinking game,
+                they are voluntarily participating in this mobile party game,
                 and understand that it may involve physical and vocal
                 challenges. The cards in this game are not binding and represent
                 a mere suggestion. You further understand that 'Off the Cards
                 Ltd' assumes no responsibility or liability for any injuries,
                 accidents, or consequences that may arise during or as a result
-                of playing this game. Drink responsibly, and ensure you and
-                every person playing with you are of legal drinking age. If you
-                do not agree to these terms, please do not proceed with the
-                game.{'\n'}
+                of playing this game. If you choose to consume alcohol while
+                participating, drink responsibly, ensure you and every person
+                playing with you are of legal drinking age. If you do not agree
+                to these terms, please do not proceed with the game.{'\n'}
               </RulesText>
             </HintContainer>
           </TextScroll>

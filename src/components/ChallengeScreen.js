@@ -21,6 +21,7 @@ import FrontOfCard from './background/FrontOfCard';
 import YellowArrowRightTwoSvg from '../assets/buttons/YellowArrowRightTwoSvg';
 import {bottlePopSound, buttonClickSound, pointSound} from './sound/sounds';
 import {isInset} from './inset/insets';
+import YellowButtonTwoSvg from '../assets/buttons/YellowButtonTwoSvg';
 
 const ChallengeScreen = ({navigation, route}) => {
   const dispatch = useDispatch();
@@ -176,7 +177,7 @@ const ChallengeScreen = ({navigation, route}) => {
           marginBottom: isInset(),
         }}>
         <WidthContainer onPress={() => complete(false)}>
-          <ButtonText>DRINK</ButtonText>
+          <ButtonText>SKIP</ButtonText>
           <RedButtonTwoSvg
             style={{
               width: baseValue * 2 + windowWidth * 0.02,
@@ -186,7 +187,7 @@ const ChallengeScreen = ({navigation, route}) => {
         </WidthContainer>
         <WidthContainer onPress={() => complete(true)}>
           <ButtonText>DONE</ButtonText>
-          <RedButtonTwoSvg
+          <YellowButtonTwoSvg
             style={{
               width: baseValue * 2 + windowWidth * 0.02,
               height: baseValue,

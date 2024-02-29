@@ -65,6 +65,8 @@ const DrinkScreen = ({navigation}) => {
     drinkers.forEach((player, index) => {
       if (index === drinkers.length - 2) {
         title += `${player} and `;
+      } else if (drinkers.length === 1 || index === drinkers.length - 1) {
+        title += `${player}`;
       } else {
         title += `${player}, `;
       }
@@ -119,12 +121,10 @@ const DrinkScreen = ({navigation}) => {
                   <FrontOfCard drink={'drink'} />
                   <CardContentContainer>
                     <CardTitle>
-                      {`${drinkTitle()}`}
-                      <DrinkText>{'\n'}DRINK!</DrinkText>
+                      <DrinkText>BOTTOMS UP, </DrinkText>
+                      {`${drinkTitle()}!`}
                     </CardTitle>
-                    <CardComment>
-                      Yeah, yeah, you've "just been thirsty"
-                    </CardComment>
+                    <CardComment>Maybe next time?</CardComment>
                   </CardContentContainer>
                 </CardContainer>
                 {/* Back Side */}
@@ -240,10 +240,10 @@ const CardTitle = styled.Text`
 `;
 
 const DrinkText = styled.Text`
-  font-size: 70px;
+  font-size: 40px;
   text-align: center;
   width: 80%;
-  margin-top: 20px;
+  margin-bottom: 20px;
   padding: 2px;
   color: #ffcf00;
   font-family: Morning Breeze;
