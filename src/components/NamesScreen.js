@@ -61,8 +61,6 @@ const NamesScreen = ({navigation}) => {
     };
   }, [players]);
 
-  console.log(isKeyboardVisible);
-
   const onChangeText = input => {
     setName(input);
   };
